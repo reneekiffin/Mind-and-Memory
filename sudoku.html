@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sudoku – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg,#FFF5E8,#FFF8F0); overflow-y:auto; }
+
+  .sudoku-controls { display:flex; gap:8px; padding:0 24px 12px; flex-wrap:wrap; align-items:center; }
+  .sudoku-level-pill { padding:10px 18px; border-radius:50px; font-size:15px; font-weight:900; cursor:pointer; border:3px solid #C0550D; color:#C0550D; background:#FFF3EE; -webkit-tap-highlight-color:transparent; }
+  .sudoku-level-pill.active { background:#C0550D; color:#fff; }
+  .sudoku-save-tag { margin-left:auto; font-size:14px; font-weight:800; color:var(--green); background:#E8F8EF; padding:6px 12px; border-radius:50px; }
+  .sudoku-status { text-align:center; padding:4px 24px 10px; font-size:18px; font-weight:900; color:var(--teal); }
+
+  /* Pencil toggle */
+  #pencil-toggle {
+    display:block; width:calc(100% - 48px); margin:0 24px 12px;
+    background:#fff; border:3px solid var(--purple);
+    border-radius:50px; padding:14px 20px;
+    font-size:19px; font-weight:900; color:var(--purple);
+    cursor:pointer; text-align:center; -webkit-tap-highlight-color:transparent;
+    transition: background .2s, color .2s;
+  }
+  #pencil-toggle .pencil-explain { font-size:14px; font-weight:700; opacity:.85; display:block; margin-top:3px; }
+
+  /* Board */
+  .sudoku-board-wrap { padding:0 12px 12px; display:flex; justify-content:center; }
+  .sudoku-board {
+    display:grid; grid-template-columns:repeat(9,1fr);
+    border:3px solid #444; border-radius:10px; overflow:hidden;
+    width:100%; max-width:390px;
+  }
+  .sudoku-cell {
+    aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+    font-family:'Fredoka One',cursive; font-size:20px;
+    background:#fff; color:var(--text); cursor:pointer;
+    border-right:1px solid #ddd; border-bottom:1px solid #ddd;
+    position:relative; transition:background .12s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .sudoku-cell.given     { background:#F0EBE3; color:#222; font-weight:900; cursor:default; }
+  .sudoku-cell.selected  { background:#B8E4F9 !important; }
+  .sudoku-cell.highlight { background:#E4F4FB; }
+  .sudoku-cell.same-num  { background:#D4EDDA; }
+  .sudoku-cell.error     { color:#EF5350; }
+  .sudoku-cell.correct-fill { color:var(--teal); }
+
+  /* Pencil marks grid */
+  .pencil-grid { display:grid; grid-template-columns:repeat(3,1fr); width:100%; height:100%; padding:1px; }
+  .pencil-num { display:flex; align-items:center; justify-content:center; font-family:'Nunito',sans-serif; font-size:9px; font-weight:900; color:#9B6DD9; line-height:1; }
+
+  /* Numpad */
+  .sudoku-numpad { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; padding:0 24px 10px; }
+  .sudoku-num { background:#fff; border:3px solid #C0550D; border-radius:14px; padding:14px 6px; font-family:'Fredoka One',cursive; font-size:28px; cursor:pointer; text-align:center; color:#C0550D; box-shadow:0 3px 8px rgba(0,0,0,.1); -webkit-tap-highlight-color:transparent; }
+  .sudoku-num:active { transform:scale(.92); }
+  .sudoku-num.erase { grid-column:span 2; background:#C0550D; color:#fff; font-size:18px; border-color:#C0550D; display:flex; align-items:center; justify-content:center; gap:6px; }
+
+  /* Hint */
+  .sudoku-hint-btn { margin:0 24px 16px; background:#fff; border:3px solid var(--purple); border-radius:50px; padding:14px; font-size:18px; font-weight:800; color:var(--purple); cursor:pointer; text-align:center; -webkit-tap-highlight-color:transparent; display:block; }
+</style>
+</head>
+<body>
+  <a class="back-btn" href="index.html">← Home</a>
+  <div class="game-header">
+    <div class="game-title" style="color:#C0550D">🧩 Sudoku</div>
+    <div class="score-badge" id="sudoku-timer">⏱ 0:00</div>
+  </div>
+
+  <div class="sudoku-controls">
+    <span class="sudoku-level-pill active" data-lvl="easy"   onclick="setSudokuLevel('easy')">Easy</span>
+    <span class="sudoku-level-pill"        data-lvl="medium" onclick="setSudokuLevel('medium')">Medium</span>
+    <span class="sudoku-level-pill"        data-lvl="hard"   onclick="setSudokuLevel('hard')">Hard</span>
+    <span class="sudoku-save-tag" id="sudoku-save-tag">💾 Auto-saved</span>
+  </div>
+
+  <div class="sudoku-status" id="sudoku-status">Fill in the missing numbers!</div>
+
+  <button id="pencil-toggle" onclick="togglePencil()">
+    ✏️ Pencil Mode: OFF
+    <span class="pencil-explain">Tap to write tiny "maybe" numbers in a cell</span>
+  </button>
+
+  <div class="sudoku-board-wrap">
+    <div class="sudoku-board" id="sudoku-board"></div>
+  </div>
+
+  <div class="sudoku-numpad" id="sudoku-numpad"></div>
+
+  <button class="sudoku-hint-btn" onclick="sudokuHint()">💡 Give me a hint — fill in one cell</button>
+
+  <div class="overlay" id="result-overlay">
+    <div class="result-popup">
+      <div class="result-emoji" id="res-emoji">🏆</div>
+      <div class="result-title" id="res-title">Puzzle Complete!</div>
+      <div class="result-score" id="res-score"></div>
+      <button class="popup-btn" id="res-play-again">New Puzzle 🔄</button>
+      <a class="popup-btn secondary" href="index.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script src="games/sudoku.js"></script>
+</body>
+</html>

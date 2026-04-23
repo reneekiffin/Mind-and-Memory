@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Math Fun – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg, #FFF0EB, #FFF8F0); }
+  .question-box {
+    margin: 16px 24px; background: #fff;
+    border-radius: var(--radius); padding: 36px 20px;
+    text-align: center; box-shadow: var(--shadow);
+    border: 3px solid var(--primary);
+  }
+  .question-text { font-family: 'Fredoka One', cursive; font-size: 56px; color: var(--primary); line-height: 1.1; }
+  .question-hint { font-size: 18px; color: var(--subtext); margin-top: 8px; font-weight: 700; }
+  .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 24px; }
+  .answer-btn {
+    background: #fff; border: 4px solid var(--border);
+    border-radius: 20px; padding: 28px 12px;
+    font-family: 'Fredoka One', cursive; font-size: 44px;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: var(--text);
+    transition: transform 0.1s;
+  }
+  .answer-btn:active { transform: scale(0.94); }
+  .answer-btn.correct { background: var(--green); border-color: var(--green); color: #fff; }
+  .answer-btn.wrong   { background: #EF5350; border-color: #EF5350; color: #fff; }
+</style>
+</head>
+<body>
+  <a class="back-btn" href="index.html">← Home</a>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--primary)">🔢 Math Fun</div>
+    <div class="score-badge">⭐ <span id="math-score">0</span></div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="math-progress" style="width:0%"></div>
+  </div>
+  <div class="question-box">
+    <div class="question-text" id="math-question"></div>
+    <div class="question-hint">Tap the correct answer below</div>
+  </div>
+  <div class="feedback-area" id="math-feedback"></div>
+  <div class="answer-grid" id="math-answers"></div>
+  <script src="games/math.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg, #FFF3E8, #FFF8F0); }
+
+  .home-header {
+    background: var(--primary);
+    padding: 36px 28px 28px;
+    border-radius: 0 0 40px 40px;
+    color: #fff; text-align: center;
+  }
+  .home-header .sun { font-size: 56px; margin-bottom: 8px; }
+  .home-header h1 { font-family: 'Fredoka One', cursive; font-size: 36px; letter-spacing: 1px; margin-bottom: 4px; }
+  .home-header p { font-size: 20px; opacity: 0.9; font-weight: 700; }
+
+  .home-greeting { padding: 24px 24px 8px; font-size: 22px; font-weight: 800; }
+  .home-sub { padding: 4px 24px 16px; font-size: 19px; color: var(--subtext); font-weight: 700; }
+
+  .game-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; padding: 12px 24px 32px;
+  }
+  .game-card {
+    background: #fff; border-radius: var(--radius);
+    padding: 28px 16px; text-align: center;
+    box-shadow: var(--shadow); cursor: pointer;
+    transition: transform 0.15s; border: 3px solid transparent;
+    -webkit-tap-highlight-color: transparent; user-select: none;
+    text-decoration: none; color: var(--text); display: block;
+  }
+  .game-card:active { transform: scale(0.96); }
+  .game-card .icon { font-size: 52px; margin-bottom: 12px; }
+  .game-card .game-name { font-family: 'Fredoka One', cursive; font-size: 22px; margin-bottom: 4px; }
+  .game-card .game-desc { font-size: 15px; color: var(--subtext); font-weight: 700; }
+
+  .game-card.math    { border-color: var(--primary); }
+  .game-card.memory  { border-color: var(--secondary); }
+  .game-card.word    { border-color: var(--green); }
+  .game-card.pattern { border-color: var(--purple); }
+  .game-card.sudoku  { border-color: #C0550D; }
+  .game-card.wordle  {
+    border-color: var(--teal); grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 18px;
+    text-align: left; padding: 22px 24px;
+  }
+  .game-card.wordle .icon { font-size: 52px; margin-bottom: 0; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="home-header">
+  <div class="sun">☀️</div>
+  <h1>Mind & Memory</h1>
+  <p>Daily Brain Exercises</p>
+</div>
+
+<div class="home-greeting" id="greeting">Good Morning! 🌸</div>
+<div class="home-sub">Choose a game to play:</div>
+
+<div class="game-grid">
+  <a class="game-card math" href="math.html">
+    <div class="icon">🔢</div>
+    <div class="game-name">Math Fun</div>
+    <div class="game-desc">Add, Subtract & More</div>
+  </a>
+  <a class="game-card memory" href="memory.html">
+    <div class="icon">🃏</div>
+    <div class="game-name">Memory</div>
+    <div class="game-desc">Match the Cards</div>
+  </a>
+  <a class="game-card word" href="wordplay.html">
+    <div class="icon">📝</div>
+    <div class="game-name">Word Play</div>
+    <div class="game-desc">3 Difficulty Levels</div>
+  </a>
+  <a class="game-card pattern" href="patterns.html">
+    <div class="icon">🔍</div>
+    <div class="game-name">Patterns</div>
+    <div class="game-desc">5 Levels · Unlimited</div>
+  </a>
+  <a class="game-card sudoku" href="sudoku.html">
+    <div class="icon">🧩</div>
+    <div class="game-name">Sudoku</div>
+    <div class="game-desc">✏️ Pencil marks · Auto-saves!</div>
+  </a>
+  <div class="game-card" style="border-color:#ccc;opacity:.4;cursor:default;">
+    <div class="icon">🎯</div>
+    <div class="game-name">More Soon</div>
+    <div class="game-desc">Coming soon!</div>
+  </div>
+  <a class="game-card wordle" href="wordle.html">
+    <div class="icon">💬</div>
+    <div>
+      <div class="game-name">Word Guess</div>
+      <div class="game-desc">5-letter Wordle · 6 tries · 600 words</div>
+    </div>
+  </a>
+</div>
+
+<script>
+  const h = new Date().getHours();
+  document.getElementById('greeting').textContent =
+    h < 12 ? 'Good Morning! 🌸' : h < 17 ? 'Good Afternoon! ☀️' : 'Good Evening! 🌙';
+</script>
+</body>
+</html>
