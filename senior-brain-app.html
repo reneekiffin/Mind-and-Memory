@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mind & Memory</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Fredoka+One&display=swap');
+
+  :root {
+    --bg: #FFF8F0;
+    --card: #FFFFFF;
+    --primary: #E8633A;
+    --secondary: #4A90D9;
+    --green: #4CAF7D;
+    --yellow: #F5C842;
+    --purple: #9B6DD9;
+    --teal: #2BBFA4;
+    --text: #2C2C2C;
+    --subtext: #6B6B6B;
+    --border: #E8DDD0;
+    --shadow: 0 6px 24px rgba(0,0,0,0.12);
+    --radius: 24px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  .screen { display: none; flex-direction: column; min-height: 100vh; }
+  .screen.active { display: flex; }
+
+  /* HOME */
+  #home { background: linear-gradient(160deg, #FFF3E8 0%, #FFF8F0 60%); }
+  .home-header {
+    background: var(--primary); padding: 36px 28px 28px;
+    border-radius: 0 0 40px 40px; color: white; text-align: center;
+  }
+  .home-header .sun { font-size: 56px; margin-bottom: 8px; }
+  .home-header h1 { font-family: 'Fredoka One', cursive; font-size: 36px; letter-spacing: 1px; margin-bottom: 4px; }
+  .home-header p { font-size: 20px; opacity: 0.9; font-weight: 700; }
+  .home-greeting { padding: 24px 24px 8px; font-size: 22px; font-weight: 800; }
+
+  .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 12px 24px 32px; }
+  .game-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 28px 16px; text-align: center;
+    box-shadow: var(--shadow); cursor: pointer;
+    transition: transform 0.15s; border: 3px solid transparent;
+    -webkit-tap-highlight-color: transparent; user-select: none;
+  }
+  .game-card:active { transform: scale(0.96); }
+  .game-card .icon { font-size: 52px; margin-bottom: 12px; }
+  .game-card .game-name { font-family: 'Fredoka One', cursive; font-size: 22px; margin-bottom: 4px; }
+  .game-card .game-desc { font-size: 15px; color: var(--subtext); font-weight: 700; }
+  .game-card.math { border-color: var(--primary); }
+  .game-card.memory { border-color: var(--secondary); }
+  .game-card.word { border-color: var(--green); }
+  .game-card.pattern { border-color: var(--purple); }
+  .game-card.wordle { border-color: var(--teal); grid-column: 1 / -1; flex-direction: row; display: flex; align-items: center; gap: 18px; text-align: left; padding: 22px 24px; }
+  .game-card.wordle .icon { font-size: 52px; margin-bottom: 0; flex-shrink: 0; }
+
+  .back-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: white; border: 3px solid var(--border); border-radius: 50px;
+    padding: 14px 24px; font-size: 20px; font-weight: 800;
+    font-family: 'Nunito', sans-serif; cursor: pointer; color: var(--text);
+    margin: 20px 24px 0; width: fit-content; -webkit-tap-highlight-color: transparent;
+  }
+
+  .game-header { padding: 20px 24px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .game-title { font-family: 'Fredoka One', cursive; font-size: 28px; }
+  .score-badge { background: var(--yellow); border-radius: 50px; padding: 10px 20px; font-size: 20px; font-weight: 900; }
+
+  /* MATH */
+  #math-game { background: linear-gradient(160deg, #FFF0EB 0%, #FFF8F0 70%); }
+  .question-box { margin: 16px 24px; background: white; border-radius: var(--radius); padding: 36px 20px; text-align: center; box-shadow: var(--shadow); border: 3px solid var(--primary); }
+  .question-text { font-family: 'Fredoka One', cursive; font-size: 56px; color: var(--primary); line-height: 1.1; }
+  .question-hint { font-size: 18px; color: var(--subtext); margin-top: 8px; font-weight: 700; }
+  .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 24px; }
+  .answer-btn {
+    background: white; border: 4px solid var(--border); border-radius: 20px; padding: 28px 12px;
+    font-family: 'Fredoka One', cursive; font-size: 44px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; box-shadow: 0 4px 12px rgba(0,0,0,0.08); color: var(--text); transition: transform 0.1s;
+  }
+  .answer-btn:active { transform: scale(0.94); }
+  .answer-btn.correct { background: var(--green); border-color: var(--green); color: white; }
+  .answer-btn.wrong { background: #EF5350; border-color: #EF5350; color: white; }
+
+  .feedback-area { text-align: center; padding: 12px 24px; font-size: 26px; font-weight: 900; min-height: 52px; }
+  .feedback-area.good { color: var(--green); }
+  .feedback-area.bad { color: #EF5350; }
+
+  /* MEMORY */
+  #memory-game { background: linear-gradient(160deg, #EBF3FF 0%, #FFF8F0 70%); }
+  .memory-instruction { margin: 0 24px 12px; background: var(--secondary); color: white; border-radius: 16px; padding: 16px 20px; font-size: 20px; font-weight: 800; text-align: center; }
+  .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 24px; }
+  .mem-card { aspect-ratio: 1; border-radius: 16px; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 36px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); -webkit-tap-highlight-color: transparent; user-select: none; }
+  .mem-card.flipped { background: white; border: 3px solid var(--secondary); }
+  .mem-card.matched { background: var(--green); border: 3px solid var(--green); }
+
+  /* WORD PLAY */
+  #word-game { background: linear-gradient(160deg, #EDFBF2 0%, #FFF8F0 70%); }
+  .word-prompt { margin: 0 24px 16px; background: var(--green); color: white; border-radius: 16px; padding: 16px 20px; font-size: 20px; font-weight: 800; text-align: center; }
+  .letters-display { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; padding: 0 24px 20px; }
+  .letter-tile { width: 64px; height: 64px; background: white; border: 4px solid var(--green); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 34px; color: var(--green); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .word-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 0 24px; }
+  .word-btn { background: white; border: 4px solid var(--border); border-radius: 18px; padding: 22px 10px; font-family: 'Fredoka One', cursive; font-size: 28px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); -webkit-tap-highlight-color: transparent; color: var(--text); transition: transform 0.1s; }
+  .word-btn:active { transform: scale(0.95); }
+  .word-btn.correct { background: var(--green); border-color: var(--green); color: white; }
+  .word-btn.wrong { background: #EF5350; border-color: #EF5350; color: white; }
+
+  /* PATTERN */
+  #pattern-game { background: linear-gradient(160deg, #F3EEFF 0%, #FFF8F0 70%); }
+  .pattern-seq { margin: 0 24px 16px; background: white; border: 3px solid var(--purple); border-radius: var(--radius); padding: 24px; text-align: center; box-shadow: var(--shadow); }
+  .pattern-seq-label { font-size: 18px; color: var(--subtext); font-weight: 800; margin-bottom: 12px; }
+  .pattern-numbers { font-family: 'Fredoka One', cursive; font-size: 48px; color: var(--purple); letter-spacing: 4px; }
+  .pattern-q { font-size: 60px; color: var(--primary); }
+  .pattern-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 24px; }
+  .pattern-btn { background: white; border: 4px solid var(--border); border-radius: 20px; padding: 30px 10px; font-family: 'Fredoka One', cursive; font-size: 42px; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); -webkit-tap-highlight-color: transparent; color: var(--text); transition: transform 0.1s; }
+  .pattern-btn:active { transform: scale(0.95); }
+  .pattern-btn.correct { background: var(--purple); border-color: var(--purple); color: white; }
+  .pattern-btn.wrong { background: #EF5350; border-color: #EF5350; color: white; }
+
+  /* ══ WORD GUESS (WORDLE) ══ */
+  #wordle-game { background: linear-gradient(160deg, #E8F8F6 0%, #FFF8F0 70%); }
+
+  .wordle-banner {
+    margin: 0 24px 12px; background: var(--teal); color: white;
+    border-radius: 18px; padding: 14px 20px;
+    font-size: 19px; font-weight: 800; text-align: center; line-height: 1.4;
+  }
+
+  .wordle-legend {
+    display: flex; gap: 12px; justify-content: center;
+    padding: 0 24px 12px; flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 800; }
+  .legend-box { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: white; font-weight: 900; }
+  .legend-box.green { background: var(--green); }
+  .legend-box.yellow { background: #C9960A; }
+  .legend-box.gray { background: #9E9E9E; }
+
+  .wordle-grid { display: flex; flex-direction: column; gap: 8px; padding: 0 24px 10px; }
+  .wordle-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .wordle-cell {
+    aspect-ratio: 1; border: 4px solid var(--border); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive; font-size: 38px;
+    background: white; color: var(--text);
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.07);
+  }
+  .wordle-cell.active-row { border-color: var(--teal); }
+  .wordle-cell.correct { background: var(--green); border-color: var(--green); color: white; }
+  .wordle-cell.present { background: #C9960A; border-color: #C9960A; color: white; }
+  .wordle-cell.absent { background: #9E9E9E; border-color: #9E9E9E; color: white; }
+
+  .wordle-feedback { text-align: center; padding: 6px 24px 8px; font-size: 22px; font-weight: 900; min-height: 42px; }
+  .wordle-feedback.good { color: var(--green); }
+  .wordle-feedback.bad { color: #EF5350; }
+  .wordle-feedback.hint { color: var(--teal); }
+
+  /* Big keyboard */
+  .wordle-keyboard { padding: 0 10px 24px; display: flex; flex-direction: column; gap: 7px; }
+  .kb-row { display: flex; gap: 5px; justify-content: center; }
+  .kb-key {
+    flex: 1; max-width: 42px; height: 60px;
+    border-radius: 10px; border: 3px solid var(--border); background: white;
+    font-family: 'Fredoka One', cursive; font-size: 22px;
+    cursor: pointer; color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    -webkit-tap-highlight-color: transparent; user-select: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .kb-key:active { transform: scale(0.92); }
+  .kb-key.wide { max-width: 62px; font-size: 17px; flex: 1.5; }
+  .kb-key.correct { background: var(--green); border-color: var(--green); color: white; }
+  .kb-key.present { background: #C9960A; border-color: #C9960A; color: white; }
+  .kb-key.absent { background: #BDBDBD; border-color: #BDBDBD; color: white; }
+
+  /* PROGRESS */
+  .progress-bar-wrap { background: var(--border); border-radius: 50px; height: 12px; margin: 0 24px 16px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--yellow)); border-radius: 50px; transition: width 0.4s ease; }
+
+  /* RESULT */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100; align-items: center; justify-content: center; }
+  .overlay.show { display: flex; }
+  .result-popup { background: white; border-radius: 32px; padding: 40px 32px; text-align: center; width: 88%; max-width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .result-emoji { font-size: 72px; margin-bottom: 12px; }
+  .result-title { font-family: 'Fredoka One', cursive; font-size: 36px; margin-bottom: 8px; }
+  .result-score { font-size: 22px; color: var(--subtext); font-weight: 800; margin-bottom: 28px; }
+  .popup-btn { display: block; width: 100%; background: var(--primary); color: white; border: none; border-radius: 18px; padding: 20px; font-family: 'Fredoka One', cursive; font-size: 24px; cursor: pointer; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(232,99,58,0.35); }
+  .popup-btn.secondary { background: white; border: 3px solid var(--border); color: var(--text); box-shadow: none; }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="home-header">
+    <div class="sun">☀️</div>
+    <h1>Mind & Memory</h1>
+    <p>Daily Brain Exercises</p>
+  </div>
+  <div class="home-greeting" id="greeting">Good Morning! 🌸</div>
+  <div style="padding:4px 24px 16px;font-size:19px;color:var(--subtext);font-weight:700;">Choose a game to play:</div>
+  <div class="game-grid">
+    <div class="game-card math" onclick="startGame('math')">
+      <div class="icon">🔢</div>
+      <div class="game-name">Math Fun</div>
+      <div class="game-desc">Add & Subtract</div>
+    </div>
+    <div class="game-card memory" onclick="startGame('memory')">
+      <div class="icon">🃏</div>
+      <div class="game-name">Memory</div>
+      <div class="game-desc">Match Cards</div>
+    </div>
+    <div class="game-card word" onclick="startGame('word')">
+      <div class="icon">📝</div>
+      <div class="game-name">Word Play</div>
+      <div class="game-desc">Find the Word</div>
+    </div>
+    <div class="game-card pattern" onclick="startGame('pattern')">
+      <div class="icon">🔍</div>
+      <div class="game-name">Patterns</div>
+      <div class="game-desc">What Comes Next?</div>
+    </div>
+    <div class="game-card wordle" onclick="startGame('wordle')">
+      <div class="icon">💬</div>
+      <div>
+        <div class="game-name">Word Guess</div>
+        <div class="game-desc">Guess the 4-letter word — 6 tries!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MATH -->
+<div id="math-game" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--primary)">🔢 Math Fun</div>
+    <div class="score-badge">⭐ <span id="math-score">0</span></div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="math-progress" style="width:0%"></div></div>
+  <div class="question-box">
+    <div class="question-text" id="math-question">5 + 3 = ?</div>
+    <div class="question-hint">Tap the correct answer below</div>
+  </div>
+  <div class="feedback-area" id="math-feedback"></div>
+  <div class="answer-grid" id="math-answers"></div>
+</div>
+
+<!-- MEMORY -->
+<div id="memory-game" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--secondary)">🃏 Memory</div>
+    <div class="score-badge">Pairs: <span id="mem-pairs">0</span>/8</div>
+  </div>
+  <div class="memory-instruction" id="mem-instruction">Tap two cards to find a match!</div>
+  <div class="memory-grid" id="memory-grid"></div>
+</div>
+
+<!-- WORD PLAY -->
+<div id="word-game" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--green)">📝 Word Play</div>
+    <div class="score-badge">⭐ <span id="word-score">0</span></div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="word-progress" style="width:0%"></div></div>
+  <div class="word-prompt" id="word-prompt">Which word can you make?</div>
+  <div class="letters-display" id="letters-display"></div>
+  <div class="word-options" id="word-options"></div>
+  <div class="feedback-area" id="word-feedback"></div>
+</div>
+
+<!-- PATTERN -->
+<div id="pattern-game" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--purple)">🔍 Patterns</div>
+    <div class="score-badge">⭐ <span id="pat-score">0</span></div>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pat-progress" style="width:0%"></div></div>
+  <div class="pattern-seq">
+    <div class="pattern-seq-label">What number comes next?</div>
+    <div class="pattern-numbers" id="pattern-seq-display">2, 4, 6, 8, <span class="pattern-q">?</span></div>
+  </div>
+  <div class="feedback-area" id="pat-feedback"></div>
+  <div class="pattern-options" id="pattern-options"></div>
+</div>
+
+<!-- WORD GUESS (WORDLE) -->
+<div id="wordle-game" class="screen">
+  <button class="back-btn" onclick="goHome()">← Home</button>
+  <div class="game-header">
+    <div class="game-title" style="color:var(--teal)">💬 Word Guess</div>
+    <div class="score-badge">Try <span id="wordle-try">1</span>/6</div>
+  </div>
+  <div class="wordle-banner" id="wordle-banner">Guess the 4-letter word!<br>You have 6 tries 😊</div>
+  <div class="wordle-legend">
+    <div class="legend-item"><div class="legend-box green">A</div> Right spot!</div>
+    <div class="legend-item"><div class="legend-box yellow">B</div> Wrong spot</div>
+    <div class="legend-item"><div class="legend-box gray">C</div> Not in word</div>
+  </div>
+  <div class="wordle-grid" id="wordle-grid"></div>
+  <div class="wordle-feedback" id="wordle-feedback"></div>
+  <div class="wordle-keyboard" id="wordle-keyboard"></div>
+</div>
+
+<!-- RESULT POPUP -->
+<div class="overlay" id="result-overlay">
+  <div class="result-popup">
+    <div class="result-emoji" id="res-emoji">🎉</div>
+    <div class="result-title" id="res-title">Well Done!</div>
+    <div class="result-score" id="res-score">You scored 8 out of 10!</div>
+    <button class="popup-btn" id="res-play-again">Play Again 🔄</button>
+    <button class="popup-btn secondary" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+
+<script>
+// GREETING
+(function(){
+  const h=new Date().getHours();
+  const el=document.getElementById('greeting');
+  if(h<12) el.textContent='Good Morning! 🌸';
+  else if(h<17) el.textContent='Good Afternoon! ☀️';
+  else el.textContent='Good Evening! 🌙';
+})();
+
+let currentGame='';
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+function goHome(){ showScreen('home'); }
+function startGame(game){ currentGame=game; if(game==='math')initMath(); else if(game==='memory')initMemory(); else if(game==='word')initWord(); else if(game==='pattern')initPattern(); else if(game==='wordle')initWordle(); showScreen(game+'-game'); }
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr; }
+
+// ══ MATH ══
+const mathQuestions=[];let mathIdx=0,mathScore=0;const MATH_TOTAL=8;
+function generateMathQuestions(){const q=[];const ops=['+','-'];for(let i=0;i<MATH_TOTAL;i++){const op=ops[Math.floor(Math.random()*ops.length)];let a,b,answer;if(op==='+'){a=Math.floor(Math.random()*20)+1;b=Math.floor(Math.random()*20)+1;answer=a+b;}else{a=Math.floor(Math.random()*20)+10;b=Math.floor(Math.random()*a)+1;answer=a-b;}const choices=[answer];while(choices.length<4){const offset=Math.floor(Math.random()*8)+1;const wrong=Math.random()<0.5?answer+offset:answer-offset;if(!choices.includes(wrong)&&wrong>0)choices.push(wrong);}shuffle(choices);q.push({text:`${a} ${op} ${b} = ?`,answer,choices});}return q;}
+function initMath(){mathIdx=0;mathScore=0;mathQuestions.length=0;mathQuestions.push(...generateMathQuestions());document.getElementById('math-score').textContent=0;renderMathQuestion();}
+function renderMathQuestion(){const q=mathQuestions[mathIdx];document.getElementById('math-question').textContent=q.text;document.getElementById('math-feedback').textContent='';document.getElementById('math-feedback').className='feedback-area';document.getElementById('math-progress').style.width=(mathIdx/MATH_TOTAL*100)+'%';const grid=document.getElementById('math-answers');grid.innerHTML='';q.choices.forEach(c=>{const btn=document.createElement('button');btn.className='answer-btn';btn.textContent=c;btn.onclick=()=>handleMathAnswer(c,btn,q.answer);grid.appendChild(btn);});}
+function handleMathAnswer(chosen,btn,correct){const btns=document.querySelectorAll('.answer-btn');btns.forEach(b=>b.onclick=null);const fb=document.getElementById('math-feedback');if(chosen===correct){btn.classList.add('correct');fb.textContent='✅ Correct! Well done!';fb.className='feedback-area good';mathScore++;document.getElementById('math-score').textContent=mathScore;}else{btn.classList.add('wrong');btns.forEach(b=>{if(parseInt(b.textContent)===correct)b.classList.add('correct');});fb.textContent=`❌ The answer was ${correct}`;fb.className='feedback-area bad';}setTimeout(()=>{mathIdx++;if(mathIdx<MATH_TOTAL)renderMathQuestion();else showResult('math',mathScore,MATH_TOTAL);},1800);}
+
+// ══ MEMORY ══
+const memEmojis=['🍎','🌸','🐶','⭐','🎵','🌈','🐱','🦋'];
+let memFlipped=[],memMatched=0,memLocked=false;
+function initMemory(){memFlipped=[];memMatched=0;memLocked=false;document.getElementById('mem-pairs').textContent='0';document.getElementById('mem-instruction').textContent='Tap two cards to find a match!';const cards=[...memEmojis,...memEmojis];shuffle(cards);const grid=document.getElementById('memory-grid');grid.innerHTML='';cards.forEach((emoji)=>{const card=document.createElement('div');card.className='mem-card';card.dataset.emoji=emoji;card.innerHTML='❓';card.onclick=()=>flipCard(card);grid.appendChild(card);});}
+function flipCard(card){if(memLocked||card.classList.contains('flipped')||card.classList.contains('matched'))return;card.classList.add('flipped');card.innerHTML=card.dataset.emoji;memFlipped.push(card);if(memFlipped.length===2){memLocked=true;const[a,b]=memFlipped;if(a.dataset.emoji===b.dataset.emoji){a.classList.add('matched');b.classList.add('matched');memMatched++;document.getElementById('mem-pairs').textContent=memMatched;document.getElementById('mem-instruction').textContent=memMatched===8?'🎉 All matched!':`Great! Keep going! (${memMatched}/8)`;memFlipped=[];memLocked=false;if(memMatched===8)setTimeout(()=>showResult('memory',8,8),800);}else{document.getElementById('mem-instruction').textContent='Not a match, try again!';setTimeout(()=>{a.classList.remove('flipped');b.classList.remove('flipped');a.innerHTML='❓';b.innerHTML='❓';memFlipped=[];memLocked=false;document.getElementById('mem-instruction').textContent='Tap two cards to find a match!';},1200);}}}
+
+// ══ WORD PLAY ══
+const wordPuzzles=[{letters:'C A T',correct:'CAT',options:['CAT','COT','BAT','CAN']},{letters:'D O G',correct:'DOG',options:['DIG','DOG','LOG','HOG']},{letters:'S U N',correct:'SUN',options:['BUN','RUN','SUN','FUN']},{letters:'H A T',correct:'HAT',options:['MAT','HAT','BAT','FAT']},{letters:'B I R D',correct:'BIRD',options:['BIND','BIRD','BARN','BURN']},{letters:'F R O G',correct:'FROG',options:['FROG','FROM','GROG','FLOG']},{letters:'T R E E',correct:'TREE',options:['FREE','TREE','THEE','TREK']},{letters:'M O O N',correct:'MOON',options:['MOAN','NOON','BOON','MOON']}];
+let wordIdx=0,wordScore=0;const WORD_TOTAL=wordPuzzles.length;
+function initWord(){wordIdx=0;wordScore=0;document.getElementById('word-score').textContent=0;renderWordQuestion();}
+function renderWordQuestion(){const q=wordPuzzles[wordIdx];document.getElementById('word-progress').style.width=(wordIdx/WORD_TOTAL*100)+'%';document.getElementById('word-feedback').textContent='';document.getElementById('word-feedback').className='feedback-area';document.getElementById('word-prompt').textContent='Which word can you make from these letters?';const display=document.getElementById('letters-display');display.innerHTML='';q.letters.split(' ').forEach(l=>{const tile=document.createElement('div');tile.className='letter-tile';tile.textContent=l;display.appendChild(tile);});const optsDiv=document.getElementById('word-options');optsDiv.innerHTML='';const opts=[...q.options];shuffle(opts);opts.forEach(o=>{const btn=document.createElement('button');btn.className='word-btn';btn.textContent=o;btn.onclick=()=>handleWordAnswer(o,btn,q.correct);optsDiv.appendChild(btn);});}
+function handleWordAnswer(chosen,btn,correct){const btns=document.querySelectorAll('.word-btn');btns.forEach(b=>b.onclick=null);const fb=document.getElementById('word-feedback');if(chosen===correct){btn.classList.add('correct');fb.textContent="✅ That's right!";fb.className='feedback-area good';wordScore++;document.getElementById('word-score').textContent=wordScore;}else{btn.classList.add('wrong');btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});fb.textContent=`❌ The word was ${correct}`;fb.className='feedback-area bad';}setTimeout(()=>{wordIdx++;if(wordIdx<WORD_TOTAL)renderWordQuestion();else showResult('word',wordScore,WORD_TOTAL);},1800);}
+
+// ══ PATTERN ══
+function makePattern(){const types=[()=>{const s=Math.floor(Math.random()*3)+1,a=Math.floor(Math.random()*3)+1;return{seq:Array.from({length:4},(_,i)=>a+s*i),answer:a+s*4};},()=>{const a=Math.floor(Math.random()*5)+15,s=Math.floor(Math.random()*2)+1;return{seq:Array.from({length:4},(_,i)=>a-s*i),answer:a-s*4};}];return types[Math.floor(Math.random()*types.length)]();}
+let patIdx=0,patScore=0;const PATTERN_TOTAL=6;let patterns=[];
+function initPattern(){patIdx=0;patScore=0;patterns=[];for(let i=0;i<PATTERN_TOTAL;i++)patterns.push(makePattern());document.getElementById('pat-score').textContent=0;renderPattern();}
+function renderPattern(){const p=patterns[patIdx];document.getElementById('pat-progress').style.width=(patIdx/PATTERN_TOTAL*100)+'%';document.getElementById('pat-feedback').textContent='';document.getElementById('pat-feedback').className='feedback-area';document.getElementById('pattern-seq-display').innerHTML=p.seq.join(', ')+', <span class="pattern-q">?</span>';const opts=[p.answer];while(opts.length<4){const off=Math.floor(Math.random()*6)+1;const wrong=Math.random()<0.5?p.answer+off:p.answer-off;if(!opts.includes(wrong)&&wrong>0)opts.push(wrong);}shuffle(opts);const optsDiv=document.getElementById('pattern-options');optsDiv.innerHTML='';opts.forEach(o=>{const btn=document.createElement('button');btn.className='pattern-btn';btn.textContent=o;btn.onclick=()=>handlePatternAnswer(o,btn,p.answer);optsDiv.appendChild(btn);});}
+function handlePatternAnswer(chosen,btn,correct){const btns=document.querySelectorAll('.pattern-btn');btns.forEach(b=>b.onclick=null);const fb=document.getElementById('pat-feedback');if(chosen===correct){btn.classList.add('correct');fb.textContent='✅ Excellent thinking!';fb.className='feedback-area good';patScore++;document.getElementById('pat-score').textContent=patScore;}else{btn.classList.add('wrong');btns.forEach(b=>{if(parseInt(b.textContent)===correct)b.classList.add('correct');});fb.textContent=`❌ The answer was ${correct}`;fb.className='feedback-area bad';}setTimeout(()=>{patIdx++;if(patIdx<PATTERN_TOTAL)renderPattern();else showResult('pattern',patScore,PATTERN_TOTAL);},1800);}
+
+// ══ WORD GUESS (WORDLE-STYLE) ══
+const WORDLE_WORDS=['CAKE','BIRD','FISH','GATE','LAMP','BOOK','RAIN','TREE','MILK','DOOR','HAND','STAR','WIND','BOAT','BELL','CORN','FROG','GOLD','HILL','KITE','LEAF','MINT','NOSE','PARK','ROSE','SALT','SWIM','TAIL','VINE','WOLF','BARN','CLAY','DRUM','FIRE','GLOW','HIVE','IRON','JADE','KNOT','LIME','MANE','NEST','PINE','REEF','SILK','TOAD','WAND','ARCH','BOLD','CAVE','DUSK','ECHO','FLAP','GRIP','HALO','IRIS','JOLT','KEEN','LARK','MAZE'];
+const KB_ROWS=[['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L'],['⌫','Z','X','C','V','B','N','M','↵']];
+
+let wSecret='',wCurrentRow=0,wCurrentCol=0,wDone=false,wCells=[],wKeyMap={};
+
+function initWordle(){
+  wSecret=WORDLE_WORDS[Math.floor(Math.random()*WORDLE_WORDS.length)];
+  wCurrentRow=0;wCurrentCol=0;wDone=false;
+  document.getElementById('wordle-try').textContent='1';
+  document.getElementById('wordle-feedback').textContent='';
+  document.getElementById('wordle-feedback').className='wordle-feedback';
+  document.getElementById('wordle-banner').innerHTML='Guess the 4-letter word!<br>You have 6 tries 😊';
+  wKeyMap={};
+
+  // Grid
+  const grid=document.getElementById('wordle-grid');
+  grid.innerHTML='';wCells=[];
+  for(let r=0;r<6;r++){
+    const row=document.createElement('div');row.className='wordle-row';wCells[r]=[];
+    for(let c=0;c<4;c++){
+      const cell=document.createElement('div');
+      cell.className='wordle-cell'+(r===0?' active-row':'');
+      row.appendChild(cell);wCells[r][c]=cell;
+    }
+    grid.appendChild(row);
+  }
+
+  // Keyboard
+  const kb=document.getElementById('wordle-keyboard');kb.innerHTML='';
+  KB_ROWS.forEach(row=>{
+    const rowEl=document.createElement('div');rowEl.className='kb-row';
+    row.forEach(k=>{
+      const btn=document.createElement('button');
+      btn.className='kb-key'+(k==='⌫'||k==='↵'?' wide':'');
+      btn.textContent=k;btn.dataset.key=k;
+      btn.onclick=()=>handleKey(k);
+      rowEl.appendChild(btn);
+      if(k!=='⌫'&&k!=='↵') wKeyMap[k]=btn;
+    });
+    kb.appendChild(rowEl);
+  });
+}
+
+function handleKey(k){
+  if(wDone) return;
+  if(k==='⌫'){
+    if(wCurrentCol>0){wCurrentCol--;wCells[wCurrentRow][wCurrentCol].textContent='';}
+  } else if(k==='↵'){
+    submitWordleGuess();
+  } else {
+    if(wCurrentCol<4){wCells[wCurrentRow][wCurrentCol].textContent=k;wCurrentCol++;}
+  }
+}
+
+function submitWordleGuess(){
+  if(wCurrentCol<4){showWF('Please fill in all 4 letters! 😊','hint');return;}
+  const guess=Array.from({length:4},(_,i)=>wCells[wCurrentRow][i].textContent).join('');
+  const result=scoreGuess(guess,wSecret);
+  applyColors(wCurrentRow,result,guess);
+  const won=result.every(r=>r==='correct');
+  wCurrentRow++;
+  document.getElementById('wordle-try').textContent=Math.min(wCurrentRow+1,6);
+  if(won){
+    wDone=true;
+    const msgs=['🎉 Amazing! You got it!','🏆 Brilliant! Well done!','⭐ Wonderful!'];
+    showWF(msgs[Math.floor(Math.random()*msgs.length)],'good');
+    setTimeout(()=>showResult('wordle','win',wCurrentRow),1700);
+  } else if(wCurrentRow===6){
+    wDone=true;
+    showWF(`The word was: ${wSecret} 💪`,'bad');
+    setTimeout(()=>showResult('wordle','lose',0),1900);
+  } else {
+    wCurrentCol=0;
+    wCells[wCurrentRow].forEach(c=>c.classList.add('active-row'));
+    showWF('','');
+  }
+}
+
+function scoreGuess(guess,secret){
+  const result=Array(4).fill('absent');
+  const sArr=secret.split('');const gArr=guess.split('');const used=Array(4).fill(false);
+  for(let i=0;i<4;i++){if(gArr[i]===sArr[i]){result[i]='correct';used[i]=true;}}
+  for(let i=0;i<4;i++){if(result[i]==='correct')continue;for(let j=0;j<4;j++){if(!used[j]&&gArr[i]===sArr[j]){result[i]='present';used[j]=true;break;}}}
+  return result;
+}
+
+function applyColors(row,result,guess){
+  result.forEach((r,i)=>{
+    setTimeout(()=>{
+      const cell=wCells[row][i];cell.classList.remove('active-row');cell.classList.add(r);
+      const btn=wKeyMap[guess[i]];
+      if(btn){
+        if(r==='correct') btn.className='kb-key correct';
+        else if(r==='present'&&!btn.classList.contains('correct')) btn.className='kb-key present';
+        else if(r==='absent'&&!btn.classList.contains('correct')&&!btn.classList.contains('present')) btn.className='kb-key absent';
+      }
+    },i*180);
+  });
+}
+
+function showWF(msg,type){const el=document.getElementById('wordle-feedback');el.textContent=msg;el.className='wordle-feedback'+(type?' '+type:'');}
+
+// ══ RESULT ══
+function showResult(game,score,total){
+  const overlay=document.getElementById('result-overlay');
+  let emoji,title,scoreText;
+  if(game==='wordle'){
+    if(score==='win'){const t=total;emoji=t<=2?'🏆':t<=4?'🎉':'👏';title=t<=2?'Amazing!':t<=4?'Well Done!':'You got it!';scoreText=`You guessed the word in ${t} ${t===1?'try':'tries'}!`;}
+    else{emoji='💪';title='Keep Practicing!';scoreText=`The word was: ${wSecret}. Try again!`;}
+  } else if(game==='memory'){
+    emoji='🏆';title='You Did It!';scoreText='You matched all 8 pairs!';
+  } else {
+    const pct=score/total;
+    if(pct===1){emoji='🏆';title='Perfect Score!';}else if(pct>=0.7){emoji='🎉';title='Well Done!';}else if(pct>=0.5){emoji='👏';title='Good Try!';}else{emoji='💪';title='Keep Practicing!';}
+    scoreText=`You scored ${score} out of ${total}!`;
+  }
+  document.getElementById('res-emoji').textContent=emoji;
+  document.getElementById('res-title').textContent=title;
+  document.getElementById('res-score').textContent=scoreText;
+  document.getElementById('res-play-again').onclick=()=>{overlay.classList.remove('show');startGame(game);};
+  overlay.classList.add('show');
+}
+</script>
+</body>
+</html>
