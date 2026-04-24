@@ -222,9 +222,6 @@ function erasePencil(row, col, num) {
 function togglePencil() {
   pencilMode = !pencilMode;
   setPencilBtn();
-  setStatus(pencilMode
-    ? '✏️ Pencil ON — numbers will appear tiny as "maybe" notes'
-    : '✏️ Pencil OFF — numbers will fill the cell normally');
 }
 
 function setPencilBtn() {
