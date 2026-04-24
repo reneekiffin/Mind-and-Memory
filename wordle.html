@@ -57,14 +57,14 @@
     flex-shrink: 0;         /* does NOT grow — fixed size */
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 4px 16px 4px;
+    gap: 4px;
+    padding: 2px 14px 2px;
   }
   .wordle-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 5px;
-    height: 54px;           /* fixed row height */
+    height: 48px;           /* fixed row height */
   }
   .wordle-cell {
     border: 3px solid #999;
@@ -105,67 +105,66 @@
   #wordle-feedback.bad  { color: #C0180C; }
   #wordle-feedback.hint { color: #007A6E; }
 
-  /* spacer pushes keyboard to bottom */
-  .wordle-spacer { flex: 1; min-height: 4px; }
+  /* small spacer */
+  .wordle-spacer { flex: 1; max-height: 10px; min-height: 2px; }
 
   /* ── KEYBOARD ── */
   #wordle-keyboard {
     flex-shrink: 0;
-    /* Extra bottom padding so bottom row clears iPhone home indicator */
-    padding: 4px 6px 6px;
+    /* Use safe-area so bottom row is always above home indicator */
+    padding: 4px 6px max(env(safe-area-inset-bottom), 10px);
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 5px;
   }
   .kb-row {
     display: flex;
-    gap: 5px;
-    /* Inset from screen edges so corners never clip keys */
+    gap: 4px;
     padding: 0 4px;
   }
   .kb-key {
     flex: 1;
-    height: 58px;
-    border-radius: 12px;
+    /* Shorter keys so all 3 rows + shadow fit on screen */
+    height: 48px;
+    border-radius: 10px;
     border: none;
-    /* Slightly off-white so keys pop against the background */
     background: #FFFFFF;
     font-family: 'Nunito', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     cursor: pointer;
-    /* Very dark text — maximum contrast */
     color: #111;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 5px 0 #A09890, 0 6px 4px rgba(0,0,0,0.18);
+    /* Smaller shadow so total height is shorter */
+    box-shadow: 0 3px 0 #A09890;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     transition: background 0.12s, color 0.12s;
   }
   .kb-key:active {
-    transform: translateY(4px);
-    box-shadow: 0 1px 0 #A09890;
+    transform: translateY(3px);
+    box-shadow: 0 0px 0 #A09890;
   }
 
-  /* ENTER — solid green, big clear text */
+  /* ENTER — solid green */
   .kb-key.enter-key {
     background: #1A7A4A;
     color: #fff;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 900;
     letter-spacing: 1px;
-    box-shadow: 0 5px 0 #0D4A2A;
+    box-shadow: 0 3px 0 #0D4A2A;
   }
-  .kb-key.enter-key:active { box-shadow: 0 1px 0 #0D4A2A; }
+  .kb-key.enter-key:active { box-shadow: 0 0px 0 #0D4A2A; }
 
-  /* DELETE — solid red, clear trash icon */
+  /* DELETE — solid red */
   .kb-key.delete-key {
     background: #C0180C;
     color: #fff;
-    font-size: 20px;
-    box-shadow: 0 5px 0 #8A0A06;
+    font-size: 18px;
+    box-shadow: 0 3px 0 #8A0A06;
   }
-  .kb-key.delete-key:active { box-shadow: 0 1px 0 #8A0A06; }
+  .kb-key.delete-key:active { box-shadow: 0 0px 0 #8A0A06; }
 
   /* Wide keys */
   .kb-key.wide { flex: 1.5; }
@@ -173,15 +172,15 @@
   /* Guessed letter states */
   .kb-key.correct {
     background: #1A7A4A; color: #fff;
-    box-shadow: 0 5px 0 #0D4A2A;
+    box-shadow: 0 3px 0 #0D4A2A;
   }
   .kb-key.present {
     background: #8A6000; color: #fff;
-    box-shadow: 0 5px 0 #5A3E00;
+    box-shadow: 0 3px 0 #5A3E00;
   }
   .kb-key.absent {
     background: #555; color: #fff;
-    box-shadow: 0 5px 0 #222;
+    box-shadow: 0 3px 0 #222;
   }
 </style>
   <link rel="manifest" href="manifest.json">
