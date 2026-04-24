@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Jamaican Proverbs – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg, #FFF9E6, #FFF8F0); overflow-y: auto; }
+
+  /* header banner */
+  .prov-header-banner {
+    margin: 0 24px 14px;
+    background: linear-gradient(135deg, #006400, #FFD700);
+    border-radius: var(--radius); padding: 18px 20px;
+    text-align: center; box-shadow: var(--shadow);
+  }
+  .prov-header-banner .flag { font-size: 40px; margin-bottom: 6px; }
+  .prov-header-banner h2 {
+    font-family: 'Fredoka One', cursive; font-size: 26px;
+    color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    margin-bottom: 4px;
+  }
+  .prov-header-banner p { font-size: 15px; color: #fff; font-weight: 700; opacity: 0.92; }
+
+  /* mode pills */
+  .prov-mode-bar { display: flex; gap: 10px; padding: 0 24px 14px; }
+  .prov-mode-pill {
+    flex: 1; text-align: center; padding: 11px 10px;
+    border-radius: 50px; font-size: 15px; font-weight: 900;
+    cursor: pointer; border: 3px solid #C8920A;
+    color: #C8920A; background: #FFF8E1;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .prov-mode-pill.active { background: #C8920A; color: #fff; }
+
+  /* mode tag */
+  .prov-mode-tag {
+    display: inline-block; background: #006400; color: #FFD700;
+    border-radius: 50px; padding: 5px 16px;
+    font-size: 15px; font-weight: 900; margin: 0 24px 10px;
+  }
+
+  /* proverb display box */
+  .prov-proverb-box {
+    margin: 0 24px 14px; background: #fff;
+    border-radius: var(--radius); padding: 22px 20px;
+    text-align: center; box-shadow: var(--shadow);
+    border: 3px solid #FFD700;
+  }
+  .prov-proverb-label { font-size: 15px; color: var(--subtext); font-weight: 800; margin-bottom: 8px; }
+  .prov-proverb-text  {
+    font-family: 'Fredoka One', cursive; font-size: 24px;
+    color: #006400; line-height: 1.4;
+  }
+
+  /* meaning reveal box */
+  .prov-meaning-box {
+    margin: 0 24px 12px; background: #F0FFF4;
+    border-radius: var(--radius); padding: 16px 18px;
+    border: 3px solid var(--green); box-shadow: var(--shadow);
+  }
+  .prov-meaning-text { font-size: 18px; font-weight: 800; color: #1A5E35; line-height: 1.4; }
+
+  /* answer options */
+  .prov-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 24px; }
+  .prov-btn {
+    background: #fff; border: 4px solid var(--border);
+    border-radius: 16px; padding: 16px 10px;
+    font-family: 'Fredoka One', cursive; font-size: 20px;
+    cursor: pointer; text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    -webkit-tap-highlight-color: transparent; color: var(--text);
+    transition: transform 0.1s; line-height: 1.3;
+  }
+  /* meaning mode — full width single column */
+  .prov-options.meaning-mode { grid-template-columns: 1fr; }
+  .meaning-btn { font-size: 17px; padding: 14px 14px; text-align: left; }
+
+  .prov-btn:active  { transform: scale(0.95); }
+  .prov-btn.correct { background: var(--green); border-color: var(--green); color: #fff; }
+  .prov-btn.wrong   { background: #EF5350; border-color: #EF5350; color: #fff; }
+</style>
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Home</a>
+
+  <div class="game-header">
+    <div class="game-title" style="color:#006400">🇯🇲 Proverbs</div>
+    <div class="score-badge">⭐ <span id="prov-score">0</span> · Q<span id="prov-qnum">1</span></div>
+  </div>
+
+  <!-- Jamaica banner -->
+  <div class="prov-header-banner">
+    <div class="flag">🇯🇲</div>
+    <h2>Jamaican Proverbs</h2>
+    <p>Wi likkle but wi tallawah — test your knowledge of Jamaican wisdom!</p>
+  </div>
+
+  <!-- Mode selector -->
+  <div class="prov-mode-bar">
+    <div class="prov-mode-pill active" data-mode="complete" onclick="setProvMode('complete')">✏️ Complete It</div>
+    <div class="prov-mode-pill"        data-mode="meaning"  onclick="setProvMode('meaning')">🤔 What's It Mean?</div>
+  </div>
+
+  <!-- Mode label -->
+  <div class="prov-mode-tag" id="prov-mode-tag">✏️ Complete the Proverb</div>
+
+  <!-- Proverb display -->
+  <div class="prov-proverb-box">
+    <div class="prov-proverb-label">The Proverb</div>
+    <div class="prov-proverb-text" id="prov-proverb"></div>
+  </div>
+
+  <!-- Meaning reveal (shown after answering) -->
+  <div class="prov-meaning-box" id="prov-meaning-box" style="display:none;">
+    <div class="prov-meaning-text" id="prov-meaning-text"></div>
+  </div>
+
+  <!-- Answer options -->
+  <div class="prov-options" id="prov-options"></div>
+
+  <!-- Feedback -->
+  <div class="feedback-area" id="prov-feedback"></div>
+
+  <script src="games/proverbs.js"></script>
+</body>
+</html>

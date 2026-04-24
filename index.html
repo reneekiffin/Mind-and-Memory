@@ -15,11 +15,11 @@
     color: #fff; text-align: center;
   }
   .home-header .sun { font-size: 56px; margin-bottom: 8px; }
-  .home-header h1 { font-family: 'Fredoka One', cursive; font-size: 36px; letter-spacing: 1px; margin-bottom: 4px; }
-  .home-header p { font-size: 20px; opacity: 0.9; font-weight: 700; }
+  .home-header h1   { font-family: 'Fredoka One', cursive; font-size: 36px; letter-spacing: 1px; margin-bottom: 4px; }
+  .home-header p    { font-size: 20px; opacity: 0.9; font-weight: 700; }
 
   .home-greeting { padding: 24px 24px 8px; font-size: 22px; font-weight: 800; }
-  .home-sub { padding: 4px 24px 16px; font-size: 19px; color: var(--subtext); font-weight: 700; }
+  .home-sub      { padding: 4px 24px 16px; font-size: 19px; color: var(--subtext); font-weight: 700; }
 
   .game-grid {
     display: grid; grid-template-columns: 1fr 1fr;
@@ -34,16 +34,17 @@
     text-decoration: none; color: var(--text); display: block;
   }
   .game-card:active { transform: scale(0.96); }
-  .game-card .icon { font-size: 52px; margin-bottom: 12px; }
+  .game-card .icon      { font-size: 52px; margin-bottom: 12px; }
   .game-card .game-name { font-family: 'Fredoka One', cursive; font-size: 22px; margin-bottom: 4px; }
   .game-card .game-desc { font-size: 15px; color: var(--subtext); font-weight: 700; }
 
-  .game-card.math    { border-color: var(--primary); }
-  .game-card.memory  { border-color: var(--secondary); }
-  .game-card.word    { border-color: var(--green); }
-  .game-card.pattern { border-color: var(--purple); }
-  .game-card.sudoku  { border-color: #C0550D; }
-  .game-card.wordle  {
+  .game-card.math     { border-color: var(--primary); }
+  .game-card.memory   { border-color: var(--secondary); }
+  .game-card.word     { border-color: var(--green); }
+  .game-card.pattern  { border-color: var(--purple); }
+  .game-card.sudoku   { border-color: #C0550D; }
+  .game-card.proverbs { border-color: #006400; }
+  .game-card.wordle   {
     border-color: var(--teal); grid-column: 1 / -1;
     display: flex; align-items: center; gap: 18px;
     text-align: left; padding: 22px 24px;
@@ -88,11 +89,11 @@
     <div class="game-name">Sudoku</div>
     <div class="game-desc">✏️ Pencil marks · Auto-saves!</div>
   </a>
-  <div class="game-card" style="border-color:#ccc;opacity:.4;cursor:default;">
-    <div class="icon">🎯</div>
-    <div class="game-name">More Soon</div>
-    <div class="game-desc">Coming soon!</div>
-  </div>
+  <a class="game-card proverbs" href="proverbs.html">
+    <div class="icon">🇯🇲</div>
+    <div class="game-name">Proverbs</div>
+    <div class="game-desc">Jamaican wisdom & sayings</div>
+  </a>
   <a class="game-card wordle" href="wordle.html">
     <div class="icon">💬</div>
     <div>

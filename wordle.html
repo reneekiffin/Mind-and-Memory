@@ -6,63 +6,163 @@
 <title>Word Guess – Mind & Memory</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  /* Full-screen — keyboard always visible, nothing scrolls */
-  html, body { height:100%; overflow:hidden; }
-  body { background:linear-gradient(160deg,#E8F8F6,#FFF8F0); display:flex; flex-direction:column; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(160deg, #E8F8F6, #FFF8F0);
+  }
 
-  .wordle-top { flex-shrink:0; }
-  .wordle-banner { margin:0 20px 6px; background:var(--teal); color:#fff; border-radius:14px; padding:10px 16px; font-size:17px; font-weight:800; text-align:center; }
-  .wordle-legend { display:flex; gap:10px; justify-content:center; padding:0 16px 6px; }
-  .legend-item { display:flex; align-items:center; gap:5px; font-size:14px; font-weight:800; }
-  .legend-box { width:24px; height:24px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; font-weight:900; }
-  .legend-box.green  { background:var(--green); }
-  .legend-box.yellow { background:#C9960A; }
-  .legend-box.gray   { background:#9E9E9E; }
+  body {
+    display: flex;
+    flex-direction: column;
+    /* safe area for iPhone notch */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
-  /* Grid fills remaining space */
-  .wordle-grid-area { flex:1; display:flex; flex-direction:column; justify-content:center; gap:6px; padding:0 20px; min-height:0; }
-  .wordle-row { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
-  .wordle-cell { aspect-ratio:1; border:3px solid var(--border); border-radius:10px; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:28px; background:#fff; color:var(--text); transition:background .25s,border-color .25s,color .25s; }
-  .wordle-cell.active-row { border-color:var(--teal); }
-  .wordle-cell.correct { background:var(--green); border-color:var(--green); color:#fff; }
-  .wordle-cell.present { background:#C9960A;       border-color:#C9960A;      color:#fff; }
-  .wordle-cell.absent  { background:#9E9E9E;        border-color:#9E9E9E;       color:#fff; }
+  /* ── Top bar — as small as possible ── */
+  .w-top { flex-shrink: 0; }
 
-  .wordle-feedback { flex-shrink:0; text-align:center; padding:3px 16px; font-size:18px; font-weight:900; min-height:30px; }
-  .wordle-feedback.good { color:var(--green); }
-  .wordle-feedback.bad  { color:#EF5350; }
-  .wordle-feedback.hint { color:var(--teal); }
+  .back-btn {
+    margin: 8px 14px 0;
+    padding: 9px 18px;
+    font-size: 17px;
+  }
 
-  /* Keyboard — always at bottom */
-  .wordle-keyboard { flex-shrink:0; padding:4px 8px 12px; display:flex; flex-direction:column; gap:6px; }
-  .kb-row { display:flex; gap:4px; justify-content:center; }
-  .kb-key { flex:1; max-width:38px; height:50px; border-radius:9px; border:3px solid var(--border); background:#fff; font-family:'Fredoka One',cursive; font-size:19px; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,0,0,0.10); -webkit-tap-highlight-color:transparent; user-select:none; }
-  .kb-key:active { transform:scale(.90); }
-  .kb-key.wide   { max-width:54px; font-size:13px; flex:1.45; }
-  .kb-key.correct { background:var(--green); border-color:var(--green); color:#fff; }
-  .kb-key.present { background:#C9960A;       border-color:#C9960A;      color:#fff; }
-  .kb-key.absent  { background:#BDBDBD;       border-color:#BDBDBD;      color:#fff; }
+  .w-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 14px 4px;
+  }
+  .w-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px; color: var(--teal);
+  }
+  .w-badge {
+    background: var(--yellow); border-radius: 50px;
+    padding: 6px 14px; font-size: 17px; font-weight: 900;
+  }
+
+  .w-banner {
+    margin: 4px 14px 3px;
+    background: var(--teal); color: #fff;
+    border-radius: 10px; padding: 7px 12px;
+    font-size: 14px; font-weight: 800; text-align: center;
+  }
+
+  .w-legend {
+    display: flex; gap: 8px; justify-content: center;
+    padding: 2px 14px 4px;
+  }
+  .leg-item { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; }
+  .leg-box  {
+    width: 18px; height: 18px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: #fff; font-weight: 900;
+  }
+  .leg-box.g { background: var(--green); }
+  .leg-box.y { background: #C9960A; }
+  .leg-box.x { background: #9E9E9E; }
+
+  /* ── Grid — takes all leftover space ── */
+  #wordle-grid {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 2px 14px;
+    min-height: 0;   /* critical — lets flex shrink below content size */
+    gap: 4px;
+    overflow: hidden;
+  }
+
+  .wordle-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .wordle-cell {
+    aspect-ratio: 1;
+    border: 3px solid var(--border);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    background: #fff; color: var(--text);
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .wordle-cell.active-row { border-color: var(--teal); }
+  .wordle-cell.correct    { background: var(--green); border-color: var(--green); color: #fff; }
+  .wordle-cell.present    { background: #C9960A;       border-color: #C9960A;      color: #fff; }
+  .wordle-cell.absent     { background: #9E9E9E;        border-color: #9E9E9E;       color: #fff; }
+
+  /* ── Feedback line ── */
+  #wordle-feedback {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 2px 14px;
+    font-size: 15px; font-weight: 900;
+    min-height: 22px;
+  }
+  #wordle-feedback.good { color: var(--green); }
+  #wordle-feedback.bad  { color: #EF5350; }
+  #wordle-feedback.hint { color: var(--teal); }
+
+  /* ── Keyboard — pinned at bottom, never scrolled away ── */
+  #wordle-keyboard {
+    flex-shrink: 0;
+    padding: 3px 5px 8px;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+
+  .kb-row { display: flex; gap: 3px; justify-content: center; }
+
+  .kb-key {
+    flex: 1; max-width: 36px; height: 44px;
+    border-radius: 8px; border: 2px solid var(--border);
+    background: #fff;
+    font-family: 'Fredoka One', cursive; font-size: 17px;
+    cursor: pointer; color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.09);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .kb-key:active { transform: scale(0.89); }
+  .kb-key.wide   { max-width: 50px; font-size: 12px; flex: 1.4; }
+  .kb-key.correct { background: var(--green); border-color: var(--green); color: #fff; }
+  .kb-key.present { background: #C9960A;       border-color: #C9960A;      color: #fff; }
+  .kb-key.absent  { background: #BDBDBD;        border-color: #BDBDBD;       color: #fff; }
 </style>
 </head>
 <body>
-  <div class="wordle-top">
+
+  <!-- TOP: back + header + banner + legend -->
+  <div class="w-top">
     <a class="back-btn" href="index.html">← Home</a>
-    <div class="game-header">
-      <div class="game-title" style="color:var(--teal)">💬 Word Guess</div>
-      <div class="score-badge">Try <span id="wordle-try">1</span>/6</div>
+    <div class="w-header">
+      <div class="w-title">💬 Word Guess</div>
+      <div class="w-badge">Try <span id="wordle-try">1</span>/6</div>
     </div>
-    <div class="wordle-banner">Guess the 5-letter word! You have 6 tries 😊</div>
-    <div class="wordle-legend">
-      <div class="legend-item"><div class="legend-box green">A</div> Right spot!</div>
-      <div class="legend-item"><div class="legend-box yellow">B</div> Wrong spot</div>
-      <div class="legend-item"><div class="legend-box gray">C</div> Not in word</div>
+    <div class="w-banner">Guess the 5-letter word! You have 6 tries 😊</div>
+    <div class="w-legend">
+      <div class="leg-item"><div class="leg-box g">A</div> Right spot!</div>
+      <div class="leg-item"><div class="leg-box y">B</div> Wrong spot</div>
+      <div class="leg-item"><div class="leg-box x">C</div> Not in word</div>
     </div>
   </div>
 
-  <div class="wordle-grid-area" id="wordle-grid"></div>
-  <div class="wordle-feedback" id="wordle-feedback"></div>
-  <div class="wordle-keyboard" id="wordle-keyboard"></div>
+  <!-- GRID: stretches to fill remaining space -->
+  <div id="wordle-grid"></div>
 
+  <!-- FEEDBACK -->
+  <div id="wordle-feedback"></div>
+
+  <!-- KEYBOARD: always at bottom -->
+  <div id="wordle-keyboard"></div>
+
+  <!-- Result popup -->
   <div class="overlay" id="result-overlay">
     <div class="result-popup">
       <div class="result-emoji" id="res-emoji">🎉</div>
