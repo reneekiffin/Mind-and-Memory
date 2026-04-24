@@ -101,6 +101,11 @@
   .game-card.proverbs { border-color: #006400; }
   .game-card.scrabble { border-color: #8B4513; }
 </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#E8633A">
 </head>
 <body>
 
@@ -173,5 +178,10 @@
   document.getElementById('greeting').textContent =
     h < 12 ? 'Good Morning! 🌸' : h < 17 ? 'Good Afternoon! ☀️' : 'Good Evening! 🌙';
 </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
 </body>
 </html>

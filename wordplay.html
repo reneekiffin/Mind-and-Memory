@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <title>Word Play – Mind & Memory</title>
 <link rel="stylesheet" href="style.css">
 <style>
@@ -31,6 +31,11 @@
   .word-btn.correct { background:var(--green); border-color:var(--green); color:#fff; }
   .word-btn.wrong   { background:#EF5350; border-color:#EF5350; color:#fff; }
 </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#E8633A">
 </head>
 <body>
   <a class="back-btn" href="index.html">← Home</a>
@@ -53,5 +58,10 @@
   <div class="word-options" id="word-options"></div>
   <div class="feedback-area" id="word-feedback"></div>
   <script src="games/wordplay.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
 </body>
 </html>

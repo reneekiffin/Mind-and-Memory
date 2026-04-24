@@ -153,6 +153,11 @@
     box-shadow: 0 3px 0 #333; color: #fff;
   }
 </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#E8633A">
 </head>
 <body>
 
@@ -192,5 +197,10 @@
   </div>
 
   <script src="games/wordle.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
 </body>
 </html>

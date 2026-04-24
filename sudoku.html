@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"><title>Sudoku – Mind & Memory</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Sudoku – Mind & Memory</title>
 <link rel="stylesheet" href="style.css">
 <style>
   body { background: linear-gradient(160deg,#FFF5E8,#FFF8F0); overflow-y:auto; }
@@ -121,6 +122,11 @@
   }
   .sudoku-hint-btn:active { transform: scale(.97); }
 </style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#E8633A">
 </head>
 <body>
 
@@ -173,5 +179,10 @@
   </div>
 
   <script src="games/sudoku.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
 </body>
 </html>
