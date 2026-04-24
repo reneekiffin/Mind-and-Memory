@@ -1,17 +1,18 @@
 // games/memory.js
 const memEmojis = ['🍎','🌸','🐶','⭐','🎵','🌈','🐱','🦋'];
-let memFlipped = [], memMatched = 0, memLocked = false;
+let memFlipped = [], memMatched = 0, memLocked = false, memMoves = 0;
 
 function shuffle(a) {
-  for (let i = a.length - 1; i > 0; i--) {
+  const arr = [...a];
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return a;
+  return arr;
 }
 
 function initMemory() {
-  memFlipped = []; memMatched = 0; memLocked = false;
+  memFlipped = []; memMatched = 0; memLocked = false; memMoves = 0;
   document.getElementById('mem-pairs').textContent = '0';
   document.getElementById('mem-instruction').textContent = 'Tap two cards to find a match!';
   const cards = shuffle([...memEmojis, ...memEmojis]);
@@ -34,6 +35,7 @@ function flipCard(card) {
   memFlipped.push(card);
   if (memFlipped.length === 2) {
     memLocked = true;
+    memMoves++;
     const [a, b] = memFlipped;
     if (a.dataset.e === b.dataset.e) {
       a.classList.add('matched'); b.classList.add('matched');
@@ -46,7 +48,7 @@ function flipCard(card) {
         setTimeout(() => {
           document.getElementById('res-emoji').textContent = '🏆';
           document.getElementById('res-title').textContent = 'You Did It!';
-          document.getElementById('res-score').textContent = 'You matched all 8 pairs!';
+          document.getElementById('res-score').textContent = `All 8 pairs matched in ${memMoves} moves!`;
           document.getElementById('result-overlay').classList.add('show');
         }, 700);
       }
