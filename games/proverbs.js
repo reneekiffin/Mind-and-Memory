@@ -195,9 +195,11 @@ function handleProvA(chosen, btn, correct, meaning) {
 
 function setProvMode(mode) {
   provMode = mode;
-  document.querySelectorAll('.prov-mode-pill').forEach(p => {
-    p.classList.toggle('active', p.dataset.mode === mode);
-  });
+  // Green = selected (on), White = not selected (off)
+  document.getElementById('mode-complete').className =
+    'prov-mode-btn ' + (mode === 'complete' ? 'on' : 'off');
+  document.getElementById('mode-meaning').className =
+    'prov-mode-btn ' + (mode === 'meaning' ? 'on' : 'off');
   renderProvQ();
 }
 
