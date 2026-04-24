@@ -44,11 +44,19 @@ function initWordle() {
     rowEl.className = 'kb-row';
     keys.forEach(k => {
       const btn = document.createElement('button');
-      btn.className = 'kb-key' + (k === '⌫' || k === '↵' ? ' wide' : '');
-      btn.textContent = k;
+      if (k === '⌫') {
+        btn.className = 'kb-key wide delete-key';
+        btn.textContent = '⌫';
+      } else if (k === '↵') {
+        btn.className = 'kb-key wide enter-key';
+        btn.textContent = 'ENTER';
+      } else {
+        btn.className = 'kb-key';
+        btn.textContent = k;
+        keyMap[k] = btn;
+      }
       btn.onclick = () => handleKey(k);
       rowEl.appendChild(btn);
-      if (k !== '⌫' && k !== '↵') keyMap[k] = btn;
     });
     kb.appendChild(rowEl);
   });
