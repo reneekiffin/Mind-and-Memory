@@ -9,12 +9,16 @@
   html, body {
     height: 100%;
     overflow: hidden;
-    background: linear-gradient(160deg, #E8F8F6, #FFF8F0);
+    background: #EDF7F6;
   }
   body {
     display: flex;
     flex-direction: column;
-    padding-bottom: max(env(safe-area-inset-bottom), 12px);
+    /* Respect iPhone rounded corners & home indicator on ALL sides */
+    padding-top:    env(safe-area-inset-top);
+    padding-left:   max(env(safe-area-inset-left), 6px);
+    padding-right:  max(env(safe-area-inset-right), 6px);
+    padding-bottom: max(env(safe-area-inset-bottom), 10px);
   }
 
   /* ── TOP: back + header + banner + legend — all compact ── */
@@ -27,21 +31,22 @@
 
   .wordle-banner {
     margin: 3px 14px 3px;
-    background: #007A6E; /* darker teal = better contrast */
+    background: #005A52;
     color: #fff;
     border-radius: 10px; padding: 7px 12px;
     font-size: 14px; font-weight: 900; text-align: center;
+    letter-spacing: 0.2px;
   }
 
   .wordle-legend {
     display: flex; gap: 10px; justify-content: center;
     padding: 2px 14px 3px;
   }
-  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 900; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 14px; font-weight: 900; color: #222; }
   .legend-box  {
-    width: 22px; height: 22px; border-radius: 5px;
+    width: 26px; height: 26px; border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: #fff; font-weight: 900;
+    font-size: 13px; color: #fff; font-weight: 900;
   }
   .legend-box.green  { background: #1A7A4A; } /* dark green */
   .legend-box.yellow { background: #8A6000; } /* dark gold */
@@ -62,15 +67,16 @@
     height: 54px;           /* fixed row height */
   }
   .wordle-cell {
-    border: 3px solid #B0B0B0;
+    border: 3px solid #999;
     border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Fredoka One', cursive;
-    font-size: 28px; font-weight: 900;
-    background: #fff; color: #111;
+    font-size: 30px; font-weight: 900;
+    background: #fff; color: #000;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
     transition: background .25s, border-color .25s, color .25s;
   }
-  .wordle-cell.active-row { border-color: #007A6E; border-width: 3px; }
+  .wordle-cell.active-row { border-color: #005A52; border-width: 3px; }
 
   /* HIGH CONTRAST colour states */
   .wordle-cell.correct {
@@ -102,55 +108,80 @@
   /* spacer pushes keyboard to bottom */
   .wordle-spacer { flex: 1; min-height: 4px; }
 
-  /* ── KEYBOARD — big keys, always visible at bottom ── */
+  /* ── KEYBOARD ── */
   #wordle-keyboard {
     flex-shrink: 0;
-    padding: 4px 4px 6px;
+    /* Extra bottom padding so bottom row clears iPhone home indicator */
+    padding: 4px 6px 6px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
   }
   .kb-row {
-    display: flex; gap: 5px;
-    justify-content: center;
+    display: flex;
+    gap: 5px;
+    /* Inset from screen edges so corners never clip keys */
+    padding: 0 4px;
   }
   .kb-key {
     flex: 1;
-    height: 56px;
-    max-width: 40px;
-    border-radius: 10px;
-    border: 2px solid #B8B0A8;
-    background: #fff;
-    font-family: 'Fredoka One', cursive;
-    font-size: 21px;
+    height: 58px;
+    border-radius: 12px;
+    border: none;
+    /* Slightly off-white so keys pop against the background */
+    background: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
     cursor: pointer;
-    color: #111;             /* very dark for contrast */
+    /* Very dark text — maximum contrast */
+    color: #111;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 3px 0 #999; /* 3D raised look */
+    box-shadow: 0 5px 0 #A09890, 0 6px 4px rgba(0,0,0,0.18);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    font-weight: 900;
+    transition: background 0.12s, color 0.12s;
   }
   .kb-key:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #999;
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #A09890;
   }
-  .kb-key.wide      { max-width: 56px; flex: 1.4; font-size: 14px; }
-  .kb-key.enter-key { background: #E0F4EC; border-color: #1A7A4A; color: #1A7A4A; box-shadow: 0 3px 0 #0e5232; font-size: 13px; }
-  .kb-key.delete-key{ background: #FDE8E4; border-color: #C0180C; color: #C0180C; box-shadow: 0 3px 0 #8a1008; font-size: 19px; }
 
-  /* keyboard colour states — HIGH CONTRAST */
+  /* ENTER — solid green, big clear text */
+  .kb-key.enter-key {
+    background: #1A7A4A;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 0 #0D4A2A;
+  }
+  .kb-key.enter-key:active { box-shadow: 0 1px 0 #0D4A2A; }
+
+  /* DELETE — solid red, clear trash icon */
+  .kb-key.delete-key {
+    background: #C0180C;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0 5px 0 #8A0A06;
+  }
+  .kb-key.delete-key:active { box-shadow: 0 1px 0 #8A0A06; }
+
+  /* Wide keys */
+  .kb-key.wide { flex: 1.5; }
+
+  /* Guessed letter states */
   .kb-key.correct {
-    background: #1A7A4A; border-color: #1A7A4A;
-    box-shadow: 0 3px 0 #0e5232; color: #fff;
+    background: #1A7A4A; color: #fff;
+    box-shadow: 0 5px 0 #0D4A2A;
   }
   .kb-key.present {
-    background: #8A6000; border-color: #8A6000;
-    box-shadow: 0 3px 0 #5a3e00; color: #fff;
+    background: #8A6000; color: #fff;
+    box-shadow: 0 5px 0 #5A3E00;
   }
   .kb-key.absent {
-    background: #555; border-color: #555;
-    box-shadow: 0 3px 0 #333; color: #fff;
+    background: #555; color: #fff;
+    box-shadow: 0 5px 0 #222;
   }
 </style>
   <link rel="manifest" href="manifest.json">
@@ -158,6 +189,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
   <meta name="theme-color" content="#E8633A">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2390DE64'/><text y='78' x='50' text-anchor='middle' font-size='68'>🧠</text></svg>">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
