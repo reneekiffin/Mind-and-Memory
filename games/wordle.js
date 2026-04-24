@@ -46,10 +46,12 @@ function initWordle() {
       const btn = document.createElement('button');
       if (k === '⌫') {
         btn.className = 'kb-key wide delete-key';
-        btn.textContent = '⌫';
+        btn.innerHTML = '&#x232B;'; // ⌫ proper backspace symbol, clear and bold
+        btn.setAttribute('aria-label', 'Delete');
       } else if (k === '↵') {
         btn.className = 'kb-key wide enter-key';
         btn.textContent = 'ENTER';
+        btn.setAttribute('aria-label', 'Enter');
       } else {
         btn.className = 'kb-key';
         btn.textContent = k;
