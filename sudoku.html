@@ -11,42 +11,44 @@
   /* ── Top controls ── */
   .sudoku-controls {
     display: flex; gap: 8px; padding: 0 24px 12px;
-    flex-wrap: wrap; align-items: center;
+    align-items: center;
   }
   .sudoku-level-pill {
-    padding: 10px 20px; border-radius: 50px;
+    flex: 1; padding: 10px 0; border-radius: 50px;
     font-size: 16px; font-weight: 900; cursor: pointer;
     border: 3px solid #C0550D; color: #C0550D;
     background: #FFF3EE; -webkit-tap-highlight-color: transparent;
+    text-align: center;
   }
   .sudoku-level-pill.active { background: #C0550D; color: #fff; }
+
+  /* ── Header right cluster (timer + save tag) ── */
+  .sudoku-header-right {
+    display: flex; align-items: center; gap: 8px;
+  }
   .sudoku-save-tag {
-    margin-left: auto; font-size: 14px; font-weight: 800;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
     color: var(--green); background: #E8F8EF;
-    padding: 6px 14px; border-radius: 50px;
+    padding: 6px 12px; border-radius: 50px;
   }
 
   /* ── Status line ── */
   .sudoku-status {
-    text-align: center; padding: 4px 24px 10px;
-    font-size: 18px; font-weight: 800; color: var(--teal); min-height: 50px;
+    text-align: center; padding: 4px 24px 8px;
+    font-size: 16px; font-weight: 800; color: var(--teal); min-height: 24px;
   }
 
   /* ── Pencil toggle ── */
+  .pencil-toggle-wrap { text-align: center; padding: 0 24px 10px; }
   #pencil-toggle {
-    display: block; width: calc(100% - 48px); margin: 0 24px 14px;
-    background: #fff; border: 3px solid var(--purple);
-    border-radius: 50px; padding: 14px 20px;
-    font-size: 19px; font-weight: 900; color: var(--purple);
+    display: inline-block; width: auto;
+    background: #fff; border: 2px solid var(--purple);
+    border-radius: 50px; padding: 6px 16px;
+    font-size: 14px; font-weight: 800; color: var(--purple);
     cursor: pointer; text-align: center;
     -webkit-tap-highlight-color: transparent;
     transition: background .2s, color .2s;
-    line-height: 1.3;
-    min-height: 78px; box-sizing: border-box;
-  }
-  #pencil-toggle .pencil-explain {
-    font-size: 14px; font-weight: 700; opacity: .85;
-    display: block; margin-top: 3px;
+    line-height: 1.2;
   }
 
   /* ── Board ── */
@@ -135,7 +137,10 @@
 
   <div class="game-header">
     <div class="game-title" style="color:#C0550D">🧩 Sudoku</div>
-    <div class="score-badge" id="sudoku-timer">⏱ 0:00</div>
+    <div class="sudoku-header-right">
+      <span class="sudoku-save-tag" id="sudoku-save-tag">💾 Saved</span>
+      <div class="score-badge" id="sudoku-timer">⏱ 0:00</div>
+    </div>
   </div>
 
   <!-- Level selector -->
@@ -143,17 +148,17 @@
     <span class="sudoku-level-pill active" data-lvl="easy"   onclick="setSudokuLevel('easy')">Easy</span>
     <span class="sudoku-level-pill"        data-lvl="medium" onclick="setSudokuLevel('medium')">Medium</span>
     <span class="sudoku-level-pill"        data-lvl="hard"   onclick="setSudokuLevel('hard')">Hard</span>
-    <span class="sudoku-save-tag" id="sudoku-save-tag">💾 Auto-saved</span>
   </div>
 
   <!-- Status -->
-  <div class="sudoku-status" id="sudoku-status">Tap a cell, then tap a number below</div>
+  <div class="sudoku-status" id="sudoku-status">Tap a cell, then tap a number</div>
 
   <!-- ✏️ Pencil mode toggle -->
-  <button id="pencil-toggle" onclick="togglePencil()">
-    ✏️ Pencil Mode: <strong>OFF</strong>
-    <span class="pencil-explain">Tap to write tiny candidate numbers like a real pencil!</span>
-  </button>
+  <div class="pencil-toggle-wrap">
+    <button id="pencil-toggle" onclick="togglePencil()">
+      ✏️ Pencil: <strong>OFF</strong>
+    </button>
+  </div>
 
   <!-- Board -->
   <div class="sudoku-board-wrap">
