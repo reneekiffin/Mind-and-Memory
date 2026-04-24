@@ -234,12 +234,12 @@ function setPencilBtn() {
     btn.style.background = '#9B6DD9';
     btn.style.color = '#fff';
     btn.style.borderColor = '#9B6DD9';
-    btn.innerHTML = '✏️ Pencil Mode: <strong>ON</strong>';
+    btn.innerHTML = '✏️ Pencil: <strong>ON</strong>';
   } else {
     btn.style.background = '#fff';
     btn.style.color = '#9B6DD9';
     btn.style.borderColor = '#9B6DD9';
-    btn.innerHTML = '✏️ Pencil Mode: <strong>OFF</strong>';
+    btn.innerHTML = '✏️ Pencil: <strong>OFF</strong>';
   }
 }
 
@@ -312,7 +312,7 @@ function startTimer() {
 // ── Status text ───────────────────────────────────────────────
 function setStatus(msg) {
   const el = document.getElementById('sudoku-status');
-  if (el) el.textContent = msg;
+  if (el) el.innerHTML = msg;
 }
 
 // ── Save / Load (localStorage — no account needed) ────────────
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.sudoku-level-pill').forEach(p => {
       p.classList.toggle('active', p.dataset.lvl === sudokuLevel);
     });
-    setStatus('👋 Welcome back! Your game has been restored.');
+    setStatus('👋 Welcome back!<br>Your game has been restored.');
     setPencilBtn();
     buildNumpad();
     drawBoard();
