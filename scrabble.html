@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Word Builder – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg, #FDF6E8, #FFF8F0); overflow-y: auto; }
+
+  /* ── Score bar ── */
+  .scrab-scorebar {
+    display: flex; gap: 10px; padding: 0 24px 12px;
+    align-items: center; flex-wrap: wrap;
+  }
+  .scrab-stat {
+    background: #fff; border-radius: 50px;
+    padding: 8px 18px; font-size: 17px; font-weight: 900;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    border: 3px solid #D4A017;
+    color: #6B4000;
+  }
+  .scrab-stat span { color: #8B4513; }
+
+  /* ── Status message ── */
+  .scrab-status {
+    margin: 0 24px 10px; background: #fff;
+    border-radius: 14px; padding: 12px 18px;
+    font-size: 18px; font-weight: 800; text-align: center;
+    border: 3px solid #D4A017;
+    color: #3A2000; min-height: 52px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  }
+
+  /* ── Word being built ── */
+  .scrab-word-label {
+    padding: 0 24px 6px; font-size: 15px;
+    font-weight: 900; color: var(--subtext);
+  }
+  .scrab-word-area {
+    min-height: 80px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 8px 24px 4px; align-items: center;
+  }
+  .scrab-word-score {
+    padding: 0 24px 8px; font-size: 17px;
+    font-weight: 900; color: #8B4513; min-height: 28px;
+  }
+
+  /* ── Action buttons ── */
+  .scrab-actions {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px; padding: 0 24px 14px;
+  }
+  .scrab-btn {
+    border-radius: 14px; padding: 14px 8px;
+    font-family: 'Fredoka One', cursive; font-size: 17px;
+    cursor: pointer; text-align: center; border: 3px solid;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 3px 0 rgba(0,0,0,.15);
+  }
+  .scrab-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,.15); }
+  .scrab-btn.submit { background: #1A7A4A; border-color: #1A7A4A; color: #fff; }
+  .scrab-btn.clear  { background: #fff; border-color: #C0180C; color: #C0180C; }
+  .scrab-btn.shuffle{ background: #fff; border-color: #8B4513; color: #8B4513; }
+
+  /* ── Rack of tiles ── */
+  .scrab-rack-label { padding: 0 24px 8px; font-size: 15px; font-weight: 900; color: var(--subtext); }
+  .scrab-rack {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 0 24px 14px; justify-content: center;
+  }
+
+  /* ── Tile style — looks like real Scrabble ── */
+  .scrab-tile {
+    width: 60px; height: 68px;
+    background: linear-gradient(160deg, #F5DEB3, #DEB887);
+    border-radius: 10px;
+    border: 2px solid #8B6914;
+    box-shadow: 0 4px 0 #6B4A0A, 0 5px 6px rgba(0,0,0,.25);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: pointer; position: relative;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform .1s, box-shadow .1s;
+  }
+  .scrab-tile:active { transform: translateY(3px); box-shadow: 0 1px 0 #6B4A0A; }
+  .scrab-tile.used {
+    background: linear-gradient(160deg, #C8A882, #A0825A);
+    opacity: 0.5; cursor: default;
+  }
+  .scrab-tile.selected-tile {
+    background: linear-gradient(160deg, #FFE066, #FFC107);
+    border-color: #B8860B;
+    box-shadow: 0 4px 0 #8B6400, 0 5px 10px rgba(255,193,7,.4);
+  }
+  .tile-letter {
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px; font-weight: 900;
+    color: #2C1800; line-height: 1;
+  }
+  .tile-val {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px; font-weight: 900;
+    color: #5A3000; position: absolute;
+    bottom: 4px; right: 6px;
+  }
+
+  /* ── New tiles button ── */
+  .scrab-new-tiles {
+    display: block; margin: 0 24px 14px;
+    background: #8B4513; color: #fff;
+    border: none; border-radius: 50px; padding: 14px;
+    font-family: 'Fredoka One', cursive; font-size: 19px;
+    cursor: pointer; text-align: center;
+    box-shadow: 0 4px 0 #5A2D0A;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .scrab-new-tiles:active { transform: translateY(3px); box-shadow: 0 1px 0 #5A2D0A; }
+
+  /* ── Found words ── */
+  .found-label { padding: 0 24px 8px; font-size: 15px; font-weight: 900; color: var(--subtext); }
+  .scrab-found {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 0 24px 28px;
+  }
+  .found-chip {
+    background: #1A7A4A; color: #fff;
+    border-radius: 50px; padding: 7px 16px;
+    font-size: 16px; font-weight: 900;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  }
+
+  /* ── Help box ── */
+  .scrab-help {
+    margin: 0 24px 16px; background: #FFF9E6;
+    border: 3px solid #D4A017; border-radius: 16px;
+    padding: 14px 18px; font-size: 15px; font-weight: 700;
+    color: #5A3800; line-height: 1.6;
+  }
+  .scrab-help strong { color: #8B4513; }
+</style>
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Home</a>
+  <div class="game-header">
+    <div class="game-title" style="color:#8B4513">🔤 Word Builder</div>
+    <div class="score-badge">⭐ <span id="scrab-score">0</span></div>
+  </div>
+
+  <!-- Score bar -->
+  <div class="scrab-scorebar">
+    <div class="scrab-stat">Round <span id="scrab-round">1</span></div>
+    <div class="scrab-stat">Score: <span id="scrab-score2">0</span></div>
+  </div>
+
+  <!-- How to play -->
+  <div class="scrab-help">
+    🎯 <strong>How to play:</strong> Tap letter tiles to spell a word (3+ letters), then tap <strong>SUBMIT</strong>!
+    Longer words earn bonus points. Tap a selected letter to remove it.
+    <br>📦 <strong>Bonus:</strong> 4 letters = 1.5× · 5+ letters = 2× · All 7 = 3× score!
+  </div>
+
+  <!-- Status -->
+  <div class="scrab-status" id="scrab-status">Tap letters to spell a word!</div>
+
+  <!-- Word being built -->
+  <div class="scrab-word-label">Your word:</div>
+  <div class="scrab-word-area" id="scrab-word"></div>
+  <div class="scrab-word-score" id="scrab-word-score"></div>
+
+  <!-- Action buttons -->
+  <div class="scrab-actions">
+    <button class="scrab-btn submit" onclick="submitWord()">✅ Submit</button>
+    <button class="scrab-btn clear"  onclick="clearWord()">✕ Clear</button>
+    <button class="scrab-btn shuffle" onclick="shuffleRack()">🔀 Mix</button>
+  </div>
+
+  <!-- Tile rack -->
+  <div class="scrab-rack-label">Your tiles — tap to select:</div>
+  <div class="scrab-rack" id="scrab-rack"></div>
+
+  <!-- Get new tiles -->
+  <button class="scrab-new-tiles" onclick="newTiles()">🎲 Get New Tiles</button>
+
+  <!-- Found words this round -->
+  <div class="found-label" id="found-label">Words found this round:</div>
+  <div class="scrab-found" id="scrab-found"></div>
+
+  <script src="games/scrabble.js"></script>
+  <script>
+    // keep both score displays in sync
+    const origScore = document.getElementById('scrab-score');
+    const score2    = document.getElementById('scrab-score2');
+    const observer  = new MutationObserver(() => score2.textContent = origScore.textContent);
+    observer.observe(origScore, { childList: true, characterData: true, subtree: true });
+  </script>
+</body>
+</html>

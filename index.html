@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-  <title>Mind & Memory</title>
+<title>Mind & Memory</title>
 <link rel="stylesheet" href="style.css">
 <style>
   body { background: linear-gradient(160deg, #FFF3E8, #FFF8F0); }
@@ -18,38 +18,88 @@
   .home-header h1   { font-family: 'Fredoka One', cursive; font-size: 36px; letter-spacing: 1px; margin-bottom: 4px; }
   .home-header p    { font-size: 20px; opacity: 0.9; font-weight: 700; }
 
-  .home-greeting { padding: 24px 24px 8px; font-size: 22px; font-weight: 800; }
-  .home-sub      { padding: 4px 24px 16px; font-size: 19px; color: var(--subtext); font-weight: 700; }
+  .home-greeting { padding: 20px 24px 6px; font-size: 22px; font-weight: 800; }
 
+  /* ── Section labels ── */
+  .section-label {
+    padding: 14px 24px 8px;
+    font-size: 15px; font-weight: 900;
+    color: var(--subtext); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Favourites row — full width cards, prominent ── */
+  .favourites-row {
+    display: flex; flex-direction: column;
+    gap: 12px; padding: 0 24px 6px;
+  }
+  .fav-card {
+    display: flex; align-items: center; gap: 16px;
+    background: #fff; border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    text-decoration: none; color: var(--text);
+    border: 3px solid transparent;
+    transition: transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none; position: relative; overflow: hidden;
+  }
+  .fav-card:active { transform: scale(0.97); }
+
+  /* Sudoku — rich orange */
+  .fav-card.sudoku {
+    background: linear-gradient(135deg, #C0550D 0%, #E8633A 100%);
+    border-color: #C0550D;
+  }
+  .fav-card.sudoku .fav-name,
+  .fav-card.sudoku .fav-desc,
+  .fav-card.sudoku .fav-badge { color: #fff; }
+
+  /* Wordle — rich teal */
+  .fav-card.wordle {
+    background: linear-gradient(135deg, #007A6E 0%, #2BBFA4 100%);
+    border-color: #007A6E;
+  }
+  .fav-card.wordle .fav-name,
+  .fav-card.wordle .fav-desc,
+  .fav-card.wordle .fav-badge { color: #fff; }
+
+  .fav-icon  { font-size: 52px; flex-shrink: 0; }
+  .fav-info  { flex: 1; }
+  .fav-name  { font-family: 'Fredoka One', cursive; font-size: 26px; margin-bottom: 3px; }
+  .fav-desc  { font-size: 15px; font-weight: 700; opacity: 0.9; }
+  .fav-badge {
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px; font-weight: 900;
+    background: rgba(255,255,255,0.25);
+    padding: 5px 12px; border-radius: 50px;
+    flex-shrink: 0;
+  }
+
+  /* ── Regular game grid ── */
   .game-grid {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 16px; padding: 12px 24px 32px;
+    gap: 14px; padding: 0 24px 32px;
   }
   .game-card {
     background: #fff; border-radius: var(--radius);
-    padding: 28px 16px; text-align: center;
+    padding: 24px 14px; text-align: center;
     box-shadow: var(--shadow); cursor: pointer;
     transition: transform 0.15s; border: 3px solid transparent;
     -webkit-tap-highlight-color: transparent; user-select: none;
     text-decoration: none; color: var(--text); display: block;
   }
   .game-card:active { transform: scale(0.96); }
-  .game-card .icon      { font-size: 52px; margin-bottom: 12px; }
-  .game-card .game-name { font-family: 'Fredoka One', cursive; font-size: 22px; margin-bottom: 4px; }
-  .game-card .game-desc { font-size: 15px; color: var(--subtext); font-weight: 700; }
+  .game-card .icon      { font-size: 46px; margin-bottom: 10px; }
+  .game-card .game-name { font-family: 'Fredoka One', cursive; font-size: 20px; margin-bottom: 4px; }
+  .game-card .game-desc { font-size: 13px; color: var(--subtext); font-weight: 700; }
 
   .game-card.math     { border-color: var(--primary); }
   .game-card.memory   { border-color: var(--secondary); }
   .game-card.word     { border-color: var(--green); }
   .game-card.pattern  { border-color: var(--purple); }
-  .game-card.sudoku   { border-color: #C0550D; }
   .game-card.proverbs { border-color: #006400; }
-  .game-card.wordle   {
-    border-color: var(--teal); grid-column: 1 / -1;
-    display: flex; align-items: center; gap: 18px;
-    text-align: left; padding: 22px 24px;
-  }
-  .game-card.wordle .icon { font-size: 52px; margin-bottom: 0; flex-shrink: 0; }
+  .game-card.scrabble { border-color: #8B4513; }
 </style>
 </head>
 <body>
@@ -61,8 +111,30 @@
 </div>
 
 <div class="home-greeting" id="greeting">Good Morning! 🌸</div>
-<div class="home-sub">Choose a game to play:</div>
 
+<!-- ── FAVOURITES ── -->
+<div class="section-label">⭐ Favourites</div>
+<div class="favourites-row">
+  <a class="fav-card sudoku" href="sudoku.html">
+    <div class="fav-icon">🧩</div>
+    <div class="fav-info">
+      <div class="fav-name">Sudoku</div>
+      <div class="fav-desc">✏️ Pencil marks · Auto-saves your game</div>
+    </div>
+    <div class="fav-badge">PLAY →</div>
+  </a>
+  <a class="fav-card wordle" href="wordle.html">
+    <div class="fav-icon">💬</div>
+    <div class="fav-info">
+      <div class="fav-name">Word Guess</div>
+      <div class="fav-desc">5-letter Wordle · 6 tries · 600 words</div>
+    </div>
+    <div class="fav-badge">PLAY →</div>
+  </a>
+</div>
+
+<!-- ── ALL GAMES ── -->
+<div class="section-label">🎮 All Games</div>
 <div class="game-grid">
   <a class="game-card math" href="math.html">
     <div class="icon">🔢</div>
@@ -84,22 +156,15 @@
     <div class="game-name">Patterns</div>
     <div class="game-desc">5 Levels · Unlimited</div>
   </a>
-  <a class="game-card sudoku" href="sudoku.html">
-    <div class="icon">🧩</div>
-    <div class="game-name">Sudoku</div>
-    <div class="game-desc">✏️ Pencil marks · Auto-saves!</div>
-  </a>
   <a class="game-card proverbs" href="proverbs.html">
     <div class="icon">🇯🇲</div>
     <div class="game-name">Proverbs</div>
     <div class="game-desc">Jamaican wisdom & sayings</div>
   </a>
-  <a class="game-card wordle" href="wordle.html">
-    <div class="icon">💬</div>
-    <div>
-      <div class="game-name">Word Guess</div>
-      <div class="game-desc">5-letter Wordle · 6 tries · 600 words</div>
-    </div>
+  <a class="game-card scrabble" href="scrabble.html">
+    <div class="icon">🔤</div>
+    <div class="game-name">Word Builder</div>
+    <div class="game-desc">Make words from tiles!</div>
   </a>
 </div>
 
