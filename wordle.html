@@ -15,82 +15,61 @@
   body {
     display: flex;
     flex-direction: column;
-    /* safe area for iPhone notch */
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    /* Push everything up above iOS home indicator */
+    padding-bottom: max(env(safe-area-inset-bottom), 16px);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
-  /* ── Top bar — as small as possible ── */
-  .w-top { flex-shrink: 0; }
+  /* ── Top section ── */
+  .wordle-top { flex-shrink: 0; }
 
   .back-btn {
-    margin: 8px 14px 0;
-    padding: 9px 18px;
+    margin: 10px 16px 0;
+    padding: 10px 18px;
     font-size: 17px;
   }
 
-  .w-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 6px 14px 4px;
-  }
-  .w-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 22px; color: var(--teal);
-  }
-  .w-badge {
-    background: var(--yellow); border-radius: 50px;
-    padding: 6px 14px; font-size: 17px; font-weight: 900;
-  }
+  .game-header  { padding: 6px 16px 4px; }
+  .game-title   { font-size: 22px; }
+  .score-badge  { font-size: 16px; padding: 6px 14px; }
 
-  .w-banner {
-    margin: 4px 14px 3px;
+  .wordle-banner {
+    margin: 4px 16px 4px;
     background: var(--teal); color: #fff;
-    border-radius: 10px; padding: 7px 12px;
+    border-radius: 12px; padding: 7px 14px;
     font-size: 14px; font-weight: 800; text-align: center;
   }
 
-  .w-legend {
+  .wordle-legend {
     display: flex; gap: 8px; justify-content: center;
-    padding: 2px 14px 4px;
+    padding: 2px 16px 4px;
   }
-  .leg-item { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; }
-  .leg-box  {
-    width: 18px; height: 18px; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 9px; color: #fff; font-weight: 900;
-  }
-  .leg-box.g { background: var(--green); }
-  .leg-box.y { background: #C9960A; }
-  .leg-box.x { background: #9E9E9E; }
+  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 800; }
+  .legend-box  { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; font-weight: 900; }
+  .legend-box.green  { background: var(--green); }
+  .legend-box.yellow { background: #C9960A; }
+  .legend-box.gray   { background: #9E9E9E; }
 
-  /* ── Grid — takes all leftover space ── */
+  /* ── Grid — fills middle space ── */
   #wordle-grid {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 2px 14px;
-    min-height: 0;   /* critical — lets flex shrink below content size */
+    padding: 2px 20px;
+    min-height: 0;
     gap: 4px;
-    overflow: hidden;
   }
-
-  .wordle-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-    flex-shrink: 0;
-  }
-
+  .wordle-row  { display: grid; grid-template-columns: repeat(5,1fr); gap: 5px; }
   .wordle-cell {
     aspect-ratio: 1;
     border: 3px solid var(--border);
-    border-radius: 9px;
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Fredoka One', cursive;
-    font-size: 22px;
+    font-family: 'Fredoka One', cursive; font-size: 26px;
     background: #fff; color: var(--text);
-    transition: background .2s, border-color .2s, color .2s;
+    transition: background .25s, border-color .25s, color .25s;
   }
   .wordle-cell.active-row { border-color: var(--teal); }
   .wordle-cell.correct    { background: var(--green); border-color: var(--green); color: #fff; }
@@ -100,69 +79,110 @@
   /* ── Feedback line ── */
   #wordle-feedback {
     flex-shrink: 0;
-    text-align: center;
-    padding: 2px 14px;
-    font-size: 15px; font-weight: 900;
-    min-height: 22px;
+    text-align: center; padding: 2px 16px;
+    font-size: 15px; font-weight: 900; min-height: 24px;
   }
   #wordle-feedback.good { color: var(--green); }
   #wordle-feedback.bad  { color: #EF5350; }
   #wordle-feedback.hint { color: var(--teal); }
 
-  /* ── Keyboard — pinned at bottom, never scrolled away ── */
+  /* ── Keyboard — BIG keys for seniors, safe above iOS bar ── */
   #wordle-keyboard {
     flex-shrink: 0;
-    padding: 3px 5px 8px;
-    display: flex; flex-direction: column; gap: 5px;
+    padding: 4px 4px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .kb-row { display: flex; gap: 3px; justify-content: center; }
+  .kb-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    padding: 0 2px;
+  }
 
   .kb-key {
-    flex: 1; max-width: 36px; height: 44px;
-    border-radius: 8px; border: 2px solid var(--border);
+    flex: 1;
+    /* Large minimum height so grandfather can tap easily */
+    height: 58px;
+    max-width: 42px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
     background: #fff;
-    font-family: 'Fredoka One', cursive; font-size: 17px;
-    cursor: pointer; color: var(--text);
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.09);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+    /* Give each key a slight 3D raised look */
+    border-bottom: 4px solid #c8c0b4;
   }
-  .kb-key:active { transform: scale(0.89); }
-  .kb-key.wide   { max-width: 50px; font-size: 12px; flex: 1.4; }
-  .kb-key.correct { background: var(--green); border-color: var(--green); color: #fff; }
-  .kb-key.present { background: #C9960A;       border-color: #C9960A;      color: #fff; }
-  .kb-key.absent  { background: #BDBDBD;        border-color: #BDBDBD;       color: #fff; }
+  .kb-key:active {
+    transform: scale(0.92);
+    border-bottom: 2px solid #c8c0b4;
+  }
+
+  /* ⌫ and ↵ are wider */
+  .kb-key.wide {
+    max-width: 58px;
+    font-size: 16px;
+    flex: 1.4;
+    /* Make Enter stand out with a green tint */
+  }
+  .kb-key.enter-key {
+    background: #E8F8EF;
+    border-color: var(--green);
+    border-bottom-color: #2e8a57;
+    color: var(--green);
+    font-size: 18px;
+  }
+  .kb-key.delete-key {
+    background: #FFF0EB;
+    border-color: #E8633A;
+    border-bottom-color: #b04a28;
+    color: #E8633A;
+    font-size: 20px;
+  }
+
+  /* Colour states after guessing */
+  .kb-key.correct {
+    background: var(--green); border-color: var(--green);
+    border-bottom-color: #2e8a57; color: #fff;
+  }
+  .kb-key.present {
+    background: #C9960A; border-color: #C9960A;
+    border-bottom-color: #8a650a; color: #fff;
+  }
+  .kb-key.absent {
+    background: #BDBDBD; border-color: #BDBDBD;
+    border-bottom-color: #888; color: #fff;
+  }
 </style>
 </head>
 <body>
 
-  <!-- TOP: back + header + banner + legend -->
-  <div class="w-top">
+  <div class="wordle-top">
     <a class="back-btn" href="index.html">← Home</a>
-    <div class="w-header">
-      <div class="w-title">💬 Word Guess</div>
-      <div class="w-badge">Try <span id="wordle-try">1</span>/6</div>
+    <div class="game-header">
+      <div class="game-title" style="color:var(--teal)">💬 Word Guess</div>
+      <div class="score-badge">Try <span id="wordle-try">1</span>/6</div>
     </div>
-    <div class="w-banner">Guess the 5-letter word! You have 6 tries 😊</div>
-    <div class="w-legend">
-      <div class="leg-item"><div class="leg-box g">A</div> Right spot!</div>
-      <div class="leg-item"><div class="leg-box y">B</div> Wrong spot</div>
-      <div class="leg-item"><div class="leg-box x">C</div> Not in word</div>
+    <div class="wordle-banner">Guess the 5-letter word! You have 6 tries 😊</div>
+    <div class="wordle-legend">
+      <div class="legend-item"><div class="legend-box green">A</div> Right spot!</div>
+      <div class="legend-item"><div class="legend-box yellow">B</div> Wrong spot</div>
+      <div class="legend-item"><div class="legend-box gray">C</div> Not in word</div>
     </div>
   </div>
 
-  <!-- GRID: stretches to fill remaining space -->
   <div id="wordle-grid"></div>
-
-  <!-- FEEDBACK -->
   <div id="wordle-feedback"></div>
-
-  <!-- KEYBOARD: always at bottom -->
   <div id="wordle-keyboard"></div>
 
-  <!-- Result popup -->
   <div class="overlay" id="result-overlay">
     <div class="result-popup">
       <div class="result-emoji" id="res-emoji">🎉</div>
