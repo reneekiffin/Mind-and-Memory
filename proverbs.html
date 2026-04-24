@@ -5,121 +5,201 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 <title>Jamaican Proverbs – Mind & Memory</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+<meta name="theme-color" content="#E8633A">
 <style>
-  body { background: linear-gradient(160deg, #FFF9E6, #FFF8F0); overflow-y: auto; }
-
-  /* header banner */
-  .prov-header-banner {
-    margin: 0 24px 14px;
-    background: linear-gradient(135deg, #006400, #FFD700);
-    border-radius: var(--radius); padding: 18px 20px;
-    text-align: center; box-shadow: var(--shadow);
+  body {
+    background: #FFFBF0;
+    overflow-y: auto;
   }
-  .prov-header-banner .flag { font-size: 40px; margin-bottom: 6px; }
-  .prov-header-banner h2 {
-    font-family: 'Fredoka One', cursive; font-size: 26px;
-    color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-    margin-bottom: 4px;
-  }
-  .prov-header-banner p { font-size: 15px; color: #fff; font-weight: 700; opacity: 0.92; }
 
-  /* mode pills */
-  .prov-mode-bar { display: flex; gap: 10px; padding: 0 24px 14px; }
-  .prov-mode-pill {
-    flex: 1; text-align: center; padding: 11px 10px;
-    border-radius: 50px; font-size: 15px; font-weight: 900;
-    cursor: pointer; border: 3px solid #C8920A;
-    color: #C8920A; background: #FFF8E1;
+  /* ── Header ── */
+  .prov-header {
+    background: linear-gradient(135deg, #006400 0%, #228B22 60%, #DAA520 100%);
+    margin: 0 20px 16px;
+    border-radius: 20px;
+    padding: 18px 20px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .prov-header .flag { font-size: 36px; margin-bottom: 6px; }
+  .prov-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px; color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 2px;
+  }
+  .prov-header p {
+    font-size: 14px; color: rgba(255,255,255,0.9);
+    font-weight: 700;
+  }
+
+  /* ── Score row ── */
+  .prov-score-row {
+    display: flex; justify-content: space-between;
+    align-items: center; padding: 0 20px 12px;
+  }
+  .prov-score-badge {
+    background: var(--yellow); border-radius: 50px;
+    padding: 8px 18px; font-size: 18px; font-weight: 900;
+  }
+  .prov-q-badge {
+    background: #fff; border: 3px solid var(--border);
+    border-radius: 50px; padding: 8px 18px;
+    font-size: 18px; font-weight: 900; color: var(--subtext);
+  }
+
+  /* ── Mode toggle — two big clear buttons ── */
+  .prov-mode-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; padding: 0 20px 14px;
+  }
+  .prov-mode-btn {
+    padding: 14px 10px;
+    border-radius: 16px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    border: 3px solid #006400;
     -webkit-tap-highlight-color: transparent;
+    transition: all 0.15s;
   }
-  .prov-mode-pill.active { background: #C8920A; color: #fff; }
+  /* OFF state — white bg, dark green text */
+  .prov-mode-btn.off {
+    background: #fff;
+    color: #006400;
+  }
+  /* ON state — solid green, white text */
+  .prov-mode-btn.on {
+    background: #006400;
+    color: #fff;
+    box-shadow: 0 4px 0 #003D00;
+  }
+  .prov-mode-btn:active { transform: scale(0.96); }
 
-  /* mode tag */
-  .prov-mode-tag {
-    display: inline-block; background: #006400; color: #FFD700;
-    border-radius: 50px; padding: 5px 16px;
-    font-size: 15px; font-weight: 900; margin: 0 24px 10px;
+  /* ── Proverb display box ── */
+  .prov-box {
+    margin: 0 20px 14px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 3px solid #DAA520;
+    min-height: 110px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .prov-box-label {
+    font-size: 13px; color: var(--subtext);
+    font-weight: 900; margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .prov-box-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px; color: #006400;
+    line-height: 1.4;
   }
 
-  /* proverb display box */
-  .prov-proverb-box {
-    margin: 0 24px 14px; background: #fff;
-    border-radius: var(--radius); padding: 22px 20px;
-    text-align: center; box-shadow: var(--shadow);
-    border: 3px solid #FFD700;
-  }
-  .prov-proverb-label { font-size: 15px; color: var(--subtext); font-weight: 800; margin-bottom: 8px; }
-  .prov-proverb-text  {
-    font-family: 'Fredoka One', cursive; font-size: 24px;
-    color: #006400; line-height: 1.4;
-  }
-
-  /* meaning reveal box */
+  /* ── Meaning reveal ── */
   .prov-meaning-box {
-    margin: 0 24px 12px; background: #F0FFF4;
-    border-radius: var(--radius); padding: 16px 18px;
-    border: 3px solid var(--green); box-shadow: var(--shadow);
+    margin: 0 20px 12px;
+    background: #F0FFF4;
+    border-radius: 16px;
+    padding: 14px 18px;
+    border: 3px solid #006400;
   }
-  .prov-meaning-text { font-size: 18px; font-weight: 800; color: #1A5E35; line-height: 1.4; }
+  .prov-meaning-text {
+    font-size: 17px; font-weight: 800;
+    color: #004A00; line-height: 1.5;
+    text-align: center;
+  }
 
-  /* answer options */
-  .prov-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 24px; }
+  /* ── Answer options ── */
+  /* Complete mode — 2 columns */
+  .prov-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px; padding: 0 20px;
+  }
+  /* Meaning mode — 1 column (text is longer) */
+  .prov-options.meaning-mode {
+    grid-template-columns: 1fr;
+  }
   .prov-btn {
-    background: #fff; border: 4px solid var(--border);
-    border-radius: 16px; padding: 16px 10px;
-    font-family: 'Fredoka One', cursive; font-size: 20px;
-    cursor: pointer; text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    -webkit-tap-highlight-color: transparent; color: var(--text);
-    transition: transform 0.1s; line-height: 1.3;
+    background: #fff;
+    border: 3px solid #D0C8C0;
+    border-radius: 16px;
+    padding: 18px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 3px 0 #B8B0A8;
+    -webkit-tap-highlight-color: transparent;
+    color: #111;
+    line-height: 1.3;
+    transition: transform 0.1s;
   }
-  /* meaning mode — full width single column */
-  .prov-options.meaning-mode { grid-template-columns: 1fr; }
-  .meaning-btn { font-size: 17px; padding: 14px 14px; text-align: left; }
+  .prov-btn:active { transform: scale(0.96); box-shadow: 0 1px 0 #B8B0A8; }
+  .prov-btn.correct {
+    background: #006400; border-color: #006400;
+    color: #fff; box-shadow: 0 3px 0 #003D00;
+  }
+  .prov-btn.wrong {
+    background: #C0180C; border-color: #C0180C;
+    color: #fff; box-shadow: 0 3px 0 #8A0A06;
+  }
 
-  .prov-btn:active  { transform: scale(0.95); }
-  .prov-btn.correct { background: var(--green); border-color: var(--green); color: #fff; }
-  .prov-btn.wrong   { background: #EF5350; border-color: #EF5350; color: #fff; }
+  /* ── Feedback ── */
+  .prov-feedback {
+    text-align: center; padding: 10px 20px 6px;
+    font-size: 22px; font-weight: 900; min-height: 48px;
+  }
+  .prov-feedback.good { color: #006400; }
+  .prov-feedback.bad  { color: #C0180C; }
 </style>
-  <link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
-  <meta name="theme-color" content="#E8633A">
 </head>
 <body>
 
   <a class="back-btn" href="index.html">← Home</a>
 
-  <div class="game-header">
-    <div class="game-title" style="color:#006400">🇯🇲 Proverbs</div>
-    <div class="score-badge">⭐ <span id="prov-score">0</span> · Q<span id="prov-qnum">1</span></div>
+  <!-- Score row -->
+  <div class="prov-score-row">
+    <div class="prov-score-badge">⭐ <span id="prov-score">0</span></div>
+    <div class="prov-q-badge">Q <span id="prov-qnum">1</span></div>
   </div>
 
-  <!-- Jamaica banner -->
-  <div class="prov-header-banner">
+  <!-- Jamaica header -->
+  <div class="prov-header">
     <div class="flag">🇯🇲</div>
     <h2>Jamaican Proverbs</h2>
-    <p>Wi likkle but wi tallawah — test your knowledge of Jamaican wisdom!</p>
+    <p>Wi likkle but wi tallawah!</p>
   </div>
 
-  <!-- Mode selector -->
-  <div class="prov-mode-bar">
-    <div class="prov-mode-pill active" data-mode="complete" onclick="setProvMode('complete')">✏️ Complete It</div>
-    <div class="prov-mode-pill"        data-mode="meaning"  onclick="setProvMode('meaning')">🤔 What's It Mean?</div>
+  <!-- Mode toggle — simple, clear -->
+  <div class="prov-mode-row">
+    <button class="prov-mode-btn on" id="mode-complete" onclick="setProvMode('complete')">
+      ✏️ Complete It
+    </button>
+    <button class="prov-mode-btn off" id="mode-meaning" onclick="setProvMode('meaning')">
+      🤔 What's It Mean?
+    </button>
   </div>
-
-  <!-- Mode label -->
-  <div class="prov-mode-tag" id="prov-mode-tag">✏️ Complete the Proverb</div>
 
   <!-- Proverb display -->
-  <div class="prov-proverb-box">
-    <div class="prov-proverb-label">The Proverb</div>
-    <div class="prov-proverb-text" id="prov-proverb"></div>
+  <div class="prov-box">
+    <div class="prov-box-label">The Proverb</div>
+    <div class="prov-box-text" id="prov-proverb"></div>
   </div>
 
   <!-- Meaning reveal (shown after answering) -->
-  <div class="prov-meaning-box" id="prov-meaning-box" style="display:none;">
+  <div class="prov-meaning-box" id="prov-meaning-box" style="display:none">
     <div class="prov-meaning-text" id="prov-meaning-text"></div>
   </div>
 
@@ -127,7 +207,7 @@
   <div class="prov-options" id="prov-options"></div>
 
   <!-- Feedback -->
-  <div class="feedback-area" id="prov-feedback"></div>
+  <div class="prov-feedback" id="prov-feedback"></div>
 
   <script src="games/proverbs.js"></script>
   <script>
