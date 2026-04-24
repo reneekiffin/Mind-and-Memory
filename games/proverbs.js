@@ -120,10 +120,10 @@ const PROVERBS = [
 // ── Render question ───────────────────────────────────────────
 function renderProvQ() {
   provQ++;
-  document.getElementById('prov-score').textContent = provScore;
-  document.getElementById('prov-qnum').textContent  = provQ;
+  document.getElementById('prov-score').textContent  = provScore;
+  document.getElementById('prov-qnum').textContent   = provQ;
   document.getElementById('prov-feedback').textContent = '';
-  document.getElementById('prov-feedback').className = 'feedback-area';
+  document.getElementById('prov-feedback').className = 'prov-feedback';
   document.getElementById('prov-meaning-box').style.display = 'none';
 
   const q = PROVERBS[rnd(0, PROVERBS.length - 1)];
@@ -136,8 +136,7 @@ function renderProvQ() {
 }
 
 function renderCompleteQ(q) {
-  document.getElementById('prov-mode-tag').textContent = '✏️ Complete the Proverb';
-  document.getElementById('prov-proverb').textContent  = q.complete.blank;
+  document.getElementById('prov-proverb').textContent = q.complete.blank;
   const opts = shuffle(q.complete.choices);
   const grid = document.getElementById('prov-options');
   grid.className = 'prov-options';
@@ -152,8 +151,7 @@ function renderCompleteQ(q) {
 }
 
 function renderMeaningQ(q) {
-  document.getElementById('prov-mode-tag').textContent = '🤔 What does it mean?';
-  document.getElementById('prov-proverb').textContent  = q.proverb;
+  document.getElementById('prov-proverb').textContent = q.proverb;
   const others = PROVERBS.filter(p => p.proverb !== q.proverb);
   const distractors = shuffle(others).slice(0, 3).map(p => p.meaning);
   const opts = shuffle([q.meaning, ...distractors]);
@@ -175,7 +173,7 @@ function handleProvA(chosen, btn, correct, meaning) {
   if (chosen === correct) {
     btn.classList.add('correct');
     fb.textContent = '✅ Well done!';
-    fb.className = 'feedback-area good';
+    fb.className = 'prov-feedback good';
     provScore++;
     document.getElementById('prov-score').textContent = provScore;
   } else {
@@ -184,7 +182,7 @@ function handleProvA(chosen, btn, correct, meaning) {
       if (b.textContent === correct) b.classList.add('correct');
     });
     fb.textContent = '❌ Not quite — keep trying!';
-    fb.className = 'feedback-area bad';
+    fb.className = 'prov-feedback bad';
   }
   if (meaning) {
     document.getElementById('prov-meaning-text').textContent = '💡 ' + meaning;
