@@ -234,12 +234,12 @@ function setPencilBtn() {
     btn.style.background = '#9B6DD9';
     btn.style.color = '#fff';
     btn.style.borderColor = '#9B6DD9';
-    btn.innerHTML = '✏️ Pencil Mode: <strong>ON</strong><span class="pencil-explain">Numbers appear tiny as "maybe" notes</span>';
+    btn.innerHTML = '✏️ Pencil Mode: <strong>ON</strong>';
   } else {
     btn.style.background = '#fff';
     btn.style.color = '#9B6DD9';
     btn.style.borderColor = '#9B6DD9';
-    btn.innerHTML = '✏️ Pencil Mode: <strong>OFF</strong><span class="pencil-explain">Tap to write tiny candidate numbers</span>';
+    btn.innerHTML = '✏️ Pencil Mode: <strong>OFF</strong>';
   }
 }
 
