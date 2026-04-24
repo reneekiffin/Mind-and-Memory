@@ -16,24 +16,24 @@
     overflow-y: auto;
   }
 
-  /* ── Header ── */
+  /* ── Header — compact ── */
   .prov-header {
     background: linear-gradient(135deg, #006400 0%, #228B22 60%, #DAA520 100%);
-    margin: 0 20px 16px;
-    border-radius: 20px;
-    padding: 18px 20px 16px;
-    text-align: center;
+    margin: 0 20px 12px;
+    border-radius: 16px;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
     box-shadow: var(--shadow);
   }
-  .prov-header .flag { font-size: 36px; margin-bottom: 6px; }
+  .prov-header .flag { font-size: 28px; flex-shrink: 0; }
   .prov-header h2 {
     font-family: 'Fredoka One', cursive;
-    font-size: 28px; color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    margin-bottom: 2px;
+    font-size: 20px; color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    margin-bottom: 0;
   }
   .prov-header p {
-    font-size: 14px; color: rgba(255,255,255,0.9);
+    font-size: 12px; color: rgba(255,255,255,0.85);
     font-weight: 700;
   }
 
@@ -58,10 +58,10 @@
     gap: 10px; padding: 0 20px 14px;
   }
   .prov-mode-btn {
-    padding: 14px 10px;
-    border-radius: 16px;
+    padding: 11px 10px;
+    border-radius: 14px;
     font-family: 'Fredoka One', cursive;
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer;
     text-align: center;
     border: 3px solid #006400;
@@ -175,11 +175,13 @@
     <div class="prov-q-badge">Q <span id="prov-qnum">1</span></div>
   </div>
 
-  <!-- Jamaica header -->
+  <!-- Jamaica header — compact horizontal -->
   <div class="prov-header">
     <div class="flag">🇯🇲</div>
-    <h2>Jamaican Proverbs</h2>
-    <p>Wi likkle but wi tallawah!</p>
+    <div>
+      <h2>Jamaican Proverbs</h2>
+      <p>Wi likkle but wi tallawah!</p>
+    </div>
   </div>
 
   <!-- Mode toggle — simple, clear -->
