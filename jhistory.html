@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Jamaican History – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg,#FFF5E0,#FFF8F0); overflow-y:auto; }
+
+  .jh-banner {
+    margin: 0 24px 14px; border-radius: 16px;
+    padding: 14px 20px; font-size: 18px; font-weight: 800;
+    text-align: center; color: #fff; background: #006400;
+    line-height: 1.3;
+  }
+
+  .jh-question {
+    margin: 0 24px 14px; background: #fff;
+    border: 3px solid #006400; border-radius: var(--radius);
+    padding: 20px 18px; box-shadow: var(--shadow);
+  }
+  .jh-era {
+    font-size: 13px; font-weight: 900; letter-spacing: 1px;
+    color: #C9A100; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .jh-q-text {
+    font-family: 'Fredoka One', cursive; font-size: 22px;
+    color: var(--text); line-height: 1.3;
+  }
+
+  .jh-options {
+    display: grid; grid-template-columns: 1fr;
+    gap: 10px; padding: 0 24px;
+  }
+  .jh-btn {
+    background: #fff; border: 3px solid var(--border);
+    border-radius: 16px; padding: 14px 16px;
+    font-size: 17px; font-weight: 800; color: var(--text);
+    cursor: pointer; text-align: left;
+    box-shadow: 0 3px 8px rgba(0,0,0,.08);
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.3;
+  }
+  .jh-btn:active { transform: scale(.97); }
+  .jh-btn.correct { background: #006400; color: #fff; border-color: #006400; }
+  .jh-btn.wrong   { background: #EF5350; color: #fff; border-color: #EF5350; }
+
+  .jh-feedback {
+    margin: 14px 24px 0; text-align: center;
+    font-size: 18px; font-weight: 900; min-height: 26px;
+  }
+  .jh-feedback.good { color: var(--green); }
+  .jh-feedback.bad  { color: #EF5350; }
+
+  .jh-fact-box {
+    margin: 12px 24px 18px; background: #FFF8E0;
+    border: 3px solid #C9A100; border-radius: 16px;
+    padding: 14px 18px; display: none;
+  }
+  .jh-fact-label { font-size: 13px; font-weight: 900; color: #C9A100; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .jh-fact-text  { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4; }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#006400">
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Home</a>
+
+  <div class="game-header">
+    <div class="game-title" style="color:#006400">🇯🇲 Jamaican History</div>
+    <div class="score-badge">⭐ <span id="jh-score">0</span> · Q<span id="jh-qnum">1</span></div>
+  </div>
+
+  <div class="jh-banner">Jamaica from 1935 to 2012 — read the question and choose the best answer!</div>
+
+  <div class="jh-question">
+    <div class="jh-era" id="jh-era"></div>
+    <div class="jh-q-text" id="jh-question"></div>
+  </div>
+
+  <div class="jh-options" id="jh-options"></div>
+
+  <div class="jh-feedback" id="jh-feedback"></div>
+
+  <div class="jh-fact-box" id="jh-fact-box">
+    <div class="jh-fact-label">📖 Did you know?</div>
+    <div class="jh-fact-text" id="jh-fact-text"></div>
+  </div>
+
+  <script src="games/jhistory.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
+</body>
+</html>
