@@ -61,10 +61,12 @@ function flipDie(d) {
 
 function applyDieTransforms() {
   const cubes = document.querySelectorAll('.die');
+  // Only highlight dice green once the entire row matches the target —
+  // per-die feedback would leak which dice are already correct.
+  const allMatch = dieIndex.every((v, i) => v === target[i]);
   cubes.forEach((cube, d) => {
     cube.style.transform = SHOW_TRANSFORM[dieIndex[d]];
-    const matched = dieIndex[d] === target[d];
-    cube.classList.toggle('matched', matched);
+    cube.classList.toggle('matched', allMatch);
   });
   renderTarget();
 }
