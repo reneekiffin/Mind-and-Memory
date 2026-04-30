@@ -26,6 +26,22 @@
   }
   .mem-card.flipped { background: #fff; border: 3px solid var(--secondary); }
   .mem-card.matched { background: var(--green); border: 3px solid var(--green); }
+
+  /* ── Difficulty selector ── */
+  .mem-modes {
+    display: flex; gap: 8px; padding: 0 24px 12px;
+    align-items: center;
+  }
+  .mem-mode-pill {
+    flex: 1; padding: 9px 0; border-radius: 50px;
+    font-size: 15px; font-weight: 900; cursor: pointer;
+    border: 3px solid var(--secondary); color: var(--secondary);
+    background: #EBF3FF; -webkit-tap-highlight-color: transparent;
+    text-align: center;
+  }
+  .mem-mode-pill.active { background: var(--secondary); color: #fff; }
+
+  .memory-grid.hard .mem-card { font-size: 28px; }
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,7 +53,12 @@
   <a class="back-btn" href="index.html">← Home</a>
   <div class="game-header">
     <div class="game-title" style="color:var(--secondary)">🃏 Memory</div>
-    <div class="score-badge">Pairs: <span id="mem-pairs">0</span>/8</div>
+    <div class="score-badge">Pairs: <span id="mem-pairs">0</span>/<span id="mem-total">8</span></div>
+  </div>
+  <div class="mem-modes" id="mem-modes">
+    <span class="mem-mode-pill"        data-diff="easy"   onclick="setMemDifficulty('easy')">Easy · 6</span>
+    <span class="mem-mode-pill active" data-diff="medium" onclick="setMemDifficulty('medium')">Medium · 8</span>
+    <span class="mem-mode-pill"        data-diff="hard"   onclick="setMemDifficulty('hard')">Hard · 12</span>
   </div>
   <div class="memory-instruction" id="mem-instruction">Tap two cards to find a match!</div>
   <div class="memory-grid" id="memory-grid"></div>

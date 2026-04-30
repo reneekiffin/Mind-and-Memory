@@ -1,6 +1,13 @@
 // games/memory.js
-const memEmojis = ['🍎','🌸','🐶','⭐','🎵','🌈','🐱','🦋'];
-let memFlipped = [], memMatched = 0, memLocked = false, memMoves = 0;
+const ALL_EMOJIS = ['🍎','🌸','🐶','⭐','🎵','🌈','🐱','🦋','🍌','🌻','🐢','🚗'];
+const DIFFICULTY_PAIRS = { easy: 6, medium: 8, hard: 12 };
+
+let memDifficulty = 'medium';
+let memPairs      = DIFFICULTY_PAIRS[memDifficulty];
+let memFlipped    = [];
+let memMatched    = 0;
+let memLocked     = false;
+let memMoves      = 0;
 
 function shuffle(a) {
   const arr = [...a];
@@ -14,9 +21,12 @@ function shuffle(a) {
 function initMemory() {
   memFlipped = []; memMatched = 0; memLocked = false; memMoves = 0;
   document.getElementById('mem-pairs').textContent = '0';
+  document.getElementById('mem-total').textContent = memPairs;
   document.getElementById('mem-instruction').textContent = 'Tap two cards to find a match!';
-  const cards = shuffle([...memEmojis, ...memEmojis]);
-  const grid = document.getElementById('memory-grid');
+  const emojis = ALL_EMOJIS.slice(0, memPairs);
+  const cards  = shuffle([...emojis, ...emojis]);
+  const grid   = document.getElementById('memory-grid');
+  grid.className = 'memory-grid' + (memDifficulty === 'hard' ? ' hard' : '');
   grid.innerHTML = '';
   cards.forEach(e => {
     const c = document.createElement('div');
@@ -26,6 +36,17 @@ function initMemory() {
     c.onclick = () => flipCard(c);
     grid.appendChild(c);
   });
+}
+
+function setMemDifficulty(diff) {
+  if (!DIFFICULTY_PAIRS[diff]) return;
+  memDifficulty = diff;
+  memPairs = DIFFICULTY_PAIRS[diff];
+  document.querySelectorAll('.mem-mode-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.diff === diff);
+  });
+  document.getElementById('result-overlay').classList.remove('show');
+  initMemory();
 }
 
 function flipCard(card) {
@@ -42,13 +63,13 @@ function flipCard(card) {
       memMatched++;
       document.getElementById('mem-pairs').textContent = memMatched;
       document.getElementById('mem-instruction').textContent =
-        memMatched === 8 ? '🎉 All matched! Amazing!' : `Great match! Keep going! (${memMatched}/8)`;
+        memMatched === memPairs ? '🎉 All matched! Amazing!' : `Great match! Keep going! (${memMatched}/${memPairs})`;
       memFlipped = []; memLocked = false;
-      if (memMatched === 8) {
+      if (memMatched === memPairs) {
         setTimeout(() => {
           document.getElementById('res-emoji').textContent = '🏆';
           document.getElementById('res-title').textContent = 'You Did It!';
-          document.getElementById('res-score').textContent = `All 8 pairs matched in ${memMoves} moves!`;
+          document.getElementById('res-score').textContent = `All ${memPairs} pairs matched in ${memMoves} moves!`;
           document.getElementById('result-overlay').classList.add('show');
         }, 700);
       }
