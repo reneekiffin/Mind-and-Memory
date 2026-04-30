@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Mood Match – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg,#FFF0F5,#FFF8F0); overflow-y:auto; }
+
+  /* ── Status / instructions ── */
+  .mood-status {
+    text-align: center; padding: 4px 24px 10px;
+    font-size: 16px; font-weight: 800; color: var(--teal); min-height: 24px;
+  }
+
+  /* ── Target card ── */
+  .target-label {
+    text-align: center; font-size: 14px; font-weight: 900;
+    letter-spacing: 1px; color: var(--subtext);
+    text-transform: uppercase; padding: 0 24px 6px;
+  }
+  .target-card {
+    margin: 0 24px 18px;
+    background: #fff; border: 3px solid var(--purple);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    display: flex; justify-content: center; gap: 10px;
+    box-shadow: var(--shadow);
+  }
+  .target-face {
+    font-size: 48px; line-height: 1;
+    width: 64px; height: 64px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Dice row ── */
+  .dice-row {
+    display: flex; justify-content: center; gap: 18px;
+    padding: 8px 16px 16px;
+    perspective: 800px;
+  }
+
+  .die {
+    width: 90px; height: 90px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.4,.2,.3,1.2);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .die.matched .face {
+    background: #E8F8EF;
+    border-color: var(--green);
+  }
+  .face {
+    position: absolute; inset: 0;
+    background: #fff; border: 3px solid var(--purple);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 50px; line-height: 1;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    backface-visibility: hidden;
+  }
+  .face.f0 { transform: rotateY(  0deg) translateZ(45px); }
+  .face.f1 { transform: rotateY( 90deg) translateZ(45px); }
+  .face.f2 { transform: rotateY(180deg) translateZ(45px); }
+  .face.f3 { transform: rotateY(270deg) translateZ(45px); }
+  .face.f4 { transform: rotateX( 90deg) translateZ(45px); }
+  .face.f5 { transform: rotateX(-90deg) translateZ(45px); }
+
+  /* ── Buttons ── */
+  .mood-actions {
+    display: flex; gap: 10px; padding: 0 24px 18px;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .mood-btn {
+    background: #fff; border: 3px solid var(--purple);
+    border-radius: 50px; padding: 12px 22px;
+    font-size: 16px; font-weight: 900; color: var(--purple);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .mood-btn:active { transform: scale(.97); }
+  .mood-btn.primary {
+    background: var(--purple); color: #fff;
+  }
+
+  /* ── Stats line ── */
+  .mood-stats {
+    text-align: center; padding: 0 24px 12px;
+    font-size: 14px; font-weight: 800; color: var(--subtext);
+  }
+  .mood-stats span { color: var(--purple); }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#9B6DD9">
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Home</a>
+
+  <div class="game-header">
+    <div class="game-title" style="color:#9B6DD9">😀 Mood Match</div>
+    <div class="score-badge" id="mood-rounds">🏆 0</div>
+  </div>
+
+  <div class="mood-status" id="mood-status">Tap each die to flip it. Match the card above!</div>
+
+  <div class="target-label">🎯 Match this</div>
+  <div class="target-card" id="target-card"></div>
+
+  <div class="dice-row" id="dice-row"></div>
+
+  <div class="mood-stats">Taps: <span id="mood-taps">0</span></div>
+
+  <div class="mood-actions">
+    <button class="mood-btn" onclick="moodShuffle()">🎲 Shuffle dice</button>
+    <button class="mood-btn primary" onclick="moodNewRound()">🔄 New card</button>
+  </div>
+
+  <!-- Win popup -->
+  <div class="overlay" id="result-overlay">
+    <div class="result-popup">
+      <div class="result-emoji" id="res-emoji">🎉</div>
+      <div class="result-title">Matched!</div>
+      <div class="result-score" id="res-score"></div>
+      <button class="popup-btn" id="res-next">Next card 🔄</button>
+      <a class="popup-btn secondary" href="index.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script src="games/moodmatch.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
+</body>
+</html>
