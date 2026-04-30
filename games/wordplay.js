@@ -96,7 +96,67 @@ const wordPools = {
     {word:'SUSU',         clue:'Gossip; also a community savings group',          opts:['SUSU','BUS','JOOK','LINK UP']},
     {word:'BOONOONOONOOS',clue:'A sweetheart; a darling person',                  opts:['BOONOONOONOOS','PICKNEY','BREDREN','SMADDY']},
     {word:'LINK UP',      clue:'To meet up with someone',                         opts:['LINK UP','BIG UP','BUS','GWAAN']},
-    {word:'JOOK',         clue:'To poke or pierce',                               opts:['JOOK','BUS','NYAM','BEX']}
+    {word:'JOOK',         clue:'To poke or pierce',                               opts:['JOOK','BUS','NYAM','BEX']},
+
+    // ── Music & dance ─────────────────────────────────────────
+    {word:'REGGAE',       clue:'Jamaica\'s most famous music genre — Bob Marley made it world-famous',         opts:['REGGAE','SKA','MENTO','DUB']},
+    {word:'SKA',          clue:'Upbeat Jamaican music style of the 1960s — came before reggae',               opts:['SKA','DUB','MENTO','DANCEHALL']},
+    {word:'MENTO',        clue:'Traditional rural folk music of Jamaica',                                      opts:['MENTO','REGGAE','SKA','DUB']},
+    {word:'DANCEHALL',    clue:'A faster, more electronic style of Jamaican music born in the 1980s',          opts:['DANCEHALL','ROCKSTEADY','MENTO','SKA']},
+    {word:'ROCKSTEADY',   clue:'The slower style that came between ska and reggae',                            opts:['ROCKSTEADY','DANCEHALL','MENTO','DUB']},
+    {word:'DUB',          clue:'A remix-based Jamaican music style with heavy bass and echo',                  opts:['DUB','SKA','MENTO','REGGAE']},
+    {word:'JONKUNNU',     clue:'A Christmas masquerade parade with masked dancers (also "John Canoe")',        opts:['JONKUNNU','KUMINA','BRUKINS','MAYPOLE']},
+    {word:'KUMINA',       clue:'An Afro-Jamaican spiritual drumming and dance tradition from the Congo',       opts:['KUMINA','JONKUNNU','NYABINGHI','BRUKINS']},
+    {word:'NYABINGHI',    clue:'Rastafari drumming and chanting ritual',                                       opts:['NYABINGHI','KUMINA','JONKUNNU','MENTO']},
+    {word:'QUADRILLE',    clue:'A four-couple folk dance brought from Europe and adapted in Jamaica',          opts:['QUADRILLE','MAYPOLE','BRUKINS','DINKI MINI']},
+    {word:'MAYPOLE',      clue:'A folk dance with ribbons woven around a tall pole',                           opts:['MAYPOLE','QUADRILLE','BRUKINS','JONKUNNU']},
+    {word:'DINKI MINI',   clue:'A folk dance from St Mary parish, performed at "Nine-Night" wakes',            opts:['DINKI MINI','BRUKINS','MAYPOLE','KUMINA']},
+    {word:'BRUKINS',      clue:'A pageant dance celebrating Emancipation Day in 1834',                         opts:['BRUKINS','DINKI MINI','MAYPOLE','JONKUNNU']},
+
+    // ── Food ──────────────────────────────────────────────────
+    {word:'ACKEE',        clue:'Jamaica\'s national fruit — eaten with saltfish',                              opts:['ACKEE','CALLALOO','BAMMY','PATTY']},
+    {word:'CALLALOO',     clue:'A leafy green vegetable similar to spinach',                                   opts:['CALLALOO','ACKEE','BAMMY','SORREL']},
+    {word:'JERK',         clue:'A spicy seasoning and slow-cooking method using pimento wood',                 opts:['JERK','ESCOVITCH','RUNDOWN','CURRY GOAT']},
+    {word:'BAMMY',        clue:'A flatbread made from cassava (yuca)',                                         opts:['BAMMY','FESTIVAL','PATTY','BULLA']},
+    {word:'FESTIVAL',     clue:'A sweet fried cornmeal dumpling, often served with jerk',                      opts:['FESTIVAL','BAMMY','BULLA','PATTY']},
+    {word:'PATTY',        clue:'A flaky yellow pastry filled with spiced meat',                                opts:['PATTY','BAMMY','BULLA','GIZZADA']},
+    {word:'RUNDOWN',      clue:'A creamy coconut milk stew, often with mackerel',                              opts:['RUNDOWN','ESCOVITCH','JERK','OXTAIL']},
+    {word:'CURRY GOAT',   clue:'A spicy slow-cooked goat dish, popular at celebrations',                       opts:['CURRY GOAT','OXTAIL','RUNDOWN','JERK']},
+    {word:'OXTAIL',       clue:'A rich slow-cooked dish made from beef tail',                                  opts:['OXTAIL','CURRY GOAT','RUNDOWN','JERK']},
+    {word:'ESCOVITCH',    clue:'Fried fish topped with spicy pickled vegetables',                              opts:['ESCOVITCH','JERK','RUNDOWN','CURRY GOAT']},
+    {word:'BULLA',        clue:'A flat round molasses cake, often eaten with avocado',                         opts:['BULLA','GIZZADA','BAMMY','FESTIVAL']},
+    {word:'GIZZADA',      clue:'A small coconut tart with a pinched pastry shell',                             opts:['GIZZADA','BULLA','BAMMY','PATTY']},
+    {word:'SORREL',       clue:'A red drink made from hibiscus flowers, popular at Christmas',                 opts:['SORREL','SUSU','RUNDOWN','BAMMY']},
+    {word:'PIMENTO',      clue:'Allspice — Jamaica is the world\'s leading producer',                          opts:['PIMENTO','CALLALOO','ACKEE','SORREL']},
+
+    // ── Religion / Rastafari ─────────────────────────────────
+    {word:'RASTAFARI',    clue:'A spiritual movement born in Jamaica in the 1930s',                            opts:['RASTAFARI','OBEAH','LIVITY','NYABINGHI']},
+    {word:'LIVITY',       clue:'The Rastafarian way of life',                                                  opts:['LIVITY','RASTAFARI','I-TAL','LOCS']},
+    {word:'ZION',         clue:'In Rastafari, the promised land — paradise on earth',                          opts:['ZION','BABYLON','LIVITY','I-TAL']},
+    {word:'BABYLON',      clue:'A Rastafari term for corrupt authority or oppressive systems',                 opts:['BABYLON','ZION','LIVITY','I-TAL']},
+    {word:'I-TAL',        clue:'Clean, natural, vegetarian food eaten in the Rastafari diet',                  opts:['I-TAL','LIVITY','ZION','BABYLON']},
+    {word:'LOCS',         clue:'Dreadlocks — natural matted hair worn by many Rastafarians',                   opts:['LOCS','TAMS','LIVITY','I-TAL']},
+    {word:'JAH',          clue:'A Rastafari name for God',                                                     opts:['JAH','RAS','I-TAL','ZION']},
+    {word:'RAS',          clue:'A Rastafari title of respect, meaning "head" or "prince"',                     opts:['RAS','JAH','LIVITY','LOCS']},
+
+    // ── People, places & culture ─────────────────────────────
+    {word:'HIGGLER',      clue:'A market vendor or street trader, often a woman',                              opts:['HIGGLER','OBEAH','SMADDY','BREDREN']},
+    {word:'OBEAH',        clue:'Traditional Caribbean folk magic and healing',                                 opts:['OBEAH','HIGGLER','DUPPY','OUNNU']},
+    {word:'KINGSTON',     clue:'The capital city of Jamaica',                                                  opts:['KINGSTON','YARD','ENDS','BUSH']},
+    {word:'BUSH',         clue:'The countryside; the rural area outside town',                                 opts:['BUSH','YARD','ENDS','KINGSTON']},
+    {word:'BANDOOLOO',    clue:'Crooked, dishonest, or fraudulent',                                            opts:['BANDOOLOO','CRISS','IRIE','BOONOONOONOOS']},
+    {word:'OUNNU',        clue:'All of you — second-person plural ("y\'all")',                                 opts:['OUNNU','SMADDY','PICKNEY','BREDREN']},
+    {word:'TAMS',         clue:'A knit hat, often used to cover dreadlocks',                                   opts:['TAMS','LOCS','LIVITY','I-TAL']},
+
+    // ── Common verbs & expressions ───────────────────────────
+    {word:'BRUK',         clue:'Broken, or to break something',                                                opts:['BRUK','LICK','TUMP','JOOK']},
+    {word:'LICK',         clue:'To hit or strike',                                                             opts:['LICK','TUMP','BRUK','JOOK']},
+    {word:'TUMP',         clue:'To thump or punch',                                                            opts:['TUMP','LICK','BRUK','JOOK']},
+    {word:'CHO',          clue:'An exclamation of frustration or dismissal',                                   opts:['CHO','ZEEN','BEX','GWAAN']},
+    {word:'ONE LOVE',     clue:'A greeting expressing unity and peace, made famous by Bob Marley',             opts:['ONE LOVE','BIG UP','LINK UP','WALK GOOD']},
+    {word:'WALK GOOD',    clue:'A farewell — "travel safely, take care"',                                      opts:['WALK GOOD','ONE LOVE','LINK UP','BIG UP']},
+    {word:'SOON COME',    clue:'"I\'ll be there soon" — used flexibly with Jamaican time',                     opts:['SOON COME','LINK UP','WALK GOOD','GWAAN']},
+    {word:'NUH PROBLEM',  clue:'"No problem" — a phrase of reassurance',                                       opts:['NUH PROBLEM','ONE LOVE','SOON COME','WALK GOOD']}
   ]
 };
 

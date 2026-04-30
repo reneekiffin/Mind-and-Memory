@@ -86,8 +86,10 @@ function checkMatch() {
     rounds++;
     saveStats();
     document.getElementById('mood-rounds').textContent = `🏆 ${rounds}`;
-    setStatus('🎉 Matched! Tap "New card" for another.');
-    showWin();
+    setStatus('🎉 Matched!');
+    // Pause so the player can see the green "matched" highlight on
+    // all three dice before the win popup covers the board.
+    setTimeout(showWin, 1600);
   }
 }
 
