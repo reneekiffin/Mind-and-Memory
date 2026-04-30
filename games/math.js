@@ -1,5 +1,6 @@
 // games/math.js — unlimited auto-generated math questions
 let mathScore = 0, mathQ = 0;
+let mathMode  = 'all'; // 'all' | '+' | '-' | '×'
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function shuffle(a) {
@@ -13,13 +14,24 @@ function shuffle(a) {
 
 function genMath() {
   const level = Math.min(Math.floor(mathQ / 5), 3); // gets harder every 5 questions
-  const ops = level < 2 ? ['+', '-'] : ['+', '-', '×'];
+  const allOps = level < 2 ? ['+', '-'] : ['+', '-', '×'];
+  const ops = mathMode === 'all' ? allOps : [mathMode];
   const op = ops[rnd(0, ops.length - 1)];
   let a, b, ans;
   if (op === '+') { a = rnd(1, 30 + level * 20); b = rnd(1, 30 + level * 20); ans = a + b; }
   else if (op === '-') { a = rnd(10, 60 + level * 20); b = rnd(1, a); ans = a - b; }
   else { a = rnd(2, 12); b = rnd(2, 12); ans = a * b; }
   return { text: `${a} ${op} ${b} = ?`, ans };
+}
+
+function setMathMode(mode) {
+  mathMode = mode;
+  document.querySelectorAll('.math-mode-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.op === mode);
+  });
+  mathQ = 0;
+  document.getElementById('math-progress').style.width = '0%';
+  renderMathQ();
 }
 
 function uniq(val, n, gen) {

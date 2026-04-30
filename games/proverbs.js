@@ -69,6 +69,29 @@ const PROVERBS = [
   { proverb:"Nuh count yuh chicken before dem hatch.", meaning:"Don't celebrate outcomes that haven't happened yet.", blank:"Nuh count yuh chicken before dem ___.", answer:"hatch", choices:["hatch","catch","match","scratch"] },
   { proverb:"Dem who laugh last, laugh longest.", meaning:"The final victory is the sweetest — be patient.", blank:"Dem who laugh last, laugh ___.", answer:"longest", choices:["longest","strongest","youngest","hardest"] },
   { proverb:"What is fi yuh will come to yuh.", meaning:"What is meant for you will eventually find its way to you.", blank:"What is fi yuh will come to ___.", answer:"yuh", choices:["yuh","dem","him","us"] },
+  { proverb:"Wanti wanti cyaan getti, getti getti nuh wanti.", meaning:"Those who want something can't get it, while those who already have it take it for granted.", blank:"Wanti wanti cyaan getti, getti getti nuh ___.", answer:"wanti", choices:["wanti","getti","plenti","empti"] },
+  { proverb:"Cockroach nuh business inna fowl fight.", meaning:"Stay out of disputes that don't concern you.", blank:"Cockroach nuh business inna fowl ___.", answer:"fight", choices:["fight","sight","might","light"] },
+  { proverb:"If yuh nuh have horse, ride cow.", meaning:"Make do with what you have.", blank:"If yuh nuh have horse, ride ___.", answer:"cow", choices:["cow","dog","goat","sow"] },
+  { proverb:"Empty barrel mek di most noise.", meaning:"Those who know the least often talk the most.", blank:"Empty barrel mek di most ___.", answer:"noise", choices:["noise","poise","voice","choice"] },
+  { proverb:"Two bull cyaan rule one pen.", meaning:"Two strong leaders cannot share the same authority.", blank:"Two bull cyaan rule one ___.", answer:"pen", choices:["pen","den","ten","yard"] },
+  { proverb:"Hand wash hand mek hand come clean.", meaning:"Working together benefits everyone.", blank:"Hand wash hand mek hand come ___.", answer:"clean", choices:["clean","mean","seen","green"] },
+  { proverb:"Howdy and tenky nuh bruk no square.", meaning:"Politeness costs nothing — always be courteous.", blank:"Howdy and tenky nuh bruk no ___.", answer:"square", choices:["square","share","spare","stair"] },
+  { proverb:"Likkle but tallawah.", meaning:"Small but mighty — don't underestimate the small ones.", blank:"Likkle but ___.", answer:"tallawah", choices:["tallawah","famous","clever","silly"] },
+  { proverb:"Coward man keep sound bone.", meaning:"Being cautious helps you avoid harm.", blank:"Coward man keep sound ___.", answer:"bone", choices:["bone","stone","tone","zone"] },
+  { proverb:"Where smoke deh, fire deh.", meaning:"There's usually some truth behind every rumour.", blank:"Where smoke deh, ___ deh.", answer:"fire", choices:["fire","wire","tyre","liar"] },
+  { proverb:"Mango when him ripe, him mus drop.", meaning:"Things happen in their natural time.", blank:"Mango when him ripe, him mus ___.", answer:"drop", choices:["drop","stop","pop","hop"] },
+  { proverb:"Eye nuh see, mout nuh tell.", meaning:"What you don't witness, you can't gossip about.", blank:"Eye nuh see, mout nuh ___.", answer:"tell", choices:["tell","yell","fell","sell"] },
+  { proverb:"Bad ting nuh have owner.", meaning:"Trouble has no master — it can come to anyone.", blank:"Bad ting nuh have ___.", answer:"owner", choices:["owner","opener","loaner","corner"] },
+  { proverb:"Yuh cyaan plant corn an reap peas.", meaning:"You won't get a different result from the same actions.", blank:"Yuh cyaan plant corn an reap ___.", answer:"peas", choices:["peas","seas","keys","trees"] },
+  { proverb:"Marry yuh like, lib wid yuh love.", meaning:"You marry the one you like, and love grows from living together.", blank:"Marry yuh like, lib wid yuh ___.", answer:"love", choices:["love","glove","dove","above"] },
+  { proverb:"Goat seh wha left a fence a fi him.", meaning:"People claim what others have set aside or discarded.", blank:"Goat seh wha left a fence a fi ___.", answer:"him", choices:["him","them","you","us"] },
+  { proverb:"Crab walk too much him lose him claw.", meaning:"Wandering or being nosey too often leads to trouble.", blank:"Crab walk too much him lose him ___.", answer:"claw", choices:["claw","jaw","paw","saw"] },
+  { proverb:"Donkey seh world nuh level.", meaning:"Life isn't fair — there are always inequalities.", blank:"Donkey seh world nuh ___.", answer:"level", choices:["level","clever","sever","ever"] },
+  { proverb:"Old time people fool but dem nuh stupid.", meaning:"Older folks may seem simple, but they are deeply wise.", blank:"Old time people fool but dem nuh ___.", answer:"stupid", choices:["stupid","cupid","timid","rapid"] },
+  { proverb:"If yuh waan fi know yuh fren, lend him yuh donkey.", meaning:"You discover who's truly reliable when you trust them with something valuable.", blank:"If yuh waan fi know yuh fren, lend him yuh ___.", answer:"donkey", choices:["donkey","monkey","money","story"] },
+  { proverb:"Yuh cyaan suck cane and blow whistle.", meaning:"You cannot do two opposing things at the same time.", blank:"Yuh cyaan suck cane and blow ___.", answer:"whistle", choices:["whistle","thistle","castle","kettle"] },
+  { proverb:"Wha gone bad a morning cyaan come good a evening.", meaning:"What starts off wrong rarely turns out right later.", blank:"Wha gone bad a morning cyaan come good a ___.", answer:"evening", choices:["evening","morning","mid-day","night"] },
+  { proverb:"Wanga gut pickney always cry.", meaning:"Greedy people are never satisfied.", blank:"Wanga gut pickney always ___.", answer:"cry", choices:["cry","try","fly","sigh"] },
 ];
 
 // ── Render ────────────────────────────────────────────────────
@@ -155,7 +178,7 @@ function handleAnswer(chosen, btn, correct, meaning) {
     document.getElementById('prov-meaning-box').style.display = 'block';
   }
 
-  setTimeout(renderProvQ, 3000);
+  setTimeout(renderProvQ, 7000);
 }
 
 // ── Mode switch ───────────────────────────────────────────────
