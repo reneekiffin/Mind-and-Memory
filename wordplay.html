@@ -7,19 +7,21 @@
 <link rel="stylesheet" href="style.css">
 <style>
   body { background: linear-gradient(160deg, #EDFBF2, #FFF8F0); }
-  .word-level-bar { display:flex; gap:8px; padding:0 24px 14px; align-items:center; }
-  .word-level-label { font-size:16px; font-weight:800; color:var(--subtext); }
-  .word-level-pill { padding:8px 18px; border-radius:50px; font-size:15px; font-weight:900; cursor:pointer; border:3px solid transparent; -webkit-tap-highlight-color:transparent; }
+  .word-level-bar { display:flex; gap:8px; padding:0 24px 14px; align-items:center; flex-wrap:wrap; }
+  .word-level-pill { padding:8px 14px; border-radius:50px; font-size:15px; font-weight:900; cursor:pointer; border:3px solid transparent; -webkit-tap-highlight-color:transparent; flex:1; text-align:center; }
   .word-level-pill.easy   { background:#E8F8EF; color:var(--green);  border-color:var(--green); }
   .word-level-pill.medium { background:#FFF3E0; color:#E6830A; border-color:#E6830A; }
   .word-level-pill.hard   { background:#FCE4EC; color:#E91E63; border-color:#E91E63; }
+  .word-level-pill.patois { background:#FFF8E0; color:#9A7800; border-color:#C9A100; }
   .word-level-pill.easy.active   { background:var(--green); color:#fff; }
   .word-level-pill.medium.active { background:#E6830A; color:#fff; }
   .word-level-pill.hard.active   { background:#E91E63; color:#fff; }
+  .word-level-pill.patois.active { background:#C9A100; color:#fff; }
   .word-banner { margin:0 24px 14px; border-radius:16px; padding:16px 20px; font-size:20px; font-weight:800; text-align:center; color:#fff; }
   .word-banner.easy   { background:var(--green); }
   .word-banner.medium { background:#E6830A; }
   .word-banner.hard   { background:#E91E63; }
+  .word-banner.patois { background:#C9A100; }
   .word-clue-box { margin:0 24px 14px; background:#fff; border-radius:var(--radius); padding:20px; text-align:center; box-shadow:var(--shadow); }
   .word-clue-label { font-size:16px; color:var(--subtext); font-weight:800; margin-bottom:6px; }
   .word-clue-text { font-family:'Fredoka One',cursive; font-size:24px; color:var(--text); line-height:1.3; white-space:pre-line; }
@@ -44,10 +46,10 @@
     <div class="score-badge">⭐ <span id="word-score">0</span> · Q<span id="word-qnum">1</span></div>
   </div>
   <div class="word-level-bar">
-    <span class="word-level-label">Difficulty:</span>
     <span class="word-level-pill easy active" onclick="setWordLevel('easy')">Easy</span>
     <span class="word-level-pill medium"      onclick="setWordLevel('medium')">Medium</span>
     <span class="word-level-pill hard"        onclick="setWordLevel('hard')">Hard</span>
+    <span class="word-level-pill patois"      onclick="setWordLevel('patois')">Patois 🇯🇲</span>
   </div>
   <div class="word-banner easy" id="word-banner">Unscramble the letters!</div>
   <div class="word-clue-box" id="word-clue-box">

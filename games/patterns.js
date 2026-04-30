@@ -16,7 +16,10 @@ function updStreak() {
 
 function genPattern(lv) {
   if (lv === 1) {
-    const step = rnd(1, 10), dir = Math.random() < .5 ? 1 : -1, st = rnd(1, 30);
+    const step = rnd(1, 10);
+    const dir  = Math.random() < .5 ? 1 : -1;
+    // For decreasing sequences, start high enough to keep the answer positive
+    const st   = dir > 0 ? rnd(1, 30) : rnd(step * 5 + 5, step * 5 + 35);
     const seq = Array.from({length: 5}, (_, i) => st + dir * step * i);
     return { seq, answer: st + dir * step * 5, type: 'Arithmetic', hint: `Each number ${dir > 0 ? 'increases' : 'decreases'} by ${step}` };
   }
@@ -25,7 +28,7 @@ function genPattern(lv) {
     if (t === 0) { const m = rnd(2, 3), st = rnd(1, 6); const seq = Array.from({length:5}, (_, i) => st * Math.pow(m, i)); return { seq, answer: st * Math.pow(m, 5), type: 'Geometric', hint: `Multiply by ${m} each time` }; }
     if (t === 1) { const a = rnd(2,8), b = rnd(2,8), st = rnd(5,20); const seq = [st]; for (let i=1;i<5;i++) seq.push(seq[i-1]+(i%2===1?a:b)); const ans = seq[4]+(5%2===1?a:b); return { seq, answer:ans, type:'Alternating', hint:`Alternately add ${a} then ${b}` }; }
     if (t === 2) { const st = rnd(1,10); const seq = [st]; for (let i=1;i<5;i++) seq.push(seq[i-1]+i); return { seq, answer:seq[4]+5, type:'Growing Steps', hint:'Each gap increases by 1 more' }; }
-    const m=2, s=rnd(1,5), st=rnd(2,8); const seq=[]; let c=st; for(let i=0;i<5;i++){seq.push(c);c=c*m-s;} return { seq, answer:c, type:'Multiply-Subtract', hint:`×${m} then −${s} each time` };
+    const m=2, s=rnd(1,2), st=rnd(3,8); const seq=[]; let c=st; for(let i=0;i<5;i++){seq.push(c);c=c*m-s;} return { seq, answer:c, type:'Multiply-Subtract', hint:`×${m} then −${s} each time` };
   }
   if (lv === 3) {
     const t = rnd(0, 3);
@@ -59,10 +62,19 @@ function renderPatQ() {
 
   const wrong = new Set();
   const diffs = [1,2,3,5,7,10,15,20];
-  while (wrong.size < 3) {
+  let attempts = 0;
+  while (wrong.size < 3 && attempts < 60) {
     const d = diffs[rnd(0, diffs.length-1)] * (Math.random() < .5 ? 1 : -1);
     const w = answer + d;
-    if (w > 0 && w !== answer && !wrong.has(w)) wrong.add(w);
+    if (w !== answer && !wrong.has(w)) wrong.add(w);
+    attempts++;
+  }
+  // Safety fallback: ensure we always have 3 distractors
+  let fillStep = 1;
+  while (wrong.size < 3) {
+    const w = answer + fillStep * 11;
+    if (w !== answer && !wrong.has(w)) wrong.add(w);
+    fillStep++;
   }
   const opts = shuffle([answer, ...wrong]);
   const div = document.getElementById('pattern-options');
