@@ -4,7 +4,8 @@
 const DIE_FACES = [
   ['😀','😂','😍','😎','🤔','😴'],
   ['😢','😡','🤩','🥶','🤒','😱'],
-  ['🤠','🤓','😇','🥳','🙃','🤯']
+  ['🤠','🤓','😇','🥳','🙃','🤯'],
+  ['😋','😌','😏','😐','😑','😬']
 ];
 
 // Each cube face needs a transform to show it front-on
@@ -17,8 +18,12 @@ const SHOW_TRANSFORM = [
   'rotateX(  90deg)'
 ];
 
-let dieIndex   = [0,0,0];   // which face is currently shown on each die
-let target     = [0,0,0];   // which face each die needs to show
+const DIFFICULTY_DICE = { easy: 2, medium: 3, hard: 4 };
+
+let difficulty = 'medium';
+let dieCount   = DIFFICULTY_DICE[difficulty];
+let dieIndex   = new Array(dieCount).fill(0);
+let target     = new Array(dieCount).fill(0);
 let taps       = 0;
 let rounds     = 0;
 
@@ -35,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function buildDice() {
   const row = document.getElementById('dice-row');
   row.innerHTML = '';
-  for (let d = 0; d < 3; d++) {
+  row.classList.toggle('size-4', dieCount === 4);
+  for (let d = 0; d < dieCount; d++) {
     const cube = document.createElement('div');
     cube.className = 'die';
     cube.dataset.idx = d;
@@ -49,6 +55,19 @@ function buildDice() {
     row.appendChild(cube);
   }
   applyDieTransforms();
+}
+
+function setMoodDifficulty(diff) {
+  if (!DIFFICULTY_DICE[diff]) return;
+  difficulty = diff;
+  dieCount   = DIFFICULTY_DICE[diff];
+  dieIndex   = new Array(dieCount).fill(0);
+  target     = new Array(dieCount).fill(0);
+  document.querySelectorAll('.mood-mode-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.diff === diff);
+  });
+  buildDice();
+  moodNewRound();
 }
 
 function flipDie(d) {
@@ -74,7 +93,7 @@ function applyDieTransforms() {
 function renderTarget() {
   const card = document.getElementById('target-card');
   card.innerHTML = '';
-  for (let d = 0; d < 3; d++) {
+  for (let d = 0; d < dieCount; d++) {
     const face = document.createElement('div');
     face.className = 'target-face';
     face.textContent = DIE_FACES[d][target[d]];
@@ -109,7 +128,7 @@ function hideOverlay() {
 function moodNewRound() {
   // Pick a target that isn't already matching the current dice
   do {
-    target = [randFace(), randFace(), randFace()];
+    target = Array.from({length: dieCount}, randFace);
   } while (target.every((v, i) => v === dieIndex[i]));
   taps = 0;
   document.getElementById('mood-taps').textContent = '0';
@@ -121,7 +140,7 @@ function moodNewRound() {
 function moodShuffle() {
   // Randomize the dice (without auto-completing the puzzle)
   do {
-    dieIndex = [randFace(), randFace(), randFace()];
+    dieIndex = Array.from({length: dieCount}, randFace);
   } while (dieIndex.every((v, i) => v === target[i]));
   applyDieTransforms();
   setStatus('Dice shuffled — keep going!');

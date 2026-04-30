@@ -8,6 +8,20 @@
 <style>
   body { background: linear-gradient(160deg,#FFF0F5,#FFF8F0); overflow-y:auto; }
 
+  /* ── Difficulty selector ── */
+  .mood-modes {
+    display: flex; gap: 8px; padding: 0 24px 10px;
+    align-items: center;
+  }
+  .mood-mode-pill {
+    flex: 1; padding: 9px 0; border-radius: 50px;
+    font-size: 15px; font-weight: 900; cursor: pointer;
+    border: 3px solid var(--purple); color: var(--purple);
+    background: #F5EFFB; -webkit-tap-highlight-color: transparent;
+    text-align: center;
+  }
+  .mood-mode-pill.active { background: var(--purple); color: #fff; }
+
   /* ── Status / instructions ── */
   .mood-status {
     text-align: center; padding: 4px 24px 10px;
@@ -36,13 +50,22 @@
 
   /* ── Dice row ── */
   .dice-row {
-    display: flex; justify-content: center; gap: 18px;
+    --die-size: 90px;
+    --die-half: 45px;
+    --die-emoji: 50px;
+    display: flex; justify-content: center; gap: 14px;
     padding: 8px 16px 16px;
-    perspective: 800px;
+    perspective: 900px;
+  }
+  .dice-row.size-4 {
+    --die-size: 72px;
+    --die-half: 36px;
+    --die-emoji: 40px;
+    gap: 10px;
   }
 
   .die {
-    width: 90px; height: 90px;
+    width: var(--die-size); height: var(--die-size);
     position: relative;
     transform-style: preserve-3d;
     transition: transform .55s cubic-bezier(.4,.2,.3,1.2);
@@ -58,16 +81,16 @@
     background: #fff; border: 3px solid var(--purple);
     border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 50px; line-height: 1;
+    font-size: var(--die-emoji); line-height: 1;
     box-shadow: 0 4px 12px rgba(0,0,0,.12);
     backface-visibility: hidden;
   }
-  .face.f0 { transform: rotateY(  0deg) translateZ(45px); }
-  .face.f1 { transform: rotateY( 90deg) translateZ(45px); }
-  .face.f2 { transform: rotateY(180deg) translateZ(45px); }
-  .face.f3 { transform: rotateY(270deg) translateZ(45px); }
-  .face.f4 { transform: rotateX( 90deg) translateZ(45px); }
-  .face.f5 { transform: rotateX(-90deg) translateZ(45px); }
+  .face.f0 { transform: rotateY(  0deg) translateZ(var(--die-half)); }
+  .face.f1 { transform: rotateY( 90deg) translateZ(var(--die-half)); }
+  .face.f2 { transform: rotateY(180deg) translateZ(var(--die-half)); }
+  .face.f3 { transform: rotateY(270deg) translateZ(var(--die-half)); }
+  .face.f4 { transform: rotateX( 90deg) translateZ(var(--die-half)); }
+  .face.f5 { transform: rotateX(-90deg) translateZ(var(--die-half)); }
 
   /* ── Buttons ── */
   .mood-actions {
@@ -105,6 +128,12 @@
   <div class="game-header">
     <div class="game-title" style="color:#9B6DD9">😀 Mood Match</div>
     <div class="score-badge" id="mood-rounds">🏆 0</div>
+  </div>
+
+  <div class="mood-modes" id="mood-modes">
+    <span class="mood-mode-pill" data-diff="easy"           onclick="setMoodDifficulty('easy')">Easy · 2</span>
+    <span class="mood-mode-pill active" data-diff="medium"  onclick="setMoodDifficulty('medium')">Medium · 3</span>
+    <span class="mood-mode-pill" data-diff="hard"           onclick="setMoodDifficulty('hard')">Hard · 4</span>
   </div>
 
   <div class="mood-status" id="mood-status">Tap each die to flip it. Match the card above!</div>
