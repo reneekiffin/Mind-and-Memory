@@ -53,24 +53,50 @@ const wordPools = {
     {word:'SOMBER',clue:'Dark and gloomy in mood',opts:['SOMBER','CHEERY','BRIGHT','VIVID']},
   ],
   hard: [
-    {word:'EPHEMERAL',clue:'Lasting only a very short time\n(Think of a mayfly\'s life)',opts:['EPHEMERAL','PERPETUAL','ENDURING','TIMELESS']},
-    {word:'LOQUACIOUS',clue:'Tends to talk a great deal\n(Synonym: garrulous)',opts:['LOQUACIOUS','RETICENT','TACITURN','RESERVED']},
-    {word:'MAGNANIMOUS',clue:'Generous and forgiving — opposite of petty',opts:['MAGNANIMOUS','VINDICTIVE','MISERLY','SPITEFUL']},
-    {word:'NONCHALANT',clue:'Relaxed and unconcerned in manner',opts:['NONCHALANT','AGITATED','FLUSTERED','ANXIOUS']},
-    {word:'OBLIVIOUS',clue:'Completely unaware of what is happening',opts:['OBLIVIOUS','VIGILANT','PERCEPTIVE','COGNIZANT']},
-    {word:'QUERULOUS',clue:'Complaining in a petulant, whiny manner',opts:['QUERULOUS','SANGUINE','PLACID','CONTENT']},
-    {word:'TENACIOUS',clue:'Refuses to give up — holds on firmly\n(Synonym: persistent)',opts:['TENACIOUS','WAVERING','YIELDING','VACILLATING']},
-    {word:'UBIQUITOUS',clue:'Seems to be everywhere at the same time',opts:['UBIQUITOUS','SCARCE','RARE','ELUSIVE']},
-    {word:'WISTFUL',clue:'A gentle sadness for something in the past',opts:['WISTFUL','CHEERFUL','ELATED','CONTENT']},
-    {word:'ACRIMONY',clue:'Bitterness or ill feeling toward another',opts:['ACRIMONY','GOODWILL','AMITY','HARMONY']},
-    {word:'BELLICOSE',clue:'Eager to argue or pick a fight',opts:['BELLICOSE','PACIFIC','AMICABLE','GENTLE']},
-    {word:'COGENT',clue:'Clear, logical and convincing argument',opts:['COGENT','MUDDLED','VAGUE','INCOHERENT']},
-    {word:'DILATORY',clue:'Slow to act; causing unnecessary delay',opts:['DILATORY','PROMPT','SWIFT','EXPEDIENT']},
-    {word:'SYCOPHANT',clue:'Flatters powerful people to gain favor',opts:['SYCOPHANT','ADVERSARY','DETRACTOR','CRITIC']},
-    {word:'VACILLATE',clue:'To waver back and forth between opinions',opts:['VACILLATE','RESOLVE','COMMIT','PERSIST']},
-    {word:'PERFIDIOUS',clue:'Deceitful and untrustworthy\n(Synonym: treacherous)',opts:['PERFIDIOUS','FAITHFUL','LOYAL','STEADFAST']},
-    {word:'RECONDITE',clue:'Not known by many people; obscure',opts:['RECONDITE','OBVIOUS','FAMILIAR','COMMON']},
-    {word:'IMPETUOUS',clue:'Acting quickly without thinking first',opts:['IMPETUOUS','CAUTIOUS','DELIBERATE','CAREFUL']},
+    {word:'EPHEMERAL',clue:'Lasting only a very short time\n(Think of a mayfly\'s life)',opts:['EPHEMERAL','ETHEREAL','MERCURIAL','VOLATILE']},
+    {word:'LOQUACIOUS',clue:'Tends to talk a great deal\n(Synonym: garrulous)',opts:['LOQUACIOUS','GREGARIOUS','FACETIOUS','SARDONIC']},
+    {word:'MAGNANIMOUS',clue:'Generous and forgiving in spirit',opts:['MAGNANIMOUS','OBSEQUIOUS','GRANDIOSE','STOIC']},
+    {word:'NONCHALANT',clue:'Relaxed and unconcerned in manner',opts:['NONCHALANT','AFFABLE','GREGARIOUS','AMBIVALENT']},
+    {word:'OBLIVIOUS',clue:'Completely unaware of what is happening',opts:['OBLIVIOUS','INSOUCIANT','MYOPIC','INSULAR']},
+    {word:'QUERULOUS',clue:'Complaining in a petulant, whiny manner',opts:['QUERULOUS','CHURLISH','MOROSE','TRUCULENT']},
+    {word:'TENACIOUS',clue:'Refuses to give up — holds on firmly\n(Synonym: persistent)',opts:['TENACIOUS','ASSIDUOUS','DOGMATIC','AUDACIOUS']},
+    {word:'UBIQUITOUS',clue:'Seems to be everywhere at the same time',opts:['UBIQUITOUS','PROLIFIC','ENDEMIC','RAMPANT']},
+    {word:'WISTFUL',clue:'A gentle sadness for something in the past',opts:['WISTFUL','PENSIVE','MOROSE','FORLORN']},
+    {word:'ACRIMONY',clue:'Bitterness or ill feeling toward another',opts:['ACRIMONY','ENMITY','HUBRIS','DISDAIN']},
+    {word:'BELLICOSE',clue:'Eager to argue or pick a fight',opts:['BELLICOSE','BOISTEROUS','DOGMATIC','CONTRARIAN']},
+    {word:'COGENT',clue:'Clear, logical and convincing argument',opts:['COGENT','SUCCINCT','TRENCHANT','LACONIC']},
+    {word:'DILATORY',clue:'Slow to act; causing unnecessary delay',opts:['DILATORY','INDOLENT','DERELICT','LANGUID']},
+    {word:'SYCOPHANT',clue:'Flatters powerful people to gain favor',opts:['SYCOPHANT','HYPOCRITE','DEMAGOGUE','CHARLATAN']},
+    {word:'VACILLATE',clue:'To waver back and forth between opinions',opts:['VACILLATE','PROCRASTINATE','RUMINATE','PREVARICATE']},
+    {word:'PERFIDIOUS',clue:'Deceitful and untrustworthy\n(Synonym: treacherous)',opts:['PERFIDIOUS','MERCENARY','CRAVEN','ICONOCLASTIC']},
+    {word:'RECONDITE',clue:'Not known by many people; obscure',opts:['RECONDITE','PEDANTIC','LACONIC','AUSTERE']},
+    {word:'IMPETUOUS',clue:'Acting quickly without thinking first',opts:['IMPETUOUS','MERCURIAL','VOLATILE','CAPRICIOUS']},
+  ],
+  patois: [
+    {word:'IRIE',         clue:'Good, peaceful — all is well',                    opts:['IRIE','BEX','MAWGA','DUTTY']},
+    {word:'WAGWAN',       clue:'A greeting — "what\'s going on?"',                opts:['WAGWAN','GWAAN','LINK UP','NYAM']},
+    {word:'BREDREN',      clue:'A close male friend or brother',                  opts:['BREDREN','SISTREN','PICKNEY','DUPPY']},
+    {word:'SISTREN',      clue:'A close female friend or sister',                 opts:['SISTREN','BREDREN','SMADDY','OUNNU']},
+    {word:'PICKNEY',      clue:'A child',                                         opts:['PICKNEY','DUPPY','SMADDY','BREDREN']},
+    {word:'DUPPY',        clue:'A ghost or spirit',                               opts:['DUPPY','PICKNEY','RAS','SMADDY']},
+    {word:'TALLAWAH',     clue:'Small but strong and mighty',                     opts:['TALLAWAH','LIKKLE','MAWGA','CRISS']},
+    {word:'LIKKLE',       clue:'Little, small',                                   opts:['LIKKLE','NUFF','TALLAWAH','MAWGA']},
+    {word:'NYAM',         clue:'To eat',                                          opts:['NYAM','BUS','JOOK','GWAAN']},
+    {word:'DUTTY',        clue:'Dirty, unclean',                                  opts:['DUTTY','CRISS','IRIE','BEX']},
+    {word:'CRISS',        clue:'Crisp, cool, very nice',                          opts:['CRISS','DUTTY','CHAKA-CHAKA','MAWGA']},
+    {word:'YARD',         clue:'Home — often used to mean Jamaica itself',        opts:['YARD','ENDS','LINK UP','BIG UP']},
+    {word:'SMADDY',       clue:'Somebody, a person',                              opts:['SMADDY','OUNNU','PICKNEY','BREDREN']},
+    {word:'GWAAN',        clue:'"Going on" — happening, or "carry on"',           opts:['GWAAN','WAGWAN','LINK UP','BIG UP']},
+    {word:'ZEEN',         clue:'"I see" — understood; agreement',                 opts:['ZEEN','CHO','BEX','NUFF']},
+    {word:'NUFF',         clue:'A lot, plenty, many',                             opts:['NUFF','LIKKLE','MAWGA','DUTTY']},
+    {word:'BIG UP',       clue:'To praise or show respect for someone',           opts:['BIG UP','LINK UP','BUS','BEX']},
+    {word:'MAWGA',        clue:'Thin, skinny',                                    opts:['MAWGA','TALLAWAH','LIKKLE','CHAKA-CHAKA']},
+    {word:'BEX',          clue:'Vexed — angry, annoyed',                          opts:['BEX','IRIE','CRISS','BOONOONOONOOS']},
+    {word:'CHAKA-CHAKA',  clue:'Messy, disordered, untidy',                       opts:['CHAKA-CHAKA','CRISS','IRIE','DUTTY']},
+    {word:'SUSU',         clue:'Gossip; also a community savings group',          opts:['SUSU','BUS','JOOK','LINK UP']},
+    {word:'BOONOONOONOOS',clue:'A sweetheart; a darling person',                  opts:['BOONOONOONOOS','PICKNEY','BREDREN','SMADDY']},
+    {word:'LINK UP',      clue:'To meet up with someone',                         opts:['LINK UP','BIG UP','BUS','GWAAN']},
+    {word:'JOOK',         clue:'To poke or pierce',                               opts:['JOOK','BUS','NYAM','BEX']}
   ]
 };
 
@@ -113,9 +139,12 @@ function renderWordQ() {
     for (const o of others) { if (opts.length >= 4) break; opts.push(o.word); }
     renderWordOpts(shuffle(opts), q.word);
   } else {
-    banner.textContent = wordLevel === 'medium'
-      ? 'Read the clue — pick the correct word!'
-      : 'Advanced vocabulary — read carefully!';
+    const banners = {
+      medium: 'Read the clue — pick the correct word!',
+      hard:   'Advanced vocabulary — read carefully!',
+      patois: 'Jamaican Patois 🇯🇲 — pick the word that matches!'
+    };
+    banner.textContent = banners[wordLevel];
     document.getElementById('word-clue-box').style.display = 'block';
     document.getElementById('word-clue-text').textContent = q.clue;
     document.getElementById('word-blanks').innerHTML = '';
