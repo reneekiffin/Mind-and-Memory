@@ -44,6 +44,11 @@ const VALID_WORDS = new Set([
   'VIM','VOW','WAD','WAR','WAS','WAX','WAY','WEB','WED','WEE','WET','WHO','WHY',
   'WIG','WIN','WIT','WOE','WOK','WON','WOO','WOW','YAK','YAM','YAP','YAW','YEA',
   'YES','YET','YEW','YOU','ZAP','ZEN','ZIP','ZIT',
+  // 3-letter additions
+  'BEE','BIN','BOG','BOO','CON','COO','CUE','DUB','DUD','EGO',
+  'FEE','FIX','FOX','GAL','GIG','HEX','HEY','HOE','HUE','IRK',
+  'IVY','KIN','LIP','MAD','MAN','MOO','MUM','OOH','REV','RUE',
+  'SEE','SHE','SIR','SOL','TEE','THY','TIC','VEX','VIE','WAG','YEN',
   // 4-letter
   'ABLE','ACHE','ACID','AGED','ALSO','ANTE','ARCH','AREA','ARMY','AUNT',
   'BAKE','BALD','BALL','BAND','BANE','BANK','BARE','BARK','BARN','BASE',
@@ -125,6 +130,13 @@ const VALID_WORDS = new Set([
   'WINE','WING','WINK','WIRE','WISE','WISH','WITH','WOKE','WOLF','WOOD',
   'WOOL','WORD','WORE','WORK','WORM','WORN','WRAP','WREN','WRIT','YARD',
   'YARN','YAWN','YEAR','YELL','YOUR','ZEAL','ZERO','ZONE','ZOOM',
+  // 4-letter additions
+  'ALOE','AMEN','ARIA','ATOM','AURA','BALE','BANG','BASS','BILE','BUFF',
+  'CHEF','CHIN','COMB','CONE','COVE','CRAM','CREW','DAMP','DOLL','DUDE',
+  'DUKE','FANG','FERN','FETE','GRIM','HARK','HINT','HONE','HOOT','JAZZ',
+  'KEEL','LIMB','LIMP','LURK','OBOE','ODDS','OPAL','OUST','PANG','PEAR',
+  'RUSE','SLOG','SOFA','TACO','TINT','TOFU','TROT','TUFT','VEAL','VENT',
+  'VERB','VISA','WHIM','WILY','YANK','YORE','ZINC',
   // 5+ letters (bonus words)
   'ABOUT','ABOVE','ABUSE','ACTOR','ACUTE','AFTER','AGAIN','AGREE','AHEAD',
   'ALARM','ALBUM','ALERT','ALIVE','ALLOW','ALONE','ALONG','ALTER','ANGEL',
@@ -188,6 +200,14 @@ const VALID_WORDS = new Set([
   'WEIRD','WHALE','WHEAT','WHEEL','WHERE','WHICH','WHILE','WHITE','WHOLE',
   'WIDER','WITTY','WORLD','WORRY','WORSE','WORTH','WOULD','WOUND','WRATH',
   'WRIST','WROTE','YACHT','YEARN','YIELD','YOUNG','YOURS','YOUTH','ZEBRA',
+  // 5-letter additions
+  'DEBUT','ENEMY','ESSAY','EVENT','GUILT','HENCE','IDEAL','INDEX','IRONY',
+  'JOINT','LOBBY','LOYAL','MANGO','MARRY','MERRY','MUDDY','OASIS','PEDAL',
+  'PENNY','PIVOT','PIZZA','PROBE','PRUNE','QUACK','QUAKE','RAVEN','ROAST',
+  'RODEO','RUMOR','SAINT','SANDY','SCENT','SHADY','SLAVE','SMASH','SMELL',
+  'SNACK','SNORE','SPADE','SWEEP','SWELL','TANGO','TEETH','TEMPO','THUMB',
+  'TOAST','TODAY','TUNER','UNCLE','USHER','VAGUE','VENOM','VIDEO','VIRUS',
+  'VOWEL','WAGON','WOMAN',
 ]);
 
 // ── State ─────────────────────────────────────────────────────
