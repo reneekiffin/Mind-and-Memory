@@ -3,7 +3,7 @@
 
 let m4Score = 0;
 let m4Q     = 0;
-let m4Pool  = [];   // remaining songs this session — refilled when empty
+let m4Pool  = null;   // null = pool needs initialising; [] = exhausted
 
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function shuffle(arr) {
@@ -140,11 +140,39 @@ const SONGS = [
 
 // ── Render ──────────────────────────────────────────────────
 function pickQuestion() {
-  if (m4Pool.length === 0) m4Pool = shuffle(SONGS);
+  if (m4Pool === null) m4Pool = shuffle(SONGS);
+  if (m4Pool.length === 0) return null;
   return m4Pool.pop();
 }
 
+function showM4Complete() {
+  document.querySelector('.m4-q-label').textContent = 'Quiz complete';
+  document.getElementById('m4-question').textContent = `🎉 You scored ${m4Score} out of ${m4Q}!`;
+  document.getElementById('m4-feedback').textContent = '';
+  document.getElementById('m4-feedback').className = 'm4-feedback';
+  document.getElementById('m4-fact-box').style.display = 'none';
+
+  const grid = document.getElementById('m4-options');
+  grid.innerHTML = '';
+  const btn = document.createElement('button');
+  btn.className = 'm4-btn correct';
+  btn.textContent = '🔄 Start Over';
+  btn.onclick = restartM4;
+  grid.appendChild(btn);
+}
+
+function restartM4() {
+  m4Score = 0;
+  m4Q    = 0;
+  m4Pool = null;
+  document.querySelector('.m4-q-label').textContent = 'Who recorded this song?';
+  renderQ();
+}
+
 function renderQ() {
+  const q = pickQuestion();
+  if (!q) { showM4Complete(); return; }
+
   m4Q++;
   document.getElementById('m4-score').textContent = m4Score;
   document.getElementById('m4-qnum').textContent  = m4Q;
@@ -152,7 +180,6 @@ function renderQ() {
   document.getElementById('m4-feedback').className   = 'm4-feedback';
   document.getElementById('m4-fact-box').style.display = 'none';
 
-  const q = pickQuestion();
   document.getElementById('m4-question').textContent = `"${q.song}"`;
 
   const choices = shuffle([q.artist, ...q.distractors]);
@@ -195,6 +222,6 @@ function handleAnswer(chosen, btn, correct, fact) {
 document.addEventListener('DOMContentLoaded', () => {
   m4Score = 0;
   m4Q     = 0;
-  m4Pool  = [];
+  m4Pool  = null;
   renderQ();
 });

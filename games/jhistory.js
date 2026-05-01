@@ -2,7 +2,7 @@
 
 let jhScore = 0;
 let jhQ     = 0;
-let jhPool  = [];   // remaining questions this session — refilled when empty
+let jhPool  = null;   // null = pool needs initialising; [] = exhausted
 
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function shuffle(arr) {
@@ -193,14 +193,43 @@ const TRIVIA = [
     fact:'The lignum vitae was named the national flower in 1962. Its hardwood is one of the densest in the world.' }
 ];
 
-// Pull a question that hasn't been shown yet this session.
+// Pull a question that hasn't been shown yet this session. Returns
+// null once every question has been answered — caller then shows the
+// "Start over" prompt instead of looping.
 function pickQuestion() {
-  if (jhPool.length === 0) jhPool = shuffle(TRIVIA);
+  if (jhPool === null) jhPool = shuffle(TRIVIA);
+  if (jhPool.length === 0) return null;
   return jhPool.pop();
+}
+
+function showJHComplete() {
+  document.getElementById('jh-era').textContent = 'Quiz complete';
+  document.getElementById('jh-question').textContent = `🎉 You answered ${jhScore} out of ${jhQ} correctly!`;
+  document.getElementById('jh-feedback').textContent = '';
+  document.getElementById('jh-feedback').className = 'jh-feedback';
+  document.getElementById('jh-fact-box').style.display = 'none';
+
+  const grid = document.getElementById('jh-options');
+  grid.innerHTML = '';
+  const btn = document.createElement('button');
+  btn.className = 'jh-btn correct';
+  btn.textContent = '🔄 Start Over';
+  btn.onclick = restartJH;
+  grid.appendChild(btn);
+}
+
+function restartJH() {
+  jhScore = 0;
+  jhQ    = 0;
+  jhPool = null;
+  renderQ();
 }
 
 // ── Render ──────────────────────────────────────────────────
 function renderQ() {
+  const q = pickQuestion();
+  if (!q) { showJHComplete(); return; }
+
   jhQ++;
   document.getElementById('jh-score').textContent = jhScore;
   document.getElementById('jh-qnum').textContent  = jhQ;
@@ -208,7 +237,6 @@ function renderQ() {
   document.getElementById('jh-feedback').className   = 'jh-feedback';
   document.getElementById('jh-fact-box').style.display = 'none';
 
-  const q = pickQuestion();
   document.getElementById('jh-era').textContent = q.era;
   document.getElementById('jh-question').textContent = q.q;
 
@@ -252,6 +280,6 @@ function handleAnswer(chosen, btn, correct, fact) {
 document.addEventListener('DOMContentLoaded', () => {
   jhScore = 0;
   jhQ     = 0;
-  jhPool  = [];
+  jhPool  = null;
   renderQ();
 });
