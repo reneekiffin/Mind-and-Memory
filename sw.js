@@ -1,7 +1,7 @@
 // sw.js — Service Worker for Mind & Memory PWA
 // Uses build date as cache key so updates are picked up automatically
 
-const CACHE = 'mind-memory-2026-05-01-007';// ← Claude updates this date on each change
+const CACHE = 'mind-memory-2026-05-01-009';// ← Claude updates this date on each change
 
 const FILES = [
   '/Mind-and-Memory/index.html',

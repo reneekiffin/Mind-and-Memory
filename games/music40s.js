@@ -202,7 +202,88 @@ const SONGS = [
 
   { song:'(I\'ve Got a Gal in) Kalamazoo', artist:'Glenn Miller', year:1942,
     fact:'A No. 1 hit in 1942; featured in the film "Orchestra Wives".',
-    distractors:['Tommy Dorsey','Bing Crosby','Frank Sinatra'] }
+    distractors:['Tommy Dorsey','Bing Crosby','Frank Sinatra'] },
+
+  // ── 1950s top hits ─────────────────────────────────
+  { song:'Mona Lisa', artist:'Nat King Cole', year:1950,
+    fact:'A No. 1 hit for five weeks in 1950 — won the Academy Award for Best Original Song that year.',
+    distractors:['Frank Sinatra','Perry Como','Bing Crosby'] },
+
+  { song:'Unforgettable', artist:'Nat King Cole', year:1951,
+    fact:'Nat\'s 1951 recording was famously revived as a duet with his daughter Natalie Cole in 1991.',
+    distractors:['Frank Sinatra','Tony Bennett','Dean Martin'] },
+
+  { song:'Too Young', artist:'Nat King Cole', year:1951,
+    fact:'A No. 1 hit for 12 weeks in 1951; became one of the defining ballads of the early decade.',
+    distractors:['Eddie Fisher','Perry Como','Frank Sinatra'] },
+
+  { song:'Que Sera, Sera (Whatever Will Be, Will Be)', artist:'Doris Day', year:1956,
+    fact:'Won the 1956 Oscar for Best Original Song — Doris sang it in Hitchcock\'s "The Man Who Knew Too Much".',
+    distractors:['Patti Page','Rosemary Clooney','Peggy Lee'] },
+
+  { song:'Secret Love', artist:'Doris Day', year:1953,
+    fact:'From the 1953 film "Calamity Jane"; won the Academy Award for Best Original Song.',
+    distractors:['Patti Page','Jo Stafford','Rosemary Clooney'] },
+
+  { song:'Tennessee Waltz', artist:'Patti Page', year:1950,
+    fact:'No. 1 for 13 weeks; sold over 10 million copies and is the official Tennessee state song.',
+    distractors:['Kay Starr','Jo Stafford','Doris Day'] },
+
+  { song:'(How Much Is) That Doggie in the Window', artist:'Patti Page', year:1953,
+    fact:'A No. 1 novelty hit in 1953 — Page\'s playful recording introduced "arf, arf!" to the charts.',
+    distractors:['Kay Starr','Doris Day','Rosemary Clooney'] },
+
+  { song:'Young at Heart', artist:'Frank Sinatra', year:1953,
+    fact:'A No. 2 hit in 1954 that helped revive Sinatra\'s career; he later starred in the 1954 film of the same name.',
+    distractors:['Dean Martin','Tony Bennett','Perry Como'] },
+
+  { song:'Love and Marriage', artist:'Frank Sinatra', year:1955,
+    fact:'Won the 1956 Emmy for Best Musical Composition and became the theme of the TV show "Married… with Children".',
+    distractors:['Dean Martin','Bing Crosby','Tony Bennett'] },
+
+  { song:'I\'ve Got You Under My Skin', artist:'Frank Sinatra', year:1956,
+    fact:'Cole Porter wrote it; Sinatra\'s 1956 recording with Nelson Riddle is the definitive version.',
+    distractors:['Dean Martin','Bing Crosby','Tony Bennett'] },
+
+  { song:'Come On-a My House', artist:'Rosemary Clooney', year:1951,
+    fact:'A No. 1 hit for eight weeks in 1951 — produced by Mitch Miller; written in part by playwright William Saroyan.',
+    distractors:['Patti Page','Doris Day','Peggy Lee'] },
+
+  { song:'Hey There', artist:'Rosemary Clooney', year:1954,
+    fact:'From the Broadway musical "The Pajama Game". Spent six weeks at No. 1 in 1954.',
+    distractors:['Patti Page','Doris Day','Jo Stafford'] },
+
+  { song:'Rags to Riches', artist:'Tony Bennett', year:1953,
+    fact:'A No. 1 hit for eight weeks in 1953 — one of Bennett\'s biggest early successes.',
+    distractors:['Frank Sinatra','Eddie Fisher','Perry Como'] },
+
+  { song:'That\'s Amore', artist:'Dean Martin', year:1953,
+    fact:'From the 1953 film "The Caddy" with Jerry Lewis. Nominated for the Academy Award for Best Original Song.',
+    distractors:['Perry Como','Frank Sinatra','Tony Bennett'] },
+
+  { song:'Memories Are Made of This', artist:'Dean Martin', year:1955,
+    fact:'A No. 1 hit for six weeks in 1956 — one of Dean Martin\'s biggest sellers.',
+    distractors:['Perry Como','Tony Bennett','Frank Sinatra'] },
+
+  { song:'Catch a Falling Star', artist:'Perry Como', year:1957,
+    fact:'Won the very first Grammy Award for Best Vocal Performance, Male, in 1958.',
+    distractors:['Frank Sinatra','Pat Boone','Eddie Fisher'] },
+
+  { song:'Magic Moments', artist:'Perry Como', year:1958,
+    fact:'Written by Burt Bacharach and Hal David; topped the UK chart for eight weeks in 1958.',
+    distractors:['Frank Sinatra','Tony Bennett','Pat Boone'] },
+
+  { song:'Wish You Were Here', artist:'Eddie Fisher', year:1952,
+    fact:'A No. 1 hit for eight weeks in 1952; from the Broadway musical of the same name.',
+    distractors:['Perry Como','Frank Sinatra','Pat Boone'] },
+
+  { song:'Be My Love', artist:'Mario Lanza', year:1950,
+    fact:'Lanza\'s soaring tenor took it to No. 1 in 1951; nominated for the Best Original Song Oscar.',
+    distractors:['Perry Como','Frank Sinatra','Bing Crosby'] },
+
+  { song:'How High the Moon', artist:'Les Paul & Mary Ford', year:1951,
+    fact:'A No. 1 hit for nine weeks in 1951 — Les Paul\'s pioneering multi-track recording technique was revolutionary.',
+    distractors:['The Andrews Sisters','Patti Page','The Mills Brothers'] }
 ];
 
 // ── Render ──────────────────────────────────────────────────
