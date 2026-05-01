@@ -2,6 +2,7 @@
 
 let jhScore = 0;
 let jhQ     = 0;
+let jhPool  = [];   // remaining questions this session — refilled when empty
 
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function shuffle(arr) {
@@ -192,6 +193,12 @@ const TRIVIA = [
     fact:'The lignum vitae was named the national flower in 1962. Its hardwood is one of the densest in the world.' }
 ];
 
+// Pull a question that hasn't been shown yet this session.
+function pickQuestion() {
+  if (jhPool.length === 0) jhPool = shuffle(TRIVIA);
+  return jhPool.pop();
+}
+
 // ── Render ──────────────────────────────────────────────────
 function renderQ() {
   jhQ++;
@@ -201,7 +208,7 @@ function renderQ() {
   document.getElementById('jh-feedback').className   = 'jh-feedback';
   document.getElementById('jh-fact-box').style.display = 'none';
 
-  const q = TRIVIA[rnd(0, TRIVIA.length - 1)];
+  const q = pickQuestion();
   document.getElementById('jh-era').textContent = q.era;
   document.getElementById('jh-question').textContent = q.q;
 
@@ -245,5 +252,6 @@ function handleAnswer(chosen, btn, correct, fact) {
 document.addEventListener('DOMContentLoaded', () => {
   jhScore = 0;
   jhQ     = 0;
+  jhPool  = [];
   renderQ();
 });

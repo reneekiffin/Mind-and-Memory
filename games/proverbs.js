@@ -3,6 +3,7 @@
 let provScore = 0;
 let provQ     = 0;
 let provMode  = 'complete';
+let provPool  = [];   // remaining proverbs this session — refilled when empty
 
 function rnd(a, b) {
   return Math.floor(Math.random() * (b - a + 1)) + a;
@@ -94,6 +95,13 @@ const PROVERBS = [
   { proverb:"Wanga gut pickney always cry.", meaning:"Greedy people are never satisfied.", blank:"Wanga gut pickney always ___.", answer:"cry", choices:["cry","try","fly","sigh"] },
 ];
 
+// Pull a proverb that hasn't been shown yet this session. When the pool
+// is empty we reshuffle the full list so a long session keeps going.
+function pickProverb() {
+  if (provPool.length === 0) provPool = shuffle(PROVERBS);
+  return provPool.pop();
+}
+
 // ── Render ────────────────────────────────────────────────────
 function renderProvQ() {
   provQ++;
@@ -103,7 +111,7 @@ function renderProvQ() {
   document.getElementById('prov-feedback').className   = 'prov-feedback';
   document.getElementById('prov-meaning-box').style.display = 'none';
 
-  const q = PROVERBS[rnd(0, PROVERBS.length - 1)];
+  const q = pickProverb();
 
   if (provMode === 'meaning') {
     renderMeaning(q);
@@ -196,5 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
   provScore = 0;
   provQ     = 0;
   provMode  = 'complete';
+  provPool  = [];
   renderProvQ();
 });
