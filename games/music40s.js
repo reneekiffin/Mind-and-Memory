@@ -5,6 +5,73 @@ let m4Score = 0;
 let m4Q     = 0;
 let m4Pool  = null;   // null = pool needs initialising; [] = exhausted
 
+// ── Audio sample (iTunes Search API — 30 s preview, no API key) ──
+let m4Audio        = null;
+let m4FetchAbort   = null;
+
+async function fetchPreviewUrl(song, artist) {
+  if (m4FetchAbort) m4FetchAbort.abort();
+  m4FetchAbort = new AbortController();
+  // Strip parentheticals and articles to widen match coverage
+  const cleanSong = song.replace(/\([^)]*\)/g, '').trim();
+  const term = encodeURIComponent(`${cleanSong} ${artist}`);
+  const url  = `https://itunes.apple.com/search?term=${term}&limit=1&media=music&entity=song`;
+  try {
+    const res = await fetch(url, { signal: m4FetchAbort.signal });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.results?.[0]?.previewUrl || null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function stopAudio() {
+  if (m4Audio) {
+    m4Audio.pause();
+    m4Audio.src = '';
+    m4Audio = null;
+  }
+  const btn = document.getElementById('m4-play');
+  if (btn) {
+    btn.textContent = '🔊 Play sample';
+    btn.disabled = true;
+    btn.style.display = 'none';
+  }
+}
+
+async function setupSample(song, artist) {
+  const btn = document.getElementById('m4-play');
+  btn.style.display = 'inline-block';
+  btn.disabled = true;
+  btn.textContent = '⏳ Loading sample…';
+
+  const url = await fetchPreviewUrl(song, artist);
+  if (!url) {
+    btn.style.display = 'none';   // hide if nothing returned
+    return;
+  }
+
+  m4Audio = new Audio(url);
+  m4Audio.preload = 'auto';
+  m4Audio.addEventListener('ended', () => {
+    if (btn) btn.textContent = '🔊 Play sample';
+  });
+
+  btn.disabled = false;
+  btn.textContent = '🔊 Play sample';
+  btn.onclick = () => {
+    if (!m4Audio) return;
+    if (m4Audio.paused) {
+      m4Audio.play().catch(() => {});
+      btn.textContent = '⏸️ Pause';
+    } else {
+      m4Audio.pause();
+      btn.textContent = '▶️ Resume';
+    }
+  };
+}
+
 function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 function shuffle(arr) {
   const a = [...arr];
@@ -146,6 +213,7 @@ function pickQuestion() {
 }
 
 function showM4Complete() {
+  stopAudio();
   document.querySelector('.m4-q-label').textContent = 'Quiz complete';
   document.getElementById('m4-question').textContent = `🎉 You scored ${m4Score} out of ${m4Q}!`;
   document.getElementById('m4-feedback').textContent = '';
@@ -170,6 +238,8 @@ function restartM4() {
 }
 
 function renderQ() {
+  stopAudio();
+
   const q = pickQuestion();
   if (!q) { showM4Complete(); return; }
 
@@ -181,6 +251,7 @@ function renderQ() {
   document.getElementById('m4-fact-box').style.display = 'none';
 
   document.getElementById('m4-question').textContent = `"${q.song}"`;
+  setupSample(q.song, q.artist);
 
   const choices = shuffle([q.artist, ...q.distractors]);
   const grid = document.getElementById('m4-options');
