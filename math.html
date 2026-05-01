@@ -41,6 +41,52 @@
     text-align: center;
   }
   .math-mode-pill.active { background: var(--primary); color: #fff; }
+  .math-mode-pill.algebra { font-size: 14px; }
+
+  /* ── Difficulty selector ── */
+  .math-diffs {
+    display: flex; gap: 8px; padding: 0 24px 12px;
+    align-items: center;
+  }
+  .math-diff-pill {
+    flex: 1; padding: 8px 0; border-radius: 50px;
+    font-size: 14px; font-weight: 900; cursor: pointer;
+    border: 3px solid var(--secondary); color: var(--secondary);
+    background: #EBF3FF; -webkit-tap-highlight-color: transparent;
+    text-align: center;
+  }
+  .math-diff-pill.active { background: var(--secondary); color: #fff; }
+
+  /* ── Algebra: smaller question text + walkthrough box ── */
+  .question-box.algebra .question-text { font-size: 38px; }
+  .math-walkthrough {
+    display: none;
+    margin: 14px 24px 12px;
+    background: #FFF8E0; border: 3px solid #C9A100;
+    border-radius: 16px; padding: 14px 18px;
+  }
+  .math-walkthrough-label {
+    font-size: 13px; font-weight: 900;
+    color: #C9A100; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .math-walkthrough-steps {
+    font-size: 16px; font-weight: 700; color: var(--text);
+    line-height: 1.6;
+  }
+  .math-walkthrough-steps .step-eq {
+    font-family: 'Courier New', monospace; font-weight: 800;
+    color: var(--primary);
+  }
+  .math-next-btn {
+    margin-top: 14px;
+    background: var(--primary); color: #fff;
+    border: 3px solid var(--primary);
+    border-radius: 50px; padding: 10px 24px;
+    font-size: 16px; font-weight: 900; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .math-next-btn:active { transform: scale(.97); }
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -55,20 +101,31 @@
     <div class="score-badge">⭐ <span id="math-score">0</span></div>
   </div>
   <div class="math-modes" id="math-modes">
-    <span class="math-mode-pill active" data-op="all" onclick="setMathMode('all')">All</span>
-    <span class="math-mode-pill"        data-op="+"   onclick="setMathMode('+')">＋</span>
-    <span class="math-mode-pill"        data-op="-"   onclick="setMathMode('-')">−</span>
-    <span class="math-mode-pill"        data-op="×"   onclick="setMathMode('×')">×</span>
+    <span class="math-mode-pill active"         data-op="all"     onclick="setMathMode('all')">All</span>
+    <span class="math-mode-pill"                data-op="+"       onclick="setMathMode('+')">＋</span>
+    <span class="math-mode-pill"                data-op="-"       onclick="setMathMode('-')">−</span>
+    <span class="math-mode-pill"                data-op="×"       onclick="setMathMode('×')">×</span>
+    <span class="math-mode-pill algebra"        data-op="algebra" onclick="setMathMode('algebra')">Algebra</span>
+  </div>
+  <div class="math-diffs" id="math-diffs">
+    <span class="math-diff-pill active" data-diff="easy"   onclick="setMathDiff('easy')">Easy</span>
+    <span class="math-diff-pill"        data-diff="medium" onclick="setMathDiff('medium')">Medium</span>
+    <span class="math-diff-pill"        data-diff="hard"   onclick="setMathDiff('hard')">Hard</span>
   </div>
   <div class="progress-bar-wrap">
     <div class="progress-bar-fill" id="math-progress" style="width:0%"></div>
   </div>
-  <div class="question-box">
+  <div class="question-box" id="math-question-box">
     <div class="question-text" id="math-question"></div>
     <div class="question-hint">Tap the correct answer below</div>
   </div>
   <div class="feedback-area" id="math-feedback"></div>
   <div class="answer-grid" id="math-answers"></div>
+  <div class="math-walkthrough" id="math-walkthrough">
+    <div class="math-walkthrough-label">📘 Here's how to solve it</div>
+    <div class="math-walkthrough-steps" id="math-walkthrough-steps"></div>
+    <button class="math-next-btn" id="math-next-btn" onclick="advanceMath()">Next →</button>
+  </div>
   <script src="games/math.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
