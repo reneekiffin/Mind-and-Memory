@@ -92,6 +92,25 @@ const TRIVIA = [
   { section:'Isaiah', q:'Which prophet saw the Lord seated on a throne with seraphim crying "Holy, holy, holy"?', a:'Isaiah', choices:['Ezekiel','Daniel','Isaiah','Jeremiah'], fact:'Isaiah 6 — a seraph touched Isaiah\'s lips with a burning coal to cleanse him before sending him to prophesy.' },
   { section:'Jeremiah', q:'Which prophet is often called the "weeping prophet"?', a:'Jeremiah', choices:['Isaiah','Jeremiah','Ezekiel','Hosea'], fact:'Jeremiah ministered as Jerusalem fell to Babylon and wrote the book of Lamentations.' },
   { section:'Ezekiel', q:'Which prophet saw a valley filled with dry bones come to life?', a:'Ezekiel', choices:['Isaiah','Jeremiah','Ezekiel','Daniel'], fact:'Ezekiel 37 — God commanded him to prophesy to the bones, which came together with sinews, flesh, and breath as a vast army.' },
+
+  // ── Daniel ────────────────────────────────────────────
+  { section:'Daniel', q:'In whose den was Daniel cast for praying to God?', a:'Lions', choices:['Lions','Bears','Wolves','Serpents'], fact:'Daniel 6 — Daniel was thrown into the lions\' den; God shut the lions\' mouths and he was unharmed.' },
+  { section:'Daniel', q:'How many of Daniel\'s friends were thrown into the fiery furnace?', a:'Three', choices:['One','Two','Three','Four'], fact:'Daniel 3 — Shadrach, Meshach and Abednego refused to bow to Nebuchadnezzar\'s golden image. A fourth figure walked with them in the flames.' },
+  { section:'Daniel', q:'What were the names of Daniel\'s three friends in the furnace?', a:'Shadrach, Meshach and Abednego', choices:['Shadrach, Meshach and Abednego','Hananiah, Mishael and Azariah (their Hebrew names)','Aleph, Bet and Gimel','Eli, Eliab and Eldad'], fact:'They were given Babylonian names; their Hebrew names were Hananiah, Mishael and Azariah.' },
+  { section:'Daniel', q:'What mysterious writing appeared on the wall at King Belshazzar\'s feast?', a:'MENE, MENE, TEKEL, UPHARSIN', choices:['ALPHA AND OMEGA','MENE, MENE, TEKEL, UPHARSIN','HOLY, HOLY, HOLY','REPENT AND BELIEVE'], fact:'Daniel 5 — the words foretold that Belshazzar\'s kingdom was numbered, weighed and divided. He was killed that same night.' },
+
+  // ── Esther ────────────────────────────────────────────
+  { section:'Esther', q:'Which Jewish queen risked her life to save her people from destruction?', a:'Esther', choices:['Vashti','Esther','Bathsheba','Deborah'], fact:'Esther 4-7 — Esther approached King Xerxes uninvited and exposed Haman\'s plot to destroy the Jews.' },
+  { section:'Esther', q:'Who plotted to destroy the Jews in the book of Esther?', a:'Haman', choices:['Mordecai','Haman','Hamor','Holofernes'], fact:'Esther 3 — Haman was angered when Mordecai would not bow; he was eventually hanged on the gallows he built for Mordecai.' },
+  { section:'Esther', q:'What feast do Jews still celebrate to remember Esther\'s deliverance of her people?', a:'Purim', choices:['Hanukkah','Purim','Passover','Pentecost'], fact:'Esther 9 — Purim is named for the "pur" (lots) Haman cast to choose the day of destruction.' },
+
+  // ── Jonah ─────────────────────────────────────────────
+  { section:'Jonah', q:'In what was Jonah swallowed when he tried to flee from God?', a:'A great fish', choices:['A whale','A great fish','A leviathan','A serpent'], fact:'Jonah 1-2 — the Bible says "a great fish"; for three days and nights Jonah was inside its belly before it spat him out on dry land.' },
+  { section:'Jonah', q:'To which city was Jonah called to preach repentance?', a:'Nineveh', choices:['Babylon','Nineveh','Tyre','Tarshish'], fact:'Jonah 3 — when Jonah finally preached, the people of Nineveh repented in sackcloth and ashes, and God spared the city.' },
+
+  // ── Job ───────────────────────────────────────────────
+  { section:'Job', q:'Who lost his wealth, family and health yet refused to curse God?', a:'Job', choices:['Joseph','Job','Jeremiah','Joshua'], fact:'The book of Job — Satan was permitted to test Job, who declared "though he slay me, yet will I trust him".' },
+  { section:'Job', q:'How many friends came to comfort Job and ended up debating his suffering?', a:'Three', choices:['Two','Three','Four','Seven'], fact:'Eliphaz, Bildad and Zophar sat with Job seven days in silence before speaking (Job 2-3).' },
 ];
 
 function pickQuestion() {
