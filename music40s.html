@@ -28,6 +28,17 @@
     font-family: 'Fredoka One', cursive; font-size: 24px;
     color: var(--text); line-height: 1.3;
   }
+  .m4-play-btn {
+    display: none;
+    margin: 14px auto 0;
+    background: var(--yellow); border: 3px solid #C9A100;
+    border-radius: 50px; padding: 10px 22px;
+    font-size: 16px; font-weight: 900; color: #2C2C2C;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .m4-play-btn:disabled { opacity: .55; cursor: default; }
+  .m4-play-btn:not(:disabled):active { transform: scale(.97); }
 
   .m4-options {
     display: grid; grid-template-columns: 1fr;
@@ -81,6 +92,7 @@
   <div class="m4-question">
     <div class="m4-q-label">Who recorded this song?</div>
     <div class="m4-q-text" id="m4-question"></div>
+    <button class="m4-play-btn" id="m4-play" disabled>🔊 Play sample</button>
   </div>
 
   <div class="m4-options" id="m4-options"></div>

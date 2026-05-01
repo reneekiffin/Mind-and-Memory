@@ -3,7 +3,7 @@
 let provScore = 0;
 let provQ     = 0;
 let provMode  = 'complete';
-let provPool  = [];   // remaining proverbs this session — refilled when empty
+let provPool  = null;   // null = pool needs initialising; [] = exhausted
 
 function rnd(a, b) {
   return Math.floor(Math.random() * (b - a + 1)) + a;
@@ -95,23 +95,52 @@ const PROVERBS = [
   { proverb:"Wanga gut pickney always cry.", meaning:"Greedy people are never satisfied.", blank:"Wanga gut pickney always ___.", answer:"cry", choices:["cry","try","fly","sigh"] },
 ];
 
-// Pull a proverb that hasn't been shown yet this session. When the pool
-// is empty we reshuffle the full list so a long session keeps going.
+// Pull a proverb that hasn't been shown yet this session. Returns null
+// when the player has worked through every proverb at least once — the
+// caller then shows a "Start over" prompt instead of looping.
 function pickProverb() {
-  if (provPool.length === 0) provPool = shuffle(PROVERBS);
+  if (provPool === null) provPool = shuffle(PROVERBS);
+  if (provPool.length === 0) return null;
   return provPool.pop();
+}
+
+function showProvComplete() {
+  document.getElementById('prov-proverb').textContent = '🎉 All proverbs completed!';
+  const meaningBox = document.getElementById('prov-meaning-box');
+  meaningBox.style.display = 'block';
+  document.getElementById('prov-meaning-text').textContent =
+    `You answered ${provScore} out of ${provQ} correctly!`;
+  document.getElementById('prov-feedback').textContent = '';
+  document.getElementById('prov-feedback').className = 'prov-feedback';
+
+  const grid = document.getElementById('prov-options');
+  grid.className = 'prov-options meaning-mode';
+  grid.innerHTML = '';
+  const btn = document.createElement('button');
+  btn.className = 'prov-btn correct';
+  btn.textContent = '🔄 Start Over';
+  btn.onclick = restartProv;
+  grid.appendChild(btn);
+}
+
+function restartProv() {
+  provScore = 0;
+  provQ    = 0;
+  provPool = null;
+  renderProvQ();
 }
 
 // ── Render ────────────────────────────────────────────────────
 function renderProvQ() {
+  const q = pickProverb();
+  if (!q) { showProvComplete(); return; }
+
   provQ++;
   document.getElementById('prov-score').textContent = provScore;
   document.getElementById('prov-qnum').textContent  = provQ;
   document.getElementById('prov-feedback').textContent = '';
   document.getElementById('prov-feedback').className   = 'prov-feedback';
   document.getElementById('prov-meaning-box').style.display = 'none';
-
-  const q = pickProverb();
 
   if (provMode === 'meaning') {
     renderMeaning(q);
@@ -204,6 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
   provScore = 0;
   provQ     = 0;
   provMode  = 'complete';
-  provPool  = [];
+  provPool  = null;
   renderProvQ();
 });
