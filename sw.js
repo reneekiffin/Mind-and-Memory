@@ -1,7 +1,7 @@
 // sw.js — Service Worker for Mind & Memory PWA
 // Uses build date as cache key so updates are picked up automatically
 
-const CACHE = 'mind-memory-2026-05-01-003';// ← Claude updates this date on each change
+const CACHE = 'mind-memory-2026-05-01-006';// ← Claude updates this date on each change
 
 const FILES = [
   '/Mind-and-Memory/index.html',
@@ -17,6 +17,7 @@ const FILES = [
   '/Mind-and-Memory/moodmatch.html',
   '/Mind-and-Memory/jhistory.html',
   '/Mind-and-Memory/music40s.html',
+  '/Mind-and-Memory/biblestories.html',
   '/Mind-and-Memory/manifest.json',
   '/Mind-and-Memory/icon-192.png',
   '/Mind-and-Memory/icon-512.png',
@@ -30,7 +31,8 @@ const FILES = [
   '/Mind-and-Memory/games/scrabble.js',
   '/Mind-and-Memory/games/moodmatch.js',
   '/Mind-and-Memory/games/jhistory.js',
-  '/Mind-and-Memory/games/music40s.js'
+  '/Mind-and-Memory/games/music40s.js',
+  '/Mind-and-Memory/games/biblestories.js'
 ];
 
 // Install — cache all files

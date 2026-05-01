@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Bible Stories – Mind & Memory</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { background: linear-gradient(160deg,#F2EBFF,#FFF8F0); overflow-y:auto; }
+
+  .bs-banner {
+    margin: 0 24px 14px; border-radius: 16px;
+    padding: 14px 20px; font-size: 18px; font-weight: 800;
+    text-align: center; color: #fff; background: #5A3D9C;
+    line-height: 1.3;
+  }
+
+  .bs-question {
+    margin: 0 24px 14px; background: #fff;
+    border: 3px solid #5A3D9C; border-radius: var(--radius);
+    padding: 20px 18px; box-shadow: var(--shadow);
+  }
+  .bs-section {
+    font-size: 13px; font-weight: 900; letter-spacing: 1px;
+    color: #C9A100; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .bs-q-text {
+    font-family: 'Fredoka One', cursive; font-size: 22px;
+    color: var(--text); line-height: 1.3;
+  }
+
+  .bs-options {
+    display: grid; grid-template-columns: 1fr;
+    gap: 10px; padding: 0 24px;
+  }
+  .bs-btn {
+    background: #fff; border: 3px solid var(--border);
+    border-radius: 16px; padding: 14px 16px;
+    font-size: 17px; font-weight: 800; color: var(--text);
+    cursor: pointer; text-align: left;
+    box-shadow: 0 3px 8px rgba(0,0,0,.08);
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.3;
+  }
+  .bs-btn:active { transform: scale(.97); }
+  .bs-btn.correct { background: #5A3D9C; color: #fff; border-color: #5A3D9C; }
+  .bs-btn.wrong   { background: #EF5350; color: #fff; border-color: #EF5350; }
+
+  .bs-feedback {
+    margin: 14px 24px 0; text-align: center;
+    font-size: 18px; font-weight: 900; min-height: 26px;
+  }
+  .bs-feedback.good { color: var(--green); }
+  .bs-feedback.bad  { color: #EF5350; }
+
+  .bs-fact-box {
+    margin: 12px 24px 18px; background: #FFF8E0;
+    border: 3px solid #C9A100; border-radius: 16px;
+    padding: 14px 18px; display: none;
+  }
+  .bs-fact-label { font-size: 13px; font-weight: 900; color: #C9A100; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .bs-fact-text  { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.4; }
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mind &amp; Memory">
+  <meta name="theme-color" content="#5A3D9C">
+</head>
+<body>
+
+  <a class="back-btn" href="index.html">← Home</a>
+
+  <div class="game-header">
+    <div class="game-title" style="color:#5A3D9C">📖 Bible Stories</div>
+    <div class="score-badge">⭐ <span id="bs-score">0</span> · Q<span id="bs-qnum">1</span></div>
+  </div>
+
+  <div class="bs-banner">Stories from the Old and New Testaments — pick the best answer!</div>
+
+  <div class="bs-question">
+    <div class="bs-section" id="bs-section"></div>
+    <div class="bs-q-text" id="bs-question"></div>
+  </div>
+
+  <div class="bs-options" id="bs-options"></div>
+
+  <div class="bs-feedback" id="bs-feedback"></div>
+
+  <div class="bs-fact-box" id="bs-fact-box">
+    <div class="bs-fact-label">📖 Did you know?</div>
+    <div class="bs-fact-text" id="bs-fact-text"></div>
+  </div>
+
+  <script src="games/biblestories.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/Mind-and-Memory/sw.js");
+    }
+  </script>
+</body>
+</html>
