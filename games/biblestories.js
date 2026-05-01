@@ -111,6 +111,18 @@ const TRIVIA = [
   // ── Job ───────────────────────────────────────────────
   { section:'Job', q:'Who lost his wealth, family and health yet refused to curse God?', a:'Job', choices:['Joseph','Job','Jeremiah','Joshua'], fact:'The book of Job — Satan was permitted to test Job, who declared "though he slay me, yet will I trust him".' },
   { section:'Job', q:'How many friends came to comfort Job and ended up debating his suffering?', a:'Three', choices:['Two','Three','Four','Seven'], fact:'Eliphaz, Bildad and Zophar sat with Job seven days in silence before speaking (Job 2-3).' },
+
+  // ── Birth of Jesus ───────────────────────────────────
+  { section:'Birth of Jesus', q:'Which angel told Mary she would give birth to Jesus?', a:'Gabriel', choices:['Michael','Gabriel','Raphael','Uriel'], fact:'Luke 1:26-38 — Gabriel was sent from God to a virgin in Nazareth named Mary.' },
+  { section:'Birth of Jesus', q:'In what town was Jesus born?', a:'Bethlehem', choices:['Nazareth','Bethlehem','Jerusalem','Capernaum'], fact:'Luke 2 — Mary and Joseph travelled to Bethlehem for the census; she gave birth there in a stable.' },
+  { section:'Birth of Jesus', q:'Why did Mary lay Jesus in a manger?', a:'Because there was no room for them in the inn', choices:['To hide him from Herod','Because there was no room for them in the inn','Because the temple was closed','Because she was on a journey'], fact:'Luke 2:7 — she wrapped him in cloths and laid him in a manger because there was no place for them in the inn.' },
+  { section:'Birth of Jesus', q:'To whom did the angels first announce Jesus\'s birth?', a:'Shepherds in the fields', choices:['Roman soldiers','Shepherds in the fields','Temple priests','Innkeepers'], fact:'Luke 2:8-14 — a multitude of the heavenly host appeared to shepherds tending their flocks by night.' },
+  { section:'Birth of Jesus', q:'What three gifts did the wise men bring to Jesus?', a:'Gold, frankincense and myrrh', choices:['Bread, wine and oil','Gold, frankincense and myrrh','Silver, gold and bronze','Wheat, oil and incense'], fact:'Matthew 2 — the magi from the east presented these gifts when they found the child with his mother.' },
+  { section:'Birth of Jesus', q:'What did the wise men follow to find the baby Jesus?', a:'A star', choices:['A pillar of fire','A star','A bright cloud','A flying dove'], fact:'Matthew 2:9 — the star they had seen in the east went ahead of them until it stopped over the place where the child was.' },
+  { section:'Birth of Jesus', q:'Which king tried to kill the baby Jesus?', a:'Herod the Great', choices:['Pontius Pilate','Caesar Augustus','Herod the Great','Nebuchadnezzar'], fact:'Matthew 2 — fearing a rival king, Herod ordered all baby boys in Bethlehem under two years old to be killed.' },
+  { section:'Birth of Jesus', q:'To which country did Joseph and Mary flee with Jesus to escape Herod?', a:'Egypt', choices:['Egypt','Syria','Persia','Greece'], fact:'Matthew 2:13-15 — an angel warned Joseph in a dream to flee to Egypt until Herod\'s death.' },
+  { section:'Birth of Jesus', q:'What was the name of Mary\'s relative whose son became John the Baptist?', a:'Elizabeth', choices:['Anna','Salome','Elizabeth','Joanna'], fact:'Luke 1 — Elizabeth, formerly barren, conceived John in her old age, six months before Mary conceived Jesus.' },
+  { section:'Birth of Jesus', q:'Where did Jesus astonish the teachers when he was twelve years old?', a:'In the temple in Jerusalem', choices:['In the synagogue at Nazareth','By the Sea of Galilee','In the temple in Jerusalem','At Jacob\'s well'], fact:'Luke 2:41-52 — his parents found him after three days, sitting among the teachers, listening and asking questions.' },
 ];
 
 function pickQuestion() {
